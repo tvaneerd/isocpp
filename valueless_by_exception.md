@@ -6,8 +6,11 @@ Project: ISO C++, LEWG
 
 Reply-to: Tony Van Eerd. first initial + last name at gmail dot com
 
+#### I. Table of Contents
 
-#### II. tl;dr.
+everything ................ page 1
+
+#### II. Introduction/Summary, tl;dr.
 
 
 variant's `corrupted_by_exception()` should be called `valueless_by_exception()`.
