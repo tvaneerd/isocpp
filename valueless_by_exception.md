@@ -23,10 +23,10 @@ However, there are good aspects to the name:
 1. it is long and hard to type.  This is typically not good, but in this case, similar to "reinterpret_cast",
 there is a belief that some things _should_ be hard to type, and that variant's checking function should be one of those things
 (because it is believed that typical correct usage should not require the check)
-2. it is easy to grep for.  If you don't want it to be overused, you want it to be easily found and "policed"
+2. it is easy to grep for.  If you don't want something overused, make it easily found and "policed"
 3. The "by_exception" part of the name hints as to why it happened, and more importantly,
 why is should rarely happen and why it is most likely often handled when the exception is thrown (and thus not needed in "normal" code)
-4. A hard-to-type name is part of the "the Kona Kompromise".  Those who compromised on a rarely-invalid variant (instead of a thicker never-invalid variant) really want a don't-type-this name
+4. A hard-to-type name is part of the "the Kona Kompromise".  Those who compromised on a rarely-invalid variant (instead of a never-invalid variant) really want a don't-type-this name
 
 
 #### Design Decisions
