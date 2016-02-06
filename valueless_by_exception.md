@@ -1,6 +1,8 @@
+# valueless_by_exception
+
 Document number:  
 Date: 2015-11-12  
-Project: ISO C++, LEWG  
+Audience: LEWG  
 Reply-to: Tony Van Eerd. first initial + last name at gmail dot com
 
 ####  "tl;dr"
