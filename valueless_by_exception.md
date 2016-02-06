@@ -5,11 +5,11 @@ Date: 2015-11-12
 Audience: LEWG  
 Reply-to: Tony Van Eerd. first initial + last name at gmail dot com
 
-####  "tl;dr"
+####  Summary ("tl;dr")
 
 variant's `corrupted_by_exception()` should be called `valueless_by_exception()`.
 It's been discussed by the committee (a lot) and polled (https://docs.google.com/forms/d/1DE3ebnyeDKA2KUp0tRdZBYtkFotpgviq6VJAVeheKfg/viewanalytics?usp=form_confirm)
-and although it is not overwhelming, there is consensus (as of writing!) for `valueless_by_exception`.
+and there is consensus (as of writing!) for `valueless_by_exception`.
 
 #### Motivation
 
