@@ -1,8 +1,8 @@
-# valueless_by_exception
+## valueless_by_exception
 
 Document number: P0239R0  
 Date: 2015-11-12  
-Audience: Library Evolution Working Group  
+Audience: LEWG  
 Reply-to: Tony Van Eerd. first initial + last name at gmail dot com
 
 ####  Summary ("tl;dr")
@@ -21,12 +21,10 @@ and there is consensus (as of writing!) for `valueless_by_exception`.
 However, there are good aspects to the name:
 
 1. it is long and hard to type.  This is typically not good, but in this case, similar to "reinterpret_cast",
-there is a belief that some things _should_ be hard to type, and that variant's checking function should be one of those things
-(because it is believed that typical correct usage should not require the check)
-2. it is easy to grep for.  If you don't want something overused, make it easily found and "policed"
-3. The "by_exception" part of the name hints as to why it happened, and more importantly,
-why is should rarely happen and why it is most likely often handled when the exception is thrown (and thus not needed in "normal" code)
-4. A hard-to-type name is part of the "the Kona Kompromise".  Those who compromised on a rarely-invalid variant (instead of a never-invalid variant) really want a don't-type-this name
+some things _should_ be hard to type, 
+2. A hard-to-type name is part of the "the Kona Kompromise".  Those who compromised on a rarely-invalid variant (instead of a never-invalid variant) really want a don't-type-this name
+3. it is easy to grep for.  If you don't want something overused, make it easily found and "policed"
+4. "by_exception" correctly explains what happened, why it should rarely happen, and why it is most likely handled when the exception is thrown (and not needed in "normal" code)
 
 
 #### Design Decisions
@@ -42,4 +40,9 @@ whereas `valueless_by_exception()` looks _purposely_ inconsistent, not carelessl
 
 
 `:%s/currupted_by_exception/valueless_by_exception/g`
+
+
+#### Acknowledgements
+
+Thanks to Axel Naumann, Nevin ":-)" Liber, Ville Voutilainen, and everyone else involved.
 
