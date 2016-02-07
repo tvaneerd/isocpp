@@ -1,8 +1,8 @@
 # valueless_by_exception
 
-Document number:  
+Document number: P0239R0  
 Date: 2015-11-12  
-Audience: LEWG  
+Audience: Library Evolution Working Group  
 Reply-to: Tony Van Eerd. first initial + last name at gmail dot com
 
 ####  Summary ("tl;dr")
