@@ -36,9 +36,6 @@ If you agree with the small fix (or already assumed it worked that way) you don'
 
 ### 3 categories of classes
 
-**Aggregates:** pair, tuple; struct { float m, n; }; struct { float m; }; class MyFoo {...};  
-**Wrappers:** optional, variant, any, expected, ...  
-**Containers:** int x[17], array, vector, vector, vector
 
 | Category | Examples |
 ---:|---
@@ -47,15 +44,6 @@ If you agree with the small fix (or already assumed it worked that way) you don'
 | **Containers:** | int x[17], array, vector, vector, vector |
 
 
-
-
-| Aggregates | Wrappers | Containers |
-|------------|----------|------------|
-| pair   | optional  | int x[17] |
-| tuple  | variant | array |
-| struct { int m, n; };   | any   | vector   |
-| struct { float m; };       | expected  | vector  |
-| class Foo {...};    | ...      | vector  |
 
 Notes:
 - you can argue that `int x[17]` is an Aggregate. But it is not a Wrapper.
