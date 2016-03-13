@@ -3,7 +3,7 @@
 Document number: P0XXXR0  
 Date: 2016-03-15  
 Audience: LEWG/LWG  
-Reply-to: Tony Van Eerd. optional_less@forecode.com, YOUR NAME HERE
+Reply-to: Tony Van Eerd. optional at forecode.com, YOUR NAME HERE
 
 ## tl;dr:
 
