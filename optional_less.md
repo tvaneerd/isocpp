@@ -120,3 +120,7 @@ And for "normal" types, they are all still consistent. More importantly, they ar
 
 - (Also, regardless of this fix, Containers are not consistent with Aggregates (of floats, for example). We don't suggest changing Containers or breaking code.
 Also, Containers (often) are used to find() things via an equivalence (not equality) relation, so maybe Containers aren't broken. Maybe.)
+- (Currently `pair` and `tuple` act like Containers (with respect to `>=`). They should probably act like Aggregates. This paper does not suggest changing them at this time.)
+
+### Variant
+- ditto for variant, particularly if accepted into C++17
