@@ -124,3 +124,49 @@ Also, Containers (often) are used to find() things via an equivalence (not equal
 
 ### Variant
 - ditto for variant, particularly if accepted into C++17
+
+
+### Wording
+
+`template <class T> constexpr bool operator>(const optional<T>& x, const optional<T>& y);`  
+_Requires:_ Expression `*x > *y` shall be well-formed.  
+_Returns:_ If `!x`, `false`; otherwise, if `!y`, `true`; otherwise `*x > *y`.  
+_Remarks:_ Instantiations of this function template for which `*x > *y` is a core
+constant expression, shall be constexpr functions.
+
+`template <class T> constexpr bool operator<=(const optional<T>& x, const optional<T>& y);`  
+_Requires:_ Expression `*x <= *y` shall be well-formed.  
+_Returns:_ If `!x`, `true`; otherwise, if `!y`, `false`; otherwise `*x <= *y`.  
+_Remarks:_ Instantiations of this function template for which `*x <= *y` is a core
+constant expression, shall be constexpr functions.
+
+`template <class T> constexpr bool operator>=(const optional<T>& x, const optional<T>& y);`  
+_Requires:_ Expression `*x >= *y` shall be well-formed.  
+_Returns:_ If `!y`, `true`; otherwise, if `!x`, `false`; otherwise `*x >= *y`.  
+_Remarks:_ Instantiations of this function template for which `*x >= *y` is a core
+constant expression, shall be constexpr functions.
+
+`template <class T> constexpr bool operator!=(const optional<T>& x, const optional<T>& y);`  
+_Requires:_ Expression `*x != *y` shall be well-formed.  
+_Returns:_ If `bool(x) != bool(y)`, `true`; otherwise, if `bool(x) == false`, `false`; otherwise `*x != *y`.  
+_Remarks:_ Instantiations of this function template for which `*x != *y` is a core
+constant expression, shall be constexpr functions.
+
+#### Comparisons with T
+
+`template <class T> constexpr bool operator!=(const optional<T>& x, const T& v);`  
+_Returns:_ `bool(x) ? *x != v : true`.  
+`template <class T> constexpr bool operator!=(const T& v, const optional<T>& x);`  
+_Returns:_ `bool(x) ? v != *x : true`.  
+`template <class T> constexpr bool operator<=(const optional<T>& x, const T& v);`  
+_Returns:_ `bool(x) ? *x <= v : true`.  
+`template <class T> constexpr bool operator<=(const T& v, const optional<T>& x);`  
+_Returns:_ `bool(x) ? v <= *x : false`.  
+`template <class T> constexpr bool operator>(const optional<T>& x, const T& v);`  
+_Returns:_ `bool(x) ? *x > v : false`.  
+`template <class T> constexpr bool operator>(const T& v, const optional<T>& x);`  
+_Returns:_ `bool(x) ? v > *x : true`.  
+`template <class T> constexpr bool operator>=(const optional<T>& x, const T& v);`  
+_Returns:_ `bool(x) ? *x >= v : false`.  
+`template <class T> constexpr bool operator>=(const T& v, const optional<T>& x);`  
+_Returns:_ `bool(x) ? v >= *x : true`.  
