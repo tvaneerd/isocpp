@@ -1,9 +1,9 @@
 ## Making Optional Greater Equal Again
 
-Document number: P0XXXR0  
+Document number: P0307R0  
 Date: 2016-03-15  
 Audience: LEWG/LWG  
-Reply-to: Tony Van Eerd. optional at forecode.com, YOUR NAME HERE
+Reply-to: Tony Van Eerd. optional at forecode.com
 
 ## tl;dr:
 
@@ -134,7 +134,7 @@ Ditto for variant, particularly if accepted into C++17
 
 ## Acknowledgements
 
-... lots ...
+... TODO (lots) ...
 
 
 ## Wording
