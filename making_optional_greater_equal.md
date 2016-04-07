@@ -146,7 +146,7 @@ Ditto for variant, particularly if accepted into C++17
 
 ## Wording
 
-_(for optional)_
+_(For optional.  Based on current wording.  (I'm not sure why the wording of `optional < optional` is so different from `optional < T`))_
 
 `template <class T> constexpr bool operator>(const optional<T>& x, const optional<T>& y);`  
 _Requires:_ Expression `*x > *y` shall be well-formed.  
