@@ -129,8 +129,15 @@ And for "normal" types, they are all still consistent. More importantly, they ar
 Also, Containers (often) are used to find() things via an equivalence (not equality) relation, so maybe Containers aren't broken. Maybe.)
 - (Currently `pair` and `tuple` act like Containers (with respect to `>=`). They should probably act like Aggregates. This paper does not suggest changing them at this time.)
 
+## A Slight Alternative
+Ville suggested that `optional<T>` use `T`'s `>=` - _if it exists_ - but that if `T` does _not_ have `>=`, then `optional<T>` could generate `>=` from `<`.  If P0221R1 (default comparison operators) is implemented, then it doesn't matter - `T` will already have a generated `>=` (unless, of course, the developer intentionally deleted it).
+
+As shown above (near the beginning) it may be more consistent to only define `optional<T>::operator>=` when `T` defines `>=`, but falling back to a `<` based definition may be seen as "convenience".
+
 ## Variant
 Ditto for variant, particularly if accepted into C++17
+
+
 
 ## Acknowledgements
 
