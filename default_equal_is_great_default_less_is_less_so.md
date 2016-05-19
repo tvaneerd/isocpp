@@ -7,6 +7,10 @@ Reply-to: Tony Van Eerd. order at forecode.com
 
 ## tl;dr:
 
+We should not generate `operator<()` by default, as suggested by P0221R1.
+
+## Motivation/Explanation
+
 ```
 class chair { ... };
 ```
