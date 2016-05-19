@@ -141,7 +141,7 @@ Ditto for variant, particularly if accepted into C++17
 
 ## Acknowledgements
 
-... TODO (lots) ...
+Thanks to Chandler and Nico and many others for encouraging me, and for Ville and Nevin for putting up with me :-)
 
 
 ## Wording
