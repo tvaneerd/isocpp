@@ -31,9 +31,13 @@ Is the chair smaller? Shorter? Less legs? Less _red_? (imagine that the first me
 
 I understand it _might_ be useful, in particular when used with `std::map` (but maybe you should use `unordered_map`?), etc.  But I don't appreciate meaningless API being added to **all** my classes.
 (Why not add a `calculate_volume` function that doesn't calculate the volume of the chair, or a `calculate_pi()` function, which doesn't calculate pi?)
- Why not memberwise operator+ and divide by scalar? At least then I could maybe calculate the _average chair_, which makes more sense than the _least chair_.
+Why not memberwise operator+ and divide by scalar? At least then I could maybe calculate the _average chair_, which makes more sense than the _least chair_.
  
- If `operator<()` is default generated for most classes, I will recommend, as a coding guideline, that typical classes somehow opt-out of this default generation.  I'll go as far as allowing, maybe even recommending, a macro for this purpose.  It's that bad.
+Ordering can be useful, but it shouldn't be tied to less.  "Representative ordering" and "less" are different concepts, and each has their uses. They should not be conflated - at least not by default.
+
+## How bad is it?
+ 
+ If `operator<()` is default generated for most classes, I will recommend, as a coding guideline, that the average class opt-out of this default generation.  My default will be to disable the default.  I'll go as far as allowing, maybe even recommending, a MACRO for this purpose.  It's that bad.
 
 ## Ways Out
 
