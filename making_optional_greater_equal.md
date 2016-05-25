@@ -20,7 +20,7 @@ assert((*opt >= *opt) == false);
 _One of those is not like the others._
 
 
-Similarly, for some (possibly many*) classes Y:
+Similarly, for some classes Y:
 
 
     optional<Y> opt = ....;
@@ -30,8 +30,6 @@ Similarly, for some (possibly many*) classes Y:
     ... ( opt >= *opt) ... // OK
     ... (*opt >= *opt) ... // compile error!!!
 
-
-(*many people implement < for sake of map, but don't implement the other operators)
 
 This inconsistency in optional is a very simple and small problem with a very simple and small fix:
 `optional>=` needs to call T's `operator>=`. (optional currently instead calls `!operator<()`, which is typically,
@@ -70,8 +68,8 @@ The above is why `struct { float m; }` is not a Wrapper/Proxy, but an Aggregate.
 
 We want everything to be consistent. Sometimes this is not possible. What should we do?
 
-The following is probably obvious when stated, but still needs to be stated sometimes:
-**_Not all consistency is valued equally._** There is a scale:
+The following is probably obvious when stated, but still needs to be stated sometimes:  
+**_Not all consistency is valued equally._** There is a scale (from greatest to least value):
 
 - Self consistency
 - Similar consistency
@@ -79,14 +77,9 @@ The following is probably obvious when stated, but still needs to be stated some
 - ...
 - Global Consistency
 
-(And the value of the scale needs to be weighed with the cost.
-Self consistency is more valuable and thus you can/should be willing to spend more effort on that cost.
-Consistency at global scale, however, may not be worth the cost.)
-
-
 So how does consistency apply to the current situation with optional?
-
-_Wait._ First, however, optional needs to be correct. Being consistently wrong is not near as good as consistently right.
+**_Wait._** First, optional needs to be correct.
+Being consistently wrong is not nearly as good as consistently right.
 Of these lines:
 
 ```
@@ -147,25 +140,25 @@ Thanks to Chandler and Nico and many others for encouraging me, and for Ville an
 
 _(For optional.  Based on current wording.  (I'm not sure why the wording of `optional < optional` is so different from `optional < T`))_
 
-`template <class T> constexpr bool operator>(const optional<T>& x, const optional<T>& y);`  
+`template<class T> constexpr bool operator>(const optional<T>&x, const optional<T>&y);`  
 _Requires:_ Expression `*x > *y` shall be well-formed.  
 _Returns:_ If `!x`, `false`; otherwise, if `!y`, `true`; otherwise `*x > *y`.  
 _Remarks:_ Instantiations of this function template for which `*x > *y` is a core
 constant expression, shall be constexpr functions.
 
-`template <class T> constexpr bool operator<=(const optional<T>& x, const optional<T>& y);`  
+`template<class T> constexpr bool operator<=(const optional<T>&x, const optional<T>&y);`  
 _Requires:_ Expression `*x <= *y` shall be well-formed.  
 _Returns:_ If `!x`, `true`; otherwise, if `!y`, `false`; otherwise `*x <= *y`.  
 _Remarks:_ Instantiations of this function template for which `*x <= *y` is a core
 constant expression, shall be constexpr functions.
 
-`template <class T> constexpr bool operator>=(const optional<T>& x, const optional<T>& y);`  
+`template<class T> constexpr bool operator>=(const optional<T>&x, const optional<T>&y);`  
 _Requires:_ Expression `*x >= *y` shall be well-formed.  
 _Returns:_ If `!y`, `true`; otherwise, if `!x`, `false`; otherwise `*x >= *y`.  
 _Remarks:_ Instantiations of this function template for which `*x >= *y` is a core
 constant expression, shall be constexpr functions.
 
-`template <class T> constexpr bool operator!=(const optional<T>& x, const optional<T>& y);`  
+`template<class T> constexpr bool operator!=(const optional<T>&x, const optional<T>&y);`  
 _Requires:_ Expression `*x != *y` shall be well-formed.  
 _Returns:_ If `bool(x) != bool(y)`, `true`; otherwise, if `bool(x) == false`, `false`; otherwise `*x != *y`.  
 _Remarks:_ Instantiations of this function template for which `*x != *y` is a core
