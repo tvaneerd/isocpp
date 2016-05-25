@@ -1,6 +1,6 @@
 ## Default == is >, default < is < so
 
-Document number: P0XXXX  
+Document number: P0354R0  
 Date: 2016-05-15  
 Audience: EWG  
 Reply-to: Tony Van Eerd. order at forecode.com
