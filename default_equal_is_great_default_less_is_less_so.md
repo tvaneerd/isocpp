@@ -27,9 +27,9 @@ Is the chair smaller? Shorter? Less legs? Less _red_? (imagine that the first me
 
 `operator<()` on `chair` is _meaningless_.
 
-I understand it _might_ be useful, in particular when used with `std::map` (but maybe you should use `unordered_map`?), etc.  But I don't appreciate meaningless API being added to ALL my classes.
-Why not add a `calculate_volume` function that doesn't calculate the volume of the chair, or a `calculate_pi()` function, which doesn't calculate pi?
-(Why not memberwise operator+ and divide by scalar? At least then I could  maybe calculate the _average chair_, which makes more sense than the _least chair_.)
+I understand it _might_ be useful, in particular when used with `std::map` (but maybe you should use `unordered_map`?), etc.  But I don't appreciate meaningless API being added to **all** my classes.
+(Why not add a `calculate_volume` function that doesn't calculate the volume of the chair, or a `calculate_pi()` function, which doesn't calculate pi?)
+ Why not memberwise operator+ and divide by scalar? At least then I could maybe calculate the _average chair_, which makes more sense than the _least chair_.
 
 ## Ways Out
 
@@ -49,23 +49,23 @@ I recommend the new operator approach.  (Which, for C++17, could mean don't gene
 ### Other uses
 
 I think "less" and "representative order" are fundamentally different, and if we had both as independent concepts, we would find many natural uses.
-The first use I found, years, ago, was  an `immutable_string` class. (Adobe, for example, had at least 2 classes like this.)
+The first use I found, years ago, was  an `immutable_string` class. (Adobe, for example, had at least 2 classes like this.)
 For `immutable_string`, all instances that are equal (by string equality) can share the same storage for the string. (Like copy-on-write, but you never write!)
 The storage address becomes the implementation of `==`.
 Address is also useful for implementing `<` when used in `std::map` (if/when lookup is more important than order).
 But you still want `<` to be string-based less, for other uses, ie for display in a UI.
 Separating "order" from "less", and `std::order` from `std::less` and `operator<>` from `operator<` solves these issues.
 
-I think there are many other uses, waiting to be found. I do know that there are enough cases where a natural/meaningful `<` doesn't exist,
-that many well-respected C++ leaders (eg Sean Parent, Alex Stepanov) recommend implementing `std::less` but not `operator<` in these cases. To separate "order" from "less".  So cases exists, and work-arounds are currently in use.
+I think there are many other uses, waiting to be found. The problem is common enough 
+that many well-respected C++ leaders (eg Sean Parent, Alex Stepanov,...) have a stock recommendation: implement `std::less` but not `operator<` in cases where you want order, but `<` is meaningless.  It is a common/real issue.
 
 
 ## Take back std::less
 
-Separating `std::less` from `operator<` is a reasonable work-around, but it is still a work-around.
-The point of `std::less` was for it to be a function-object form of `operator<`; it is the  use of `std::less` in `std::map` et al that perverts the meaning of `std::less`.
+Implementing `std::less` but not `operator<` is a work-around, a hack.
+The point of `std::less` was for it to be the function-object form of `operator<`; exploiting the use of `std::less` in `std::map` et al  perverts the meaning of `std::less`.  If `std::less` was meant to be an extension point, it probably should have been named differently.
 (Note that these specializations of `std::less` may also be prohibited by the standard: 17.6.4.2.1 "only if the declaration depends on a user-defined type and the specialization meets the standard library requirements for the original template"
-- what are the requirements of `std::less`? - it is defined to return "x < y")
+- what are the requirements of `std::less`? - it is defined to return "x < y", so if returning x < y is a requirement....)
 
 By separating "less" from "representation order", we can keep `std::less` as having the single meaning of "calls `x < y`".  I would in fact go further, and deprecate any specializations of `std::less`.  It should only have one meaning.
 
@@ -73,11 +73,6 @@ By separating "less" from "representation order", we can keep `std::less` as hav
 
 1. Most importantly, please don't generate `operate<()` by default.  It is just wrong.
 2. Please take some other path towards default ordering - one of the paths suggested above, or some other path, just not default generated `operator<()`.
-
-
-## Acknowledgements
-
-... TODO ...
 
 
 ## Footnotes
