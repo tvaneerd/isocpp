@@ -84,5 +84,5 @@ By separating "less" from "representation order", we can keep `std::less` as hav
 
 ## Footnotes
 
-* It is tempting to suggest that the operator should be "less-dot" ie `<.` because adding a dot seem to be in vogue, but in this case `<.` would just lead to ambiguities like `.1 < .0`, as would `.<` and `.<.` :-)
+* It is tempting to suggest that the new ordering operator should be "less-dot" ie `<.` because adding a dot seem to be in vogue, but in this case `<.` would just lead to ambiguities like `.1 < .0`, as would `.<` and `.<.` :-)
 
