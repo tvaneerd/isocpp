@@ -69,16 +69,16 @@ that many well-respected C++ leaders (eg Sean Parent, Alex Stepanov,...) have a 
 
 ## Take back std::less
 
-Implementing `std::less` but not `operator<` is a work-around, a hack.
-The point of `std::less` was for it to be the function-object form of `operator<`; exploiting the use of `std::less` in `std::map` et al  perverts the meaning of `std::less`.  If `std::less` was meant to be an extension point, it probably should have been named differently.
-(Note that these specializations of `std::less` may also be prohibited by the standard: 17.6.4.2.1 "only if the declaration depends on a user-defined type and the specialization meets the standard library requirements for the original template"
+Implementing `std::less` but not `operator<` is a viable work-around, but it is a hack.
+The point of `std::less` was for it to be the function-object form of `operator<`; exploiting the use of `std::less` as an extension point for `std::map` et al  perverts the meaning of `std::less`.  If `std::less` was meant to be an extension point, it probably should have been named differently, and have been specific to containers - ie `std::order`, for example.
+(Note also that these specializations of `std::less` may be prohibited by the standard - 17.6.4.2.1 "only if the declaration depends on a user-defined type and the specialization meets the standard library requirements for the original template"
 - what are the requirements of `std::less`? - it is defined to return "x < y", so if returning x < y is a requirement....)
 
-By separating "less" from "representation order", we can keep `std::less` as having the single meaning of "calls `x < y`".  I would in fact go further, and deprecate any specializations of `std::less`.  It should only have one meaning.
+By separating "less" from "representation order", we can keep `std::less` as having the single meaning of "calls `x < y`".  I would in fact go further, and deprecate allowing users to specialization `std::less`.  It should only have one meaning.
 
 ## Conclusion(s)
 
-1. Most importantly, please don't generate `operate<()` by default.  It is just wrong.
+1. Most importantly, please don't generate `operate<()` _by default_.  It is just wrong.
 2. Please take some other path towards default ordering - one of the paths suggested above, or some other path, just not default generated `operator<()`.
 
 
