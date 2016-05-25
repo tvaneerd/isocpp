@@ -33,7 +33,7 @@ I understand it _might_ be useful, in particular when used with `std::map` (but 
 
 ## Ways Out
 
-0. **Just _don't_ do it**.  Don't generate `operator<()`.
+0. **Just _don't_ it**.  Don't generate `operator<()`.
 
 1. Make default generation of `operator<()` **opt in**.  This has been discussed in the past.  I'm not against it.
 I'd still like `==` to be default-in, opt-out.  Because `==` almost always makes sense, `<` almost always doesn't.
