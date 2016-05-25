@@ -71,8 +71,7 @@ The above is why `struct { float m; }` is not a Wrapper/Proxy, but an Aggregate.
 We want everything to be consistent. Sometimes this is not possible. What should we do?
 
 The following is probably obvious when stated, but still needs to be stated sometimes:
-
-_Not all consistency is valued equally._ There is a scale:
+**_Not all consistency is valued equally._** There is a scale:
 
 - Self consistency
 - Similar consistency
@@ -99,7 +98,7 @@ assert(( opt >= *opt) == true);
 assert((*opt >= *opt) == false);
 ```
 
-only the bottom one is correct. (or you can argue that only the bottom one can't change, as we are not changing how float works)
+only the bottom one is _correct_. (or you can argue that only the bottom one can't change, as we are not changing how float works)
 
 So we need to change the other three. And it is not that "we have to", it is what makes sense.
 If `optional>=` calls T's `>=` we get (of course)
@@ -115,10 +114,10 @@ This makes optional *consistent with itself* and T.
 
 #### Consistency with neighbours
 
-- This small fix makes optional _closer_ to being consistent with aggregates - `optional<float>` now gives the same results as `struct { float m; }`.
+- This small fix makes optional _closer_ to being consistent with aggregates - `optional<float>` now gives the same results as `struct { float m; }` (particularly if/when we get default generation of relational operators from EWG).
 But optional is still slightly inconsistent vs Aggregates when dealing with exotic types.
 For Aggregates, `operator>=` calls `operator>` and `operator=` instead of calling memberwise `>=`.
-(We can't change Aggregates. For aggregates with more than one member, you cannot build a sensible lexicographical `>=` from only memberwise `>=`.
+(We can't change how Aggregates work here. For aggregates with more than one member, you cannot build a sensible lexicographical `>=` from only memberwise `>=`.
 For *single* member, you could use `>=` directly, but then single-member aggregates would not be consistent with multi-member aggregates.)
 
 
@@ -135,7 +134,7 @@ Ville suggested that `optional<T>` use `T`'s `>=` - _if it exists_ - but that if
 As shown above (near the beginning) it may be more consistent to only define `optional<T>::operator>=` when `T` defines `>=`, but falling back to a `<` based definition may be seen as "convenience".
 
 ## Variant
-Ditto for variant, particularly if accepted into C++17
+Ditto for variant, particularly if accepted into C++17.  And for any other potential wrapper classes (std::expected, etc).
 
 
 
