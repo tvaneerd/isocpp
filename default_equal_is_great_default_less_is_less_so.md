@@ -28,14 +28,19 @@ It is unsurprising to want to compare two chairs and determine that they are, fo
 In fact, when I learned C circa 1987, I tried to compare two structs for equality, and was saddened that it didn't work.  For this reason, I think that
 default generation of == (and !=), a la P0221R1, is *great*, and *for most classes* both obvious and useful.
 
+
+```
+chair1 == chair2
+```
+
 Now, what does `chair1 < chair2` _mean_?
 
-What does it mean to ask "is this chair _less_ than that chair?" ?  I think this question has little to no meaning.
-Is the chair smaller? Shorter? Less legs? Less _red_? (imagine that the first member of `chair` is colour in RGB format.)
+What does it mean to ask "is this chair _less_ than that chair?" ?  Is the chair smaller? Shorter? Lighter? Less legs?  I think this question has little to no meaning.
+Less _red_? (imagine that the first member of `chair` is colour in RGB format.)
 
 `operator<()` on `chair` is _meaningless_.
 
-I understand it _might_ be useful, in particular when used with `std::map` (but maybe you should use `unordered_map`?), etc.  But I don't appreciate meaningless API being added to **all** my classes.
+I understand an ordering _might_ be useful, in particular when used with `std::map` (but maybe you should use `unordered_map`?), etc.  But I don't appreciate _meaningless_ API being added to **all** my classes.
 (Why not add a `calculate_volume` function that doesn't calculate the volume of the chair, or a `calculate_pi()` function, which doesn't calculate pi?)
 Why not memberwise operator+ and divide by scalar? At least then I could maybe calculate the _average chair_, which makes more sense than the _least chair_.
  
@@ -43,7 +48,7 @@ Ordering can be useful, but it shouldn't be tied to less.  "Representative order
 
 ## How bad is it?
  
- If `operator<()` is default generated for most classes, I will recommend, as a coding guideline, that the average class opt-out of this default generation.  My default will be to disable the default.  I'll go as far as allowing, maybe even recommending, a MACRO for this purpose.  It's that bad.
+ If `operator<()` is default generated for most classes, I will recommend, as a coding guideline, that the average class opt-out of this default generation.  My default will be to disable the default.  I'll go as far as allowing, maybe even recommending, a MACRO for this purpose.  _It's that bad._
 
 ## Ways Out
 
