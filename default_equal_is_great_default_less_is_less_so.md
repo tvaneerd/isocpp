@@ -17,10 +17,14 @@ class chair { ... };
 
 We can all easily imagine what is in class `chair`.  It probably tells you the color, size, shape, material, number of legs, etc,... of the chair. 
 
-Now, what does `chair1 == chair2` _mean_?
+```
+chair1 == chair2
+```
+
+What does `chair1 == chair2` _mean_?
 
 
-It would be unsurprising to want to compare two chairs for equality `chair1 == chair2` and determine that two chairs are, for salient properties, equal. 
+It is unsurprising to want to compare two chairs and determine that they are, for salient properties, equal. Default memberwise equality works fine.
 In fact, when I learned C circa 1987, I tried to compare two structs for equality, and was saddened that it didn't work.  For this reason, I think that
 default generation of == (and !=), a la P0221R1, is *great*, and *for most classes* both obvious and useful.
 
