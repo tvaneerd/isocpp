@@ -66,6 +66,14 @@ The difference between 3 and 4 is just whether the _language_ should generate _l
 
 I recommend 1 followed by 3 or 4.  ie for C++17, just don't generate `operator<()` and then introduce a new operator post C++17.  These are better than option 2 (opt-in) because order _is_ worthwhile, even when "less" doesn't make sense - it is a separate concept, and should be kept separate.
 
+
+## Conclusion(s)
+
+1. Most importantly, please don't generate `operate<()` _by default_.  It is just wrong.
+2. Please take some other path towards default ordering - one of the paths suggested above, or some other path, just not default generated `operator<()`.
+
+The rest of this paper discusses why separation of "less" and "representative order" is important, and why generating representative order some other way than `operator<()` would be worthwhile, but the main point of the paper has already been made: _we should not generate `operator<()` by default_.
+
 ### Other uses
 
 I think "less" and "representative order" are fundamentally different, and if we had both as independent concepts, we would find many natural uses.
@@ -89,7 +97,7 @@ The point of `std::less` was for it to be the function-object form of `operator<
 
 By separating "less" from "representation order", we can keep `std::less` as having the single meaning of "calls `x < y`".  I would in fact go further, and deprecate allowing users to specialization `std::less`.  It should only have one meaning.
 
-## Conclusion(s)
+## Conclusion(s) again
 
 1. Most importantly, please don't generate `operate<()` _by default_.  It is just wrong.
 2. Please take some other path towards default ordering - one of the paths suggested above, or some other path, just not default generated `operator<()`.
