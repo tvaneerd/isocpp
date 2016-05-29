@@ -15,7 +15,7 @@ Reply-to: Tony Van Eerd. order at forecode.com
 class chair { ... };
 ```
 
-We can all easily imagine what is in class `chair`.  It probably tells you the color, size, shape, material, number of legs, etc,... of the chair. 
+We can all easily imagine what is in class `chair`.  It probably tells you the colour, size, shape, material, number of legs, etc,... of the chair. 
 
 ```
 chair1 == chair2
@@ -25,7 +25,7 @@ What does `chair1 == chair2` _mean_?
 
 
 It is unsurprising to want to compare two chairs and determine that they are, for salient properties, equal. Default memberwise equality works fine.
-In fact, when I learned C circa 1987, I tried to compare two structs for equality, and was saddened that it didn't work.  For this reason, I think that
+In fact, when I learned C circa 1987, I tried to compare two structs for equality, and was saddened that it didn't work.  I think that
 default generation of == (and !=), a la P0221R1, is *great*, and *for most classes* both obvious and useful.
 
 
@@ -73,6 +73,8 @@ I recommend 1 followed by 3 or 4.  ie for C++17, just don't generate `operator<(
 2. Please take some other path towards default ordering - one of the paths suggested above, or some other path, just not default generated `operator<()`.
 
 The rest of this paper discusses why separation of "less" and "representative order" is important, and why generating representative order some other way than `operator<()` would be worthwhile, but the main point of the paper has already been made: _we should not generate `operator<()` by default_.
+
+The rest of this paper is probably post-C++17 discussion.
 
 ### Other uses
 
