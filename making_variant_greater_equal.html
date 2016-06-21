@@ -143,7 +143,7 @@ template &lt;class... Types&gt; constexpr bool operator!=(const variant&lt;Types
 </p>
 <dl class="attribute">
 <dt><ins class="edit">Requires:</ins></dt>
-<dd><ins class="edit"><code>get&lt;i&gt;(v) != get&lt;i&gt;(w)</code> is a valid expression returning a type that is convertible to <code>bool</code>, for all <code>i</code? with <code>0 &lt;= i &amp;&amp; i &lt; sizeof...(Types)</code></ins>.
+<dd><ins class="edit"><code>get&lt;i&gt;(v) != get&lt;i&gt;(w)</code> is a valid expression returning a type that is convertible to <code>bool</code>, for all <code>i</code> with <code>0 &lt;= i &amp;&amp; i &lt; sizeof...(Types)</code></ins>.
 </dd>
 <dt>Effects:</dt>
   <dd>Equivalent to <code>return </code><del class="edit"><code>!(v == w)</code></del><ins class="edit">(v.index() != w.index()) || (!v.valueless_by_exception() &amp;&amp; get&lt;i&gt;(v) != get&lt;i&gt;(w))</code> with <code>i</code> being <code>v.index()</code></ins>.
