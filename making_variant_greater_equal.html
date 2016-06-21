@@ -132,7 +132,7 @@ template &lt;class... Types&gt; constexpr bool operator==(const variant&lt;Types
 <dd><code>get&lt;i&gt;(v) == get&lt;i&gt;(w)</code> is a valid expression returning a type that is convertible to <code>bool</code>, for all <code>i</code><ins class="edit"> with <code>0 &lt;= i &amp;&amp; i &lt; sizeof...(Types)</code><ins>.
 </dd>
 <dt>Effects:</dt>
-<dd>Equivalent to <code>return (v.valueless_by_exception() &amp;&amp; w.valueless_by_exception()) || (v.index() == w.index() &amp;&amp; get&lt;i&gt;(v) == get&lt;i&gt;(w))</code> with <code>i</code> being <code>v.index()</code><del class="edit">, otherwise <code>false</code></del>.
+<dd>Equivalent to <code>return (v.valueless_by_exception() &amp;&amp; w.valueless_by_exception()) || (v.index() == w.index() &amp;&amp; get&lt;i&gt;(v) == get&lt;i&gt;(w))</code> with <code>i</code> being <code>v.index()</code>.
 </dd>
 </dl>
 
