@@ -1,0 +1,216 @@
+<html><head>
+  <meta charset="utf-8">
+  <meta name="author" content="P0088R2, ISO/IEC JTC1 SC22 WG21">
+
+<link rel="stylesheet" href="http://cdn.jsdelivr.net/font-hack/2.015/css/hack.min.css">
+<style type="text/css">
+pre {
+  font-family: "Hack", "OCR A Extended", "Consolas", "Lucida Console", monospace;
+  margin-left:20pt;
+  line-height: 1.1em;
+  font-size: small;
+}
+code {
+  font-family: "Hack", "OCR A Extended", "Consolas", "Lucida Console", monospace;
+  font-size: small;
+}
+pre > i {
+  font-family: "Hack", "OCR A Extended", "Consolas", "Lucida Console", monospace;
+  font-style:italic;
+}
+code > i {
+  font-family: "Hack", "OCR A Extended", "Consolas", "Lucida Console", monospace;
+  font-style:italic;
+}
+pre > em {
+  font-family: "Hack", "OCR A Extended", "Consolas", "Lucida Console", monospace;
+  font-style:italic;
+}
+code > em {
+  font-family: "Hack", "OCR A Extended", "Consolas", "Lucida Console", monospace;
+  font-style:italic;
+}
+body {
+    color: #000000; background-color: #FFFFFF; 
+    font-family: "Book Antiqua", "Times New Roman", "Times", serif;
+    padding: 2em;
+}
+/*del { text-decoration: line-through; color: #8B0040; }
+ins { text-decoration: underline; color: #005100; }*/
+del { text-decoration: line-through; color: #8B0040; }
+ins { text-decoration: none;
+    border-bottom: 1px solid #005100;
+    color: #005100;
+    line-height: 1.4em;
+}
+ins.edit { text-decoration: none;
+    border-bottom: 1px solid #0000c1;
+    color: #0000c1;
+    line-height: 1.4em;
+    background-color: #eeeeff;
+}
+del.edit {
+  text-decoration: line-through;
+    border-bottom: 1px solid #0000c1;
+    color: #0000c1;
+    line-height: 1.4em;
+    background-color: #eeeeff;
+}
+span.section_name {
+    float: right;
+    font-weight: bold;
+}
+
+p.example { margin-left: 2em; }
+pre.example { margin-left: 2em; }
+div.example { margin-left: 2em; }
+
+code.extract { background-color: #F5F6A2; }
+pre.extract { margin-left: 2em; background-color: #F5F6A2;
+  border: 1px solid #E1E28E; }
+
+p.function { }
+.attribute { margin-left: 2em; }
+.attribute dt { float: left; font-style: italic;
+  padding-right: 1ex; }
+.attribute dd { margin-left: 0em; margin-bottom: 0.5em;}
+
+blockquote.std { color: #000000; background-color: #F1F1F1;
+  border: 1px solid #D1D1D1;
+  padding-left: 0.5em; padding-right: 0.5em; }
+blockquote.stddel { text-decoration: line-through;
+  color: #000000; background-color: #FFEBFF;
+  border: 1px solid #ECD7EC;
+  padding-left: 0.5empadding-right: 0.5em; ; }
+
+blockquote.stdins { text-decoration: underline;
+  color: #000000; background-color: #C8FFC8;
+  border: 1px solid #B3EBB3; padding: 0.5em; }
+
+table { border: 1px solid black; border-spacing: 0px;
+  margin-left: auto; margin-right: auto; }
+
+table.header {
+  margin-left: 0em;
+  border: none;
+    margin-bottom: 2em;
+}
+th { text-align: left; vertical-align: top;
+  padding-left: 0.4em; 
+  padding-right: 0.4em; }
+td { text-align: left; vertical-align: top;
+  padding-left: 0.4em; 
+  padding-right: 0.4em;  }
+</style>
+
+<title>Variant: relational operators.</title>
+</head>
+
+<body>
+<p>These edits align <code>variant</code> with <code>optional</code> in making the relational operators delegate to the relational operators of the underlying types
+</p>
+
+<h3>drive by fixes:</h3>
+<p>Other fixes, noticed when editing</p>
+<ul>
+<li>"for all <code>i</code>" should be "for all <code>i</code> with <code>0 &lt;= i &amp;&amp; i &lt; sizeof...(Types)</code>"</li>
+<li><code>operator<()</code> was defined as if <code>index()</code> was signed.  It is not.</li>
+</ul>
+
+
+
+
+<h4 id="relational-operators">?.6 Relational operators <span class="section_name">[variant.relops]</span></h4>
+
+<p class="function">
+<code>
+template &lt;class... Types&gt; constexpr bool operator==(const variant&lt;Types...&gt;&amp; v, const variant&lt;Types...&gt;&amp; w);
+</code>
+</p>
+<dl class="attribute">
+<dt>Requires:</dt>
+<dd><code>get&lt;i&gt;(v) == get&lt;i&gt;(w)</code> is a valid expression returning a type that is convertible to <code>bool</code>, for all <code>i</code><ins class="edit"> with <code>0 &lt;= i &amp;&amp; i &lt; sizeof...(Types)</code><ins>.
+</dd>
+<dt>Effects:</dt>
+<dd>Equivalent to <code>return (v.valueless_by_exception() &amp;&amp; w.valueless_by_exception()) || (v.index() == w.index() &amp;&amp; get&lt;i&gt;(v) == get&lt;i&gt;(w))</code> with <code>i</code> being <code>v.index()</code><del class="edit">, otherwise <code>false</code></del>.
+</dd>
+</dl>
+
+<p class="function">
+<code>
+template &lt;class... Types&gt; constexpr bool operator!=(const variant&lt;Types...&gt;&amp; v, const variant&lt;Types...&gt;&amp; w);
+</code>
+</p>
+<dl class="attribute">
+<ins class="edit">
+<dt>Requires:</dt>
+<dd><code>get&lt;i&gt;(v) != get&lt;i&gt;(w)</code> is a valid expression returning a type that is convertible to <code>bool</code>, for all <code>i</code><ins class="edit"> with <code>0 &lt;= i &amp;&amp; i &lt; sizeof...(Types)</code></ins>.
+</dd>
+</ins>
+<dt>Effects:</dt>
+  <dd>Equivalent to <code>return </code><del class="edit"><code>!(v == w)</code></del><ins class="edit">(v.index() != w.index()) || (!v.valueless_by_exception() &amp;&amp; get&lt;i&gt;(v) != get&lt;i&gt;(w))</code> with <code>i</code> being <code>v.index()</code></ins>.
+</dd>
+</dl>
+
+<p class="function">
+<code>
+template &lt;class... Types&gt; constexpr bool operator&lt;(const variant&lt;Types...&gt;&amp; v, const variant&lt;Types...&gt;&amp; w);
+</code>
+</p>
+<dl class="attribute">
+<dt>Requires:</dt>
+<dd><code>get&lt;i&gt;(v) &lt; get&lt;i&gt;(w)</code> is a valid expression returning a type that is convertible to <code>bool</code>, for all <code>i</code><ins class="edit"> with <code>0 &lt;= i &amp;&amp; i &lt; sizeof...(Types)</code></ins>.
+</dd>
+<dt>Effects:</dt>
+  <dd>Equivalent to <code>return <ins class="edit">(v.valueless_by_exception() &amp;&amp; !w.valueless_by_exception()) ||</ins> (v.index() &lt; w.index()) || (v.index() == w.index() &amp;&amp; !v.valueless_by_exception() &amp;&amp; get&lt;i&gt;(v) &lt; get&lt;i&gt;(w))</code> with <code>i</code> being <code>v.index()</code>.
+</dd>
+</dl>
+
+
+
+
+
+
+
+<p class="function">
+<code>
+template &lt;class... Types&gt; constexpr bool operator&gt;(const variant&lt;Types...&gt;&amp; v, const variant&lt;Types...&gt;&amp; w);
+</code>
+</p>
+<dl class="attribute">
+<dt><del class="edit">Returns</del><ins class="edit">Effects</ins>:</dt>
+<dd><ins class="edit">Equivalent to <code>return </code></ins><code>w &lt; v</code>.
+</dd>
+</dl>
+
+<p class="function">
+<code>
+template &lt;class... Types&gt; constexpr bool operator&lt;=(const variant&lt;Types...&gt;&amp; v, const variant&lt;Types...&gt;&amp; w);
+</code>
+</p>
+<dl class="attribute">
+<dt><del class="edit">Returns</del><ins class="edit">Effects</ins>:</dt>
+<dd><ins class="edit">Equivalent to <code>return </code></ins><code>!(v &gt; w)</code>.
+</dd>
+</dl>
+
+<p class="function">
+<code>
+template &lt;class... Types&gt; constexpr bool operator&gt;=(const variant&lt;Types...&gt;&amp; v, const variant&lt;Types...&gt;&amp; w);
+</code>
+</p>
+<dl class="attribute">
+<dt><del class="edit">Returns</del><ins class="edit">Effects</ins>:</dt>
+<dd><ins class="edit">Equivalent to <code>return </code></ins><code>!(v &lt; w)</code>.
+</dd>
+</dl>
+
+
+
+
+
+</body></html>
+
+
+
+
