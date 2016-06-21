@@ -176,8 +176,11 @@ template &lt;class... Types&gt; constexpr bool operator&gt;(const variant&lt;Typ
 </code>
 </p>
 <dl class="attribute">
-<dt><del class="edit">Returns</del><ins class="edit">Effects</ins>:</dt>
-<dd><ins class="edit">Equivalent to <code>return </code></ins><code>w &lt; v</code>.
+<dt><ins class="edit">Requires:</ins></dt>
+<dd><ins class="edit"><code>get&lt;i&gt;(v) &gt; get&lt;i&gt;(w)</code> is a valid expression returning a type that is convertible to <code>bool</code>, for all <code>i</code> with <code>0 &lt;= i &amp;&amp; i &lt; sizeof...(Types)</code></ins>.
+</dd>
+<dt>Effects:</dt>
+<dd>Equivalent to <code>return </code><del class="edit"><code>w &lt; v</code></del><ins class="edit">(!v.valueless_by_exception() &amp;&amp; w.valueless_by_exception()) ||</ins> (v.index() &gt; w.index()) || (v.index() == w.index() &amp;&amp; !v.valueless_by_exception() &amp;&amp; get&lt;i&gt;(v) &gt; get&lt;i&gt;(w))</code> with <code>i</code> being <code>v.index()</code></ins>.
 </dd>
 </dl>
 
@@ -187,8 +190,11 @@ template &lt;class... Types&gt; constexpr bool operator&lt;=(const variant&lt;Ty
 </code>
 </p>
 <dl class="attribute">
-<dt><del class="edit">Returns</del><ins class="edit">Effects</ins>:</dt>
-<dd><ins class="edit">Equivalent to <code>return </code></ins><code>!(v &gt; w)</code>.
+<dt><ins class="edit">Requires:</ins></dt>
+<dd><ins class="edit"><code>get&lt;i&gt;(v) &lt;= get&lt;i&gt;(w)</code> is a valid expression returning a type that is convertible to <code>bool</code>, for all <code>i</code> with <code>0 &lt;= i &amp;&amp; i &lt; sizeof...(Types)</code></ins>.
+</dd>
+<dt>Effects:</dt>
+<dd>Equivalent to <code>return </code><del class="edit"><code>!(v &gt; w)</code></del><ins class="edit">v.valueless_by_exception() || (!w.valueless_by_exception() &amp;&amp; (v.index() &lt; w.index() || (v.index() == w.index() &amp;&amp; get&lt;i&gt;(v) &lt;= get&lt;i&gt;(w))))</code> with <code>i</code> being <code>v.index()</code></ins>.
 </dd>
 </dl>
 
@@ -197,9 +203,11 @@ template &lt;class... Types&gt; constexpr bool operator&lt;=(const variant&lt;Ty
 template &lt;class... Types&gt; constexpr bool operator&gt;=(const variant&lt;Types...&gt;&amp; v, const variant&lt;Types...&gt;&amp; w);
 </code>
 </p>
-<dl class="attribute">
-<dt><del class="edit">Returns</del><ins class="edit">Effects</ins>:</dt>
-<dd><ins class="edit">Equivalent to <code>return </code></ins><code>!(v &lt; w)</code>.
+<dt><ins class="edit">Requires:</ins></dt>
+<dd><ins class="edit"><code>get&lt;i&gt;(v) &gt;= get&lt;i&gt;(w)</code> is a valid expression returning a type that is convertible to <code>bool</code>, for all <code>i</code> with <code>0 &lt;= i &amp;&amp; i &lt; sizeof...(Types)</code></ins>.
+</dd>
+<dt>Effects:</dt>
+<dd>Equivalent to <code>return </code><del class="edit"><code>!(v &lt; w)</code></del><ins class="edit">w.valueless_by_exception() || (!v.valueless_by_exception() &amp;&amp; (v.index() &gt; w.index() || (v.index() == w.index() &amp;&amp; get&lt;i&gt;(v) &gt;= get&lt;i&gt;(w))))</code> with <code>i</code> being <code>v.index()</code></ins>.
 </dd>
 </dl>
 
