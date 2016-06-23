@@ -142,7 +142,7 @@ In sub-clause [optional.relops] apply the following changes to the relational op
 
 `template<class T> constexpr bool operator<(const optional<T>&x, const optional<T>&y);`  
 _Requires:_ Expression `*x < *y` shall be well-formed and shall have well-defined behaviour; its result shall be convertible to bool, and the conversion shall have well-defined behaviour.  
-_Returns:_ If `!x`, `true`; otherwise, if `!y`, `false`; otherwise `*x < *y`.  
+_Returns:_ If `!y`, `false`; otherwise, if `!x`, `true`; otherwise `*x < *y`.  
 _Remarks:_ Instantiations of this function template for which `*x < *y` is a core
 constant expression, shall be constexpr functions.
 
