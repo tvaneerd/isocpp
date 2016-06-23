@@ -124,7 +124,7 @@ Also, Containers (often) are used to find() things via an equivalence (not equal
 ## A Slight Alternative
 Ville suggested that `optional<T>` use `T`'s `>=` - _if it exists_ - but that if `T` does _not_ have `>=`, then `optional<T>` could generate `>=` from `<`.  If P0221R1 (default comparison operators) is implemented, then it doesn't matter - `T` will already have a generated `>=` (unless, of course, the developer intentionally deleted it).
 
-As shown above (near the beginning) it may be more consistent to only define `optional<T>::operator>=` when `T` defines `>=`, but falling back to a `<` based definition may be seen as "convenience".
+As shown above (near the beginning) it may be more consistent to only define `operator>=` when `T` defines `>=`, but falling back to a `<` based definition may be seen as "convenience".
 
 ## Variant
 Ditto for variant, particularly if accepted into C++17.  And for any other potential wrapper classes (std::expected, etc).
@@ -138,7 +138,7 @@ Thanks to Chandler and Nico and many others for encouraging me, and for Ville an
 
 ## Wording
 
-In sub-clause [optional.relops] apply the following changes to the relational operators.
+In sub-clause [optional.relops] apply the following changes to the relational operators.  
 The signatures didn't change. They are included for context.  
 ~~Lines struck~~  
 are replaced by the corresponding lines that follow.
@@ -146,7 +146,7 @@ are replaced by the corresponding lines that follow.
 `template<class T> constexpr bool operator==(const optional<T>&x, const optional<T>&y);`  
 ~~_Requires:_ `T` shall meet the requirements of `EqualityComparable`~~  
 _Requires:_ Expression `*x == *y` shall be well-formed and its result shall be convertible to `bool`.  
-[_Note:_ `T` need not be `EqualityComparable`. _— end note_]
+\[ _Note:_ `T` need not be `EqualityComparable`. - _end note_ \]
 
 `template<class T> constexpr bool operator!=(const optional<T>&x, const optional<T>&y);`  
 ~~_Returns:_ `!(x == y)`.~~  
@@ -156,7 +156,7 @@ _Remarks:_ Specializations of this function template for which `*x != *y` is a c
 constant expression shall be constexpr functions.
 
 `template<class T> constexpr bool operator<(const optional<T>&x, const optional<T>&y);`  
-[_Dear Editor:_ no changes to this section]
+\[ _Dearest Esteemed Editor:_ no edits to this operator \]
 
 `template<class T> constexpr bool operator>(const optional<T>&x, const optional<T>&y);`  
 ~~_Returns:_ `y < x`.~~  
