@@ -1,6 +1,6 @@
 ## Making Optional Greater Equal Again
 
-Document number: P0307R0  
+Document number: P0307R1-ish  
 Date: 2016-03-15  
 Audience: LEWG/LWG  
 Reply-to: Tony Van Eerd. optional at forecode.com
@@ -138,28 +138,34 @@ Thanks to Chandler and Nico and many others for encouraging me, and for Ville an
 
 ## Wording
 
-_(For optional.  Based on current wording.  (I'm not sure why the wording of `optional < optional` is so different from `optional < T`))_
+In sub-clause [optional.relops] apply the following changes to the relational operators
+
+`template<class T> constexpr bool operator<(const optional<T>&x, const optional<T>&y);`  
+_Requires:_ Expression `*x < *y` shall be well-formed and shall have well-defined behaviour; its result shall be convertible to bool, and the conversion shall have well-defined behaviour.  
+_Returns:_ If `!x`, `true`; otherwise, if `!y`, `false`; otherwise `*x < *y`.  
+_Remarks:_ Instantiations of this function template for which `*x < *y` is a core
+constant expression, shall be constexpr functions.
 
 `template<class T> constexpr bool operator>(const optional<T>&x, const optional<T>&y);`  
-_Requires:_ Expression `*x > *y` shall be well-formed.  
+_Requires:_ Expression `*x > *y` shall be well-formed and shall have well-defined behaviour; its result shall be convertible to bool, and the conversion shall have well-defined behaviour.  
 _Returns:_ If `!x`, `false`; otherwise, if `!y`, `true`; otherwise `*x > *y`.  
 _Remarks:_ Instantiations of this function template for which `*x > *y` is a core
 constant expression, shall be constexpr functions.
 
 `template<class T> constexpr bool operator<=(const optional<T>&x, const optional<T>&y);`  
-_Requires:_ Expression `*x <= *y` shall be well-formed.  
+_Requires:_ Expression `*x <= *y` shall be well-formed and shall have well-defined behaviour; its result shall be convertible to bool, and the conversion shall have well-defined behaviour.  
 _Returns:_ If `!x`, `true`; otherwise, if `!y`, `false`; otherwise `*x <= *y`.  
 _Remarks:_ Instantiations of this function template for which `*x <= *y` is a core
 constant expression, shall be constexpr functions.
 
 `template<class T> constexpr bool operator>=(const optional<T>&x, const optional<T>&y);`  
-_Requires:_ Expression `*x >= *y` shall be well-formed.  
+_Requires:_ Expression `*x >= *y` shall be well-formed and shall have well-defined behaviour; its result shall be convertible to bool, and the conversion shall have well-defined behaviour.  
 _Returns:_ If `!y`, `true`; otherwise, if `!x`, `false`; otherwise `*x >= *y`.  
 _Remarks:_ Instantiations of this function template for which `*x >= *y` is a core
 constant expression, shall be constexpr functions.
 
 `template<class T> constexpr bool operator!=(const optional<T>&x, const optional<T>&y);`  
-_Requires:_ Expression `*x != *y` shall be well-formed and its result shall be convertible to bool and shall be well-defined.  
+_Requires:_ Expression `*x != *y` shall be well-formed and shall have well-defined behaviour; its result shall be convertible to bool, and the conversion shall have well-defined behaviour.  
 _Returns:_ If `bool(x) != bool(y)`, `true`; otherwise, if `bool(x) == false`, `false`; otherwise `*x != *y`.  
 _Remarks:_ Specializeations of this function template for which `*x != *y` is a core
 constant expression shall be constexpr functions.
