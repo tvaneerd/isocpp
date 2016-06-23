@@ -138,7 +138,10 @@ Thanks to Chandler and Nico and many others for encouraging me, and for Ville an
 
 ## Wording
 
-In sub-clause [optional.relops] apply the following changes to the relational operators.  The signatures didn't change. They are included for context.  Lines struck are replaced by the corresponding lines that follow.
+In sub-clause [optional.relops] apply the following changes to the relational operators.
+The signatures didn't change. They are included for context.  
+~~Lines struck~~  
+are replaced by the corresponding lines that follow.
 
 `template<class T> constexpr bool operator==(const optional<T>&x, const optional<T>&y);`  
 ~~_Requires:_ `T` shall meet the requirements of `EqualityComparable`~~  
@@ -152,6 +155,7 @@ _Remarks:_ Specializations of this function template for which `*x != *y` is a c
 constant expression shall be constexpr functions.
 
 `template<class T> constexpr bool operator<(const optional<T>&x, const optional<T>&y);`  
+(no changes)
 
 `template<class T> constexpr bool operator>(const optional<T>&x, const optional<T>&y);`  
 ~~_Returns:_ `y < x`.~~  
