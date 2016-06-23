@@ -1,6 +1,6 @@
 <html><head>
   <meta charset="utf-8">
-  <meta name="author" content="P0393R0">
+  <meta name="author" content="P0393r3">
 
 <link rel="stylesheet" href="http://cdn.jsdelivr.net/font-hack/2.015/css/hack.min.css">
 <style type="text/css">
@@ -52,7 +52,7 @@ ins.edit { text-decoration: none;
 del.edit {
   text-decoration: line-through;
     border-bottom: 1px solid #0000c1;
-    color: #0000c1;
+    color: #8B0040	;
     line-height: 1.4em;
     background-color: #eeeeff;
 }
@@ -109,7 +109,7 @@ td { text-align: left; vertical-align: top;
 <body>
 <h3>Making Variant Greater Equal</h3>
 <table class="header">
-    <tbody><tr><td>Document Number:</td> <td>P0393R0</td></tr>
+    <tbody><tr><td>Document Number:</td> <td>P0393r3, ISO/IEC JTC1 SC22 WG21</td></tr>
   <tr><td>Audience:</td><td>LWG</td></tr>
     <tr><td>Date:</td><td>2016-06-21</td></tr>
     <tr><td>Author:</td><td>Tony Van Eerd (variant at forecode.com)</td></tr>
@@ -120,11 +120,12 @@ td { text-align: left; vertical-align: top;
 </p>
 
 <h3>drive by fixes:</h3>
-<p>Other fixes, noticed when editing</p>
+<p>Other fixes, noticed when editing and/or suggested by LWG during review</p>
 <ul>
-<li>"for all <code>i</code>" should be "for all <code>i</code> with <code>0 &lt;= i &amp;&amp; i &lt; sizeof...(Types)</code>"</li>
 <li><code>operator<()</code> was defined as if <code>index()</code> was signed.  It is not.</li>
+<li>convert <i>Effects</i> to <i>Returns</i> if...otherwise...otherwise... (as it was getting complicated)</li>
 </ul>
+
 
 
 
@@ -138,10 +139,13 @@ template &lt;class... Types&gt; constexpr bool operator==(const variant&lt;Types
 </p>
 <dl class="attribute">
 <dt>Requires:</dt>
-<dd><code>get&lt;i&gt;(v) == get&lt;i&gt;(w)</code> is a valid expression returning a type that is convertible to <code>bool</code>, for all <code>i</code><ins class="edit"> with <code>0 &lt;= i &amp;&amp; i &lt; sizeof...(Types)</code><ins>.
+<dd><code>get&lt;i&gt;(v) == get&lt;i&gt;(w)</code> is a valid expression returning a type that is convertible to <code>bool</code>, for all <code>i</code>.
 </dd>
-<dt>Effects:</dt>
-<dd>Equivalent to <code>return (v.valueless_by_exception() &amp;&amp; w.valueless_by_exception()) || (v.index() == w.index() &amp;&amp; get&lt;i&gt;(v) == get&lt;i&gt;(w))</code> with <code>i</code> being <code>v.index()</code>.
+<dt><del class="edit">Effects:</del></dt>
+<dd><del class="edit">Equivalent to <code>return (v.valueless_by_exception() &amp;&amp; w.valueless_by_exception()) || (v.index() == w.index() &amp;&amp; get&lt;i&gt;(v) == get&lt;i&gt;(w)</code> with <code>i</code> being <code>v.index()</code>.</del>
+</dd>
+<dt><ins class="edit">Returns:</ins></dt>
+  <dd><ins class="edit">If <code>v.index() != w.index()</code>, <code>false</code>; otherwise if <code>v.valueless_by_exception()</code>, <code>true</code>; otherwise <code>get&lt;i&gt;(v) == get&lt;i&gt;(w)</code> with <code>i</code> being <code>v.index()</code>.
 </dd>
 </dl>
 
@@ -152,10 +156,12 @@ template &lt;class... Types&gt; constexpr bool operator!=(const variant&lt;Types
 </p>
 <dl class="attribute">
 <dt><ins class="edit">Requires:</ins></dt>
-<dd><ins class="edit"><code>get&lt;i&gt;(v) != get&lt;i&gt;(w)</code> is a valid expression returning a type that is convertible to <code>bool</code>, for all <code>i</code> with <code>0 &lt;= i &amp;&amp; i &lt; sizeof...(Types)</code></ins>.
+<dd><ins class="edit"><code>get&lt;i&gt;(v) != get&lt;i&gt;(w)</code> is a valid expression returning a type that is convertible to <code>bool</code>, for all <code>i</code></ins>.
+<dt><del class="edit">Effects:</del></dt>
+<dd><del class="edit">Equivalent to <code>return !(v == w)</code>.</del>
 </dd>
-<dt>Effects:</dt>
-  <dd>Equivalent to <code>return </code><del class="edit"><code>!(v == w)</code></del><ins class="edit">(v.index() != w.index()) || (!v.valueless_by_exception() &amp;&amp; get&lt;i&gt;(v) != get&lt;i&gt;(w))</code> with <code>i</code> being <code>v.index()</code></ins>.
+<dt><ins class="edit">Returns:</ins></dt>
+  <dd><ins class="edit">If <code>v.index() != w.index()</code>, <code>true</code>; otherwise if <code>v.valueless_by_exception()</code>, <code>false</code>; otherwise <code>get&lt;i&gt;(v) != get&lt;i&gt;(w)</code> with <code>i</code> being <code>v.index()</code>.
 </dd>
 </dl>
 
@@ -166,15 +172,15 @@ template &lt;class... Types&gt; constexpr bool operator&lt;(const variant&lt;Typ
 </p>
 <dl class="attribute">
 <dt>Requires:</dt>
-<dd><code>get&lt;i&gt;(v) &lt; get&lt;i&gt;(w)</code> is a valid expression returning a type that is convertible to <code>bool</code>, for all <code>i</code><ins class="edit"> with <code>0 &lt;= i &amp;&amp; i &lt; sizeof...(Types)</code></ins>.
+<dd><code>get&lt;i&gt;(v) &lt; get&lt;i&gt;(w)</code> is a valid expression returning a type that is convertible to <code>bool</code>, for all <code>i</code><ins class="edit"></ins>.
 </dd>
-<dt>Effects:</dt>
-  <dd>Equivalent to <code>return <ins class="edit">(v.valueless_by_exception() &amp;&amp; !w.valueless_by_exception()) ||</ins> (v.index() &lt; w.index()) || (v.index() == w.index() &amp;&amp; !v.valueless_by_exception() &amp;&amp; get&lt;i&gt;(v) &lt; get&lt;i&gt;(w))</code> with <code>i</code> being <code>v.index()</code>.
+<dt><del class="edit">Effects:</del></dt>
+  <dd><del class="edit">Equivalent to <code>return (v.index() &lt; w.index()) || (v.index() == w.index() &amp;&amp; !v.valueless_by_exception() &amp;&amp; get&lt;i&gt;(v) &lt; get&lt;i&gt;(w)</code> with <code>i</code> being <code>v.index()</code></del>.
+</dd>
+<dt><ins class="edit">Returns:</ins></dt>
+  <dd><ins class="edit">If <code>w.valueless_by_exception()</code>, <code>false</code>; otherwise if <code>v.valueless_by_exception()</code>, <code>true</code>; otherwise, if <code>v.index() &lt w.index()</code>, <code>true</code>; otherwise if <code>v.index() &gt; w.index()</code>, <code>false</code>; otherwise <code>get&lt;i&gt;(v) &lt; get&lt;i&gt;(w)</code> with <code>i</code> being <code>v.index()</code>.
 </dd>
 </dl>
-
-
-
 
 
 
@@ -186,10 +192,13 @@ template &lt;class... Types&gt; constexpr bool operator&gt;(const variant&lt;Typ
 </p>
 <dl class="attribute">
 <dt><ins class="edit">Requires:</ins></dt>
-<dd><ins class="edit"><code>get&lt;i&gt;(v) &gt; get&lt;i&gt;(w)</code> is a valid expression returning a type that is convertible to <code>bool</code>, for all <code>i</code> with <code>0 &lt;= i &amp;&amp; i &lt; sizeof...(Types)</code></ins>.
+<dd><ins class="edit"><code>get&lt;i&gt;(v) &gt; get&lt;i&gt;(w)</code> is a valid expression returning a type that is convertible to <code>bool</code>, for all <code>i</code></ins>.
 </dd>
-<dt>Effects:</dt>
-<dd>Equivalent to <code>return </code><del class="edit"><code>w &lt; v</code></del><ins class="edit">(!v.valueless_by_exception() &amp;&amp; w.valueless_by_exception()) ||</ins> (v.index() &gt; w.index()) || (v.index() == w.index() &amp;&amp; !v.valueless_by_exception() &amp;&amp; get&lt;i&gt;(v) &gt; get&lt;i&gt;(w))</code> with <code>i</code> being <code>v.index()</code></ins>.
+<dt><del class="edit">Effects:</del></dt>
+<dd><del class="edit">Equivalent to <code>return </code><del class="edit"><code>w &lt; v</code></del>.
+</dd>
+<dt><ins class="edit">Returns:</ins></dt>
+  <dd><ins class="edit">If <code>v.valueless_by_exception()</code>, <code>false</code>; otherwise if <code>w.valueless_by_exception()</code>, <code>true</code>; otherwise, if <code>v.index() &gt w.index()</code>, <code>true</code>; otherwise if <code>v.index() &lt; w.index()</code>, <code>false</code>; otherwise <code>get&lt;i&gt;(v) &gt; get&lt;i&gt;(w)</code> with <code>i</code> being <code>v.index()</code>.
 </dd>
 </dl>
 
@@ -200,10 +209,13 @@ template &lt;class... Types&gt; constexpr bool operator&lt;=(const variant&lt;Ty
 </p>
 <dl class="attribute">
 <dt><ins class="edit">Requires:</ins></dt>
-<dd><ins class="edit"><code>get&lt;i&gt;(v) &lt;= get&lt;i&gt;(w)</code> is a valid expression returning a type that is convertible to <code>bool</code>, for all <code>i</code> with <code>0 &lt;= i &amp;&amp; i &lt; sizeof...(Types)</code></ins>.
+<dd><ins class="edit"><code>get&lt;i&gt;(v) &lt;= get&lt;i&gt;(w)</code> is a valid expression returning a type that is convertible to <code>bool</code>, for all <code>i</code></ins>.
 </dd>
-<dt>Effects:</dt>
-<dd>Equivalent to <code>return </code><del class="edit"><code>!(v &gt; w)</code></del><ins class="edit">v.valueless_by_exception() || (!w.valueless_by_exception() &amp;&amp; (v.index() &lt; w.index() || (v.index() == w.index() &amp;&amp; get&lt;i&gt;(v) &lt;= get&lt;i&gt;(w))))</code> with <code>i</code> being <code>v.index()</code></ins>.
+<dt><del class="edit">Effects:</del></dt>
+<dd><del class="edit">Equivalent to <code>return </code><del class="edit"><code>!(v &gt; w)</code></del>.
+</dd>
+<dt><ins class="edit">Returns:</ins></dt>
+  <dd><ins class="edit">If <code>v.valueless_by_exception()</code>, <code>true</code>; otherwise if <code>w.valueless_by_exception()</code>, <code>false</code>; otherwise, if <code>v.index() &lt w.index()</code>, <code>true</code>; otherwise if <code>v.index() &gt; w.index()</code>, <code>false</code>; otherwise <code>get&lt;i&gt;(v) &lt;= get&lt;i&gt;(w)</code> with <code>i</code> being <code>v.index()</code>.
 </dd>
 </dl>
 
@@ -212,11 +224,15 @@ template &lt;class... Types&gt; constexpr bool operator&lt;=(const variant&lt;Ty
 template &lt;class... Types&gt; constexpr bool operator&gt;=(const variant&lt;Types...&gt;&amp; v, const variant&lt;Types...&gt;&amp; w);
 </code>
 </p>
+<dl class="attribute">
 <dt><ins class="edit">Requires:</ins></dt>
-<dd><ins class="edit"><code>get&lt;i&gt;(v) &gt;= get&lt;i&gt;(w)</code> is a valid expression returning a type that is convertible to <code>bool</code>, for all <code>i</code> with <code>0 &lt;= i &amp;&amp; i &lt; sizeof...(Types)</code></ins>.
+<dd><ins class="edit"><code>get&lt;i&gt;(v) &gt;= get&lt;i&gt;(w)</code> is a valid expression returning a type that is convertible to <code>bool</code>, for all <code>i</code></ins>.
 </dd>
-<dt>Effects:</dt>
-<dd>Equivalent to <code>return </code><del class="edit"><code>!(v &lt; w)</code></del><ins class="edit">w.valueless_by_exception() || (!v.valueless_by_exception() &amp;&amp; (v.index() &gt; w.index() || (v.index() == w.index() &amp;&amp; get&lt;i&gt;(v) &gt;= get&lt;i&gt;(w))))</code> with <code>i</code> being <code>v.index()</code></ins>.
+<dt><del class="edit">Effects:</del></dt>
+<dd><del class="edit">Equivalent to <code>return !(v &lt; w)</code>.</del>
+</dd>
+<dt><ins class="edit">Returns:</ins></dt>
+  <dd><ins class="edit">If <code>w.valueless_by_exception()</code>, <code>true</code>; otherwise if <code>v.valueless_by_exception()</code>, <code>false</code>; otherwise, if <code>v.index() &gt w.index()</code>, <code>true</code>; otherwise if <code>v.index() &lt; w.index()</code>, <code>false</code>; otherwise <code>get&lt;i&gt;(v) &gt;= get&lt;i&gt;(w)</code> with <code>i</code> being <code>v.index()</code>.
 </dd>
 </dl>
 
