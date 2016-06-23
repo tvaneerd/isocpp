@@ -140,6 +140,19 @@ Thanks to Chandler and Nico and many others for encouraging me, and for Ville an
 
 In sub-clause [optional.relops] apply the following changes to the relational operators
 
+`template<class T> constexpr bool operator==(const optional<T>&x, const optional<T>&y);`  
+~~_Requires:_ `T` shall meet the requirements of `EqualityComparable`~~
+_Requires:_ Expression `*x == *y` shall be well-formed and its result shall be convertible to bool.  
+_Returns:_ If `bool(x) != bool(y)`, `false`; otherwise, if `bool(x) == false`, `true`; otherwise `*x == *y`.  
+_Remarks:_ Specializations of this function template for which `*x != *y` is a core
+constant expression shall be constexpr functions.
+
+`template<class T> constexpr bool operator!=(const optional<T>&x, const optional<T>&y);`  
+_Requires:_ Expression `*x != *y` shall be well-formed and its result shall be convertible to bool.  
+_Returns:_ If `bool(x) != bool(y)`, `true`; otherwise, if `bool(x) == false`, `false`; otherwise `*x != *y`.  
+_Remarks:_ Specializations of this function template for which `*x != *y` is a core
+constant expression shall be constexpr functions.
+
 `template<class T> constexpr bool operator<(const optional<T>&x, const optional<T>&y);`  
 _Requires:_ Expression `*x < *y` shall be well-formed and its result shall be convertible to bool.  
 _Returns:_ If `!y`, `false`; otherwise, if `!x`, `true`; otherwise `*x < *y`.  
@@ -163,12 +176,6 @@ _Requires:_ Expression `*x >= *y` shall be well-formed and its result shall be c
 _Returns:_ If `!y`, `true`; otherwise, if `!x`, `false`; otherwise `*x >= *y`.  
 _Remarks:_ Specializations of this function template for which `*x >= *y` is a core
 constant expression, shall be constexpr functions.
-
-`template<class T> constexpr bool operator!=(const optional<T>&x, const optional<T>&y);`  
-_Requires:_ Expression `*x != *y` shall be well-formed and its result shall be convertible to bool.  
-_Returns:_ If `bool(x) != bool(y)`, `true`; otherwise, if `bool(x) == false`, `false`; otherwise `*x != *y`.  
-_Remarks:_ Specializations of this function template for which `*x != *y` is a core
-constant expression shall be constexpr functions.
 
 #### Comparisons with T
 
