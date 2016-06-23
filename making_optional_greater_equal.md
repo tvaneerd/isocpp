@@ -177,16 +177,16 @@ _Effects:_ Equivalent to `return bool(x) ? *x == v : false`.
 `template <class T> constexpr bool operator!=(const optional<T>& x, const T& v);`  
 _Effects:_ Equivalent to `return bool(x) ? *x != v : true`.  
 `template <class T> constexpr bool operator!=(const T& v, const optional<T>& x);`  
-_Returns:_ `bool(x) ? v != *x : true`.  
+_Effects:_ Equivalent to `bool(x) ? v != *x : true`.  
 `template <class T> constexpr bool operator<=(const optional<T>& x, const T& v);`  
-_Returns:_ `bool(x) ? *x <= v : true`.  
+_Effects:_ Equivalent to `bool(x) ? *x <= v : true`.  
 `template <class T> constexpr bool operator<=(const T& v, const optional<T>& x);`  
-_Returns:_ `bool(x) ? v <= *x : false`.  
+_Effects:_ Equivalent to `bool(x) ? v <= *x : false`.  
 `template <class T> constexpr bool operator>(const optional<T>& x, const T& v);`  
-_Returns:_ `bool(x) ? *x > v : false`.  
+_Effects:_ Equivalent to `bool(x) ? *x > v : false`.  
 `template <class T> constexpr bool operator>(const T& v, const optional<T>& x);`  
-_Returns:_ `bool(x) ? v > *x : true`.  
+_Effects:_ Equivalent to `bool(x) ? v > *x : true`.  
 `template <class T> constexpr bool operator>=(const optional<T>& x, const T& v);`  
-_Returns:_ `bool(x) ? *x >= v : false`.  
+_Effects:_ Equivalent to `bool(x) ? *x >= v : false`.  
 `template <class T> constexpr bool operator>=(const T& v, const optional<T>& x);`  
-_Returns:_ `bool(x) ? v >= *x : true`.  
+_Effects:_ Equivalent to `bool(x) ? v >= *x : true`.  
