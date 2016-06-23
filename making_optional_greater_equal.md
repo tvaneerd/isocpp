@@ -1,6 +1,6 @@
 ## Making Optional Greater Equal Again
 
-Document number: P0307R1-ish  
+Document number: P0307R1  
 Date: 2016-03-15  
 Audience: LEWG/LWG  
 Reply-to: Tony Van Eerd. optional at forecode.com
@@ -138,40 +138,37 @@ Thanks to Chandler and Nico and many others for encouraging me, and for Ville an
 
 ## Wording
 
-In sub-clause [optional.relops] apply the following changes to the relational operators
+In sub-clause [optional.relops] apply the following changes to the relational operators.  The signatures didn't change. They are included for context.  Lines struck are replaced by the corresponding lines that follow.
 
 `template<class T> constexpr bool operator==(const optional<T>&x, const optional<T>&y);`  
-~~_Requires:_ `T` shall meet the requirements of `EqualityComparable`~~
+~~_Requires:_ `T` shall meet the requirements of `EqualityComparable`~~  
 _Requires:_ Expression `*x == *y` shall be well-formed and its result shall be convertible to bool.  
-_Returns:_ If `bool(x) != bool(y)`, `false`; otherwise, if `bool(x) == false`, `true`; otherwise `*x == *y`.  
-_Remarks:_ Specializations of this function template for which `*x != *y` is a core
-constant expression shall be constexpr functions.
 
 `template<class T> constexpr bool operator!=(const optional<T>&x, const optional<T>&y);`  
+~~_Returns:_ `!(x == y)`.~~  
 _Requires:_ Expression `*x != *y` shall be well-formed and its result shall be convertible to bool.  
 _Returns:_ If `bool(x) != bool(y)`, `true`; otherwise, if `bool(x) == false`, `false`; otherwise `*x != *y`.  
 _Remarks:_ Specializations of this function template for which `*x != *y` is a core
 constant expression shall be constexpr functions.
 
 `template<class T> constexpr bool operator<(const optional<T>&x, const optional<T>&y);`  
-_Requires:_ Expression `*x < *y` shall be well-formed and its result shall be convertible to bool.  
-_Returns:_ If `!y`, `false`; otherwise, if `!x`, `true`; otherwise `*x < *y`.  
-_Remarks:_ Specializations of this function template for which `*x < *y` is a core
-constant expression, shall be constexpr functions.
 
 `template<class T> constexpr bool operator>(const optional<T>&x, const optional<T>&y);`  
+~~_Returns:_ `y < x`.~~  
 _Requires:_ Expression `*x > *y` shall be well-formed and its result shall be convertible to bool.  
 _Returns:_ If `!x`, `false`; otherwise, if `!y`, `true`; otherwise `*x > *y`.  
 _Remarks:_ Specializations of this function template for which `*x > *y` is a core
 constant expression, shall be constexpr functions.
 
 `template<class T> constexpr bool operator<=(const optional<T>&x, const optional<T>&y);`  
+~~_Returns:_ `!(y < x)`.~~  
 _Requires:_ Expression `*x <= *y` shall be well-formed and its result shall be convertible to bool.  
 _Returns:_ If `!x`, `true`; otherwise, if `!y`, `false`; otherwise `*x <= *y`.  
 _Remarks:_ Specializations of this function template for which `*x <= *y` is a core
 constant expression, shall be constexpr functions.
 
 `template<class T> constexpr bool operator>=(const optional<T>&x, const optional<T>&y);`  
+~~_Returns:_ `!(x < y)`.~~  
 _Requires:_ Expression `*x >= *y` shall be well-formed and its result shall be convertible to bool.  
 _Returns:_ If `!y`, `true`; otherwise, if `!x`, `false`; otherwise `*x >= *y`.  
 _Remarks:_ Specializations of this function template for which `*x >= *y` is a core
@@ -180,20 +177,49 @@ constant expression, shall be constexpr functions.
 #### Comparisons with T
 
 `template <class T> constexpr bool operator==(const optional<T>& x, const T& v);`  
+~~_Returns:_ `bool(x) ? *x == v : false`.~~  
 _Effects:_ Equivalent to `return bool(x) ? *x == v : false`.  
+
+`template <class T> constexpr bool operator==(const T& v, const optional<T>& x);`  
+~~_Returns:_ `bool(x) ? v == *x : false`.~~  
+_Effects:_ Equivalent to `return bool(x) ? v == *x : false`.  
+
 `template <class T> constexpr bool operator!=(const optional<T>& x, const T& v);`  
+~~_Returns:_ `bool(x) ? !(*x == v) : true`.~~  
 _Effects:_ Equivalent to `return bool(x) ? *x != v : true`.  
+
 `template <class T> constexpr bool operator!=(const T& v, const optional<T>& x);`  
+~~_Returns:_ `bool(x) ? !(v == *x) : true`.~~  
 _Effects:_ Equivalent to `bool(x) ? v != *x : true`.  
+
+`template <class T> constexpr bool operator<(const optional<T>& x, const T& v);`  
+~~_Returns:_ `bool(x) ? *x < v : true`.~~  
+_Effects:_ Equivalent to `bool(x) ? *x < v : true`.  
+
+`template <class T> constexpr bool operator<(const T& v, const optional<T>& x);`  
+~~_Returns:_ `bool(x) ? v < *x : false`.~~  
+_Effects:_ Equivalent to `bool(x) ? v < *x : false`.  
+
 `template <class T> constexpr bool operator<=(const optional<T>& x, const T& v);`  
+~~_Returns:_ `!(x > v)`.~~  
 _Effects:_ Equivalent to `bool(x) ? *x <= v : true`.  
+
 `template <class T> constexpr bool operator<=(const T& v, const optional<T>& x);`  
+~~_Returns:_ `!(v > x)`.~~  
 _Effects:_ Equivalent to `bool(x) ? v <= *x : false`.  
+
 `template <class T> constexpr bool operator>(const optional<T>& x, const T& v);`  
+~~_Returns:_ `bool(x) ?  v < *x :  false`.~~  
 _Effects:_ Equivalent to `bool(x) ? *x > v : false`.  
+
 `template <class T> constexpr bool operator>(const T& v, const optional<T>& x);`  
+~~_Returns:_ `bool(x) ? *x < v : true`.~~  
 _Effects:_ Equivalent to `bool(x) ? v > *x : true`.  
+
 `template <class T> constexpr bool operator>=(const optional<T>& x, const T& v);`  
+~~_Returns:_ `!(x < v)`.~~  
 _Effects:_ Equivalent to `bool(x) ? *x >= v : false`.  
+
 `template <class T> constexpr bool operator>=(const T& v, const optional<T>& x);`  
+~~_Returns:_ `!(v < x)`.~~  
 _Effects:_ Equivalent to `bool(x) ? v >= *x : true`.  
