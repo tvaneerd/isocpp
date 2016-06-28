@@ -1,4 +1,4 @@
-## Potential Guidelines for LEWG/LWG Reviewers and Library Authors
+## Potential Guidelines for LEWG/LWG Reviewers and Authors
 
 ### What?
 
