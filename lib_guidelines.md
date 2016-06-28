@@ -62,6 +62,22 @@ They don't represent the same external thing.
 and do represent the same thing.
 
 
+### When to use the same name
+
+When should we use the same name (ie, typically function name), and when should we use a different name.
+
+This applies both to same name within a class (ie overloading) and same name _across_ classes - ie size() on containers, ie concepts/categories of classes.
+
+| Same name | different name |
+| --- | --- |
+| when a template would still make sense | |
+| same performance | | 
+| same "intent" | |
+
+Basically, if you have a template that calls `foo.size()` you have expectations on what `size()` means, how it performs, etc.
+
+Whenever we reuse a name within the standard library, we should imagine a template that uses that name.  Does the template work with all uses of that name?
+
 
 ### Consistency
 
