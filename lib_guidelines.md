@@ -62,6 +62,8 @@ They don't represent the same external thing.
 and do represent the same thing.
 
 
+
+
 ### When to use the same name
 
 When should we use the same name (ie, typically function name), and when should we use a different name.
@@ -79,7 +81,35 @@ Basically, if you have a template that calls `foo.size()` you have expectations 
 Whenever we reuse a name within the standard library, we should imagine a template that uses that name.  Does the template work with all uses of that name?
 
 
+
+
 ### Consistency
 
-Todo: copy/paste from https://github.com/tvaneerd/isocpp/blob/master/making_optional_greater_equal.md
+We want everything to be consistent. Sometimes this is not possible. What should we do?
+
+The following is probably obvious when stated, but still needs to be stated sometimes:  
+**_Not all consistency is valued equally._** There is a scale (from greatest to least value):
+
+- Self consistency
+- Similar consistency
+- ...
+- ...
+- Global Consistency
+
+For example, `optional<T>` is, first and foremost, consistent with `T`. (For example, see `operator>=`).  
+Then, where possible, it is consistent with similar types (`variant`, `any`, `expected`, smart pointers, etc)  
+Then, where possible, it is consistent with other std::library types.  
+Etc.  
+
+
+### Categories of Types
+
+The standard contains many related types.  It may be useful to categorize them and understand their commonalities and differences.
+
+**Aggregates:** pair, tuple;  struct { int m, n; };  struct { float m; };  class MyFoo {...};  
+**Wrappers:** optional, variant, any, expected, ...  
+**Containers:** int x[17], std::array, vector, vector, vector, ...
+
+**Smart Pointers:** are these just wrappers?  Is it a orthogonal property?
+
 
