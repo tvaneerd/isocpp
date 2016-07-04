@@ -10,6 +10,8 @@ This doc is what it is.  Maybe when it is something then we'll know what it is.
 
 ### Regular
 
+Should my type be Regular (see definition in EoP)?
+
 | Regular | Irregular |
 | --- | --- |
 | Yes | you better have a good reason |
