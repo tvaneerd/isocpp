@@ -30,6 +30,17 @@ If there is a large cost incurred to ensure that guarantee, instead of breaking 
 
 
 
+### Const-correctness and deep-const
+
+Const is tied together with ownership.  A container like vector _owns_ its elements, thus vector::begin() const returns a const_iterator which propagates constness.
+
+A Range, however, doesn't own the elements, a range is more like a pointer.  So a const Range can still range over mutable elements (like a const pointer can point to non-const data).
+
+<insert Geoffrey here>
+
+
+
+
 ### Explicit vs Implicit
 
 When should a constructor or conversion be implicit vs explicit?
@@ -79,6 +90,16 @@ This applies both to same name within a class (ie overloading) and same name _ac
 Basically, if you have a template that calls `foo.size()` you have expectations on what `size()` means, how it performs, etc.
 
 Whenever we reuse a name within the standard library, we should imagine a template that uses that name.  Does the template work with all uses of that name?
+
+
+
+
+### Naming
+
+**view** see `string_view`.  A `view` ranges over _immutable_ elements.  
+**span** see `span` (?). A `span` ranges over _mutable_ elements.
+**_ref** ? (array_ref?)
+**_ptr** ?
 
 
 
