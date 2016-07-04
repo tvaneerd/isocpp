@@ -98,10 +98,24 @@ Whenever we reuse a name within the standard library, we should imagine a templa
 
 ### Naming
 
-**view** see `string_view`.  A `view` ranges over _immutable_ elements.  
-**span** see `span` (?). A `span` ranges over _mutable_ elements.
-**_ref** ? (array_ref?)
-**_ptr** ?
+_**view**_ see `string_view`.  A `view` ranges over _immutable_ elements.  
+_**span**_ see `span` (?). A `span` ranges over _mutable_ elements.  
+_**_ref**_ ? (array_ref?)  
+_**_ptr**_ ?  
+
+_**empty**_ vs is_empty etc?
+_**get_x**_ vs x()  (and set_x(X val) vs x(X val))
+
+
+
+### More on Naming
+
+<insert thoughts from "On Naming" here>
+
+
+
+
+### member functions vs free functions
 
 
 
