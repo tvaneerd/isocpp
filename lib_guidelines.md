@@ -38,7 +38,7 @@ Const is tied together with ownership.  A container like vector _owns_ its eleme
 
 A Range, however, doesn't own the elements, a range is more like a pointer.  So a const Range can still range over mutable elements (like a const pointer can point to non-const data).
 
-<insert Geoffrey here>
+\<insert Geoffrey here\>
 
 
 
@@ -110,7 +110,7 @@ _**get_x**_ vs x()  (and set_x(X val) vs x(X val))
 
 ### More on Naming
 
-<insert thoughts from "On Naming" here>
+\<insert thoughts from "On Naming" here\>
 
 
 
