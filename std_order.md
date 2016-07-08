@@ -68,7 +68,7 @@ So that would mean `std::order<T>` calls `std::less<T>` which calls `std::order<
 3. is the only palatable solution (that I could up with anyhow)
 
 ### Should `std::order` be specializable?
-¯\_(ツ)_/¯  
+¯\\_(ツ)_/¯  
 
 `std::less` should NOT specializable.  It would be great to "take-back" `std::less`.
 
