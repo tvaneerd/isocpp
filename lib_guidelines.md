@@ -47,12 +47,14 @@ A Range, however, doesn't own the elements, a range is more like a pointer.  So 
 
 When should a constructor or conversion be implicit vs explicit?
 
-| Explicit | Implicit |
-| --- | --- |
-| if in doubt |  |
-| if might throw | doesn't throw / noexcept |
-| if info/accuracy is lost | if both types represent the same "platonic" thing (string/string_view/char* all represent "strings") |
-| if performance penalty | no performance penalty (time nor space) |
+| Explicit | Implicit | Notes/Examples |
+| --- | --- | --- |
+| usually |  |  |
+| if might throw | doesn't throw / noexcept | what about string from char * ? If we had string_view earlier... |
+| if info/accuracy is lost | if both types represent the same "platonic" thing | string/string_view/char* all represent "strings"; int, long represent "numbers" |
+| if performance penalty | no performance penalty (time nor space) |   |
+| if dangerous | not dangerous | char * from string would be performant, (mostly) accurate, noexcept; but forms a dangerous relationship |
+
 
 #### Should the conversion exist at all
 
