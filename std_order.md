@@ -55,7 +55,7 @@ To enable this we have three choices, only one of which is actually currently pa
 
 1. make `set` and `map` and `sort` et al default to `std::order`
 2. make `set` and `map` and `sort` et al default to `std::less` but have `std::less` call `std::order` when `<` is not well-formed
-3. make `set` and `map` and `sort` et al default to some `conditional<is_lessable<T>, std::less<T>, std::order<T>::type`
+3. make `set` and `map` and `sort` et al default to some `conditional<is_lessable<T>, std::less<T>, std::order<T>>::type`
 
 Which one is palatable?
 
