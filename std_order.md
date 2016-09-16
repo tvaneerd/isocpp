@@ -75,8 +75,8 @@ It might be interesting to specialize `std::order<MyImmutableString>` that compa
 
 Alternative:
 
-`std::representation_order<T>` - compiler generated.  Not specializable. Clear purpose.  Not used _directly_ by STL.  But does it recursively call itself, or `std::order` or `std::less` ???
-`std::order<T>` - used by STL.  Can be specialized.  Used by STL when it exists, else STL uses `std::less`.  _However_, `std::order` does not 'just' call `std::less` - see above.
+`std::representation_order<T>` - compiler generated.  Not specializable. Clear purpose.  Not used _directly_ by STL.  But does it recursively call itself, or `std::order` or `std::less` ???  
+`std::order<T>` - used by STL.  Can be specialized.  Used by STL when it exists, else STL uses `std::less`.  _However_, `std::order` does not 'just' call `std::less` - see above.  
 `std::less<T>` - calls `operator<`.  Cannot be specialized.
 
 On one hand, we want "the thing map uses" (ie `std::map_order` maybe).  On the other hand, we want "the thing that will always work, regardless of what the user has defined" (ie `std::some_order`) which calls `std::less` or `representation_order` or whatever it needs to do.
