@@ -16,9 +16,9 @@ This proposal is based on the work of Bjarne Stroustrup and Jens Maurer, in part
 
 ### When to generate
 
-The rule is simple: **generate `==` if the copy constructor is not user-provided**.
+The rule is simple: Code that is OK with the default copy-constructor, is OK with default `==`.
 
-ie Code that is OK with the default copy-constructor, is OK with default `==`.
+ie 
 
     struct Foo { ... };
     
@@ -32,11 +32,13 @@ Users expect copies to be the same (ie equal), that's why they are called "copie
 
 So, even if Foo contains raw pointers, if the default copy-ctor is "OK", then the default `==` is also OK.
 
+I'm told a more technical wording might be **generate `==` if the copy constructor is not user-provided**
+
 ### When to generate `!=`
 
 Whenever it is not user-provided, and the class has `==` (whether defaulted or user-provided).  
 
-What if I want default `==` but don't want `!=`.  That's an odd situation.  Declare `!=` as deleted.  
+What if I want default `==` but don't want `!=`?  That's an odd situation.  Declare `!=` as deleted.  
 What if I want default `==` but don't want `!=` and don't want it deleted?  That's a really odd situation.  
 
 ### How to generate
@@ -46,11 +48,12 @@ Same as P0221
 ### What about `<`
 
 This proposal need not have much/any interaction with `<`.  However, for those concerned about accepting one before the other,
-the stance from this proposal is that the ordering operators should be opt-in (which EWG expressed interest in).
+the stance from this proposal is that the ordering operators should only be opt-in (which EWG expressed interest in).
 
 Straw-man syntax:  `operator<() = default;`  
+
 Note that this is as similar to normal operator syntax and normal defaulting syntax as possible.  
-Also note the precedent of cast operators, which leave out the redundant return type (ie `operator int()() { ... }`)
+Also note the precedent of cast operators, which leave out the redundant return type (ie `operator int()() { return 17; }`)
 so the above syntax follows that lead (and extends it by leaving out the redundant input params as well).
 
 Similar to when `!=` is generated, `>` would be generated if `<` exists.  
@@ -59,4 +62,9 @@ Similar to when `!=` is generated, `>` would be generated if `<` exists.
 
 They would be generated as in P0221.
 
+
+### Footnotes
+
+- "if the copy constructor is not user-provided" is technical terminology from Jens, so I assume it is right
+- "Bravely Default" is a video game for Nintendo 3DS.  The title (for a video game) never made sense to me, but seems appropriate here.  Since this proposal is a "sequel" of P0221, a more appropriate name might be "Bravely Second: End Layer" (Bravely Default's sequel), but then almost no one would get the reference.
 
