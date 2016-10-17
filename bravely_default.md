@@ -16,7 +16,7 @@ This proposal is based on the work of Bjarne Stroustrup and Jens Maurer, in part
 
 ### When to generate
 
-The rule is simple: Code that is OK with the default copy-constructor, is OK with default `==`.
+The rule is simple: **Code that is OK with the default copy-constructor, is OK with default `==`**.
 
 Because copy is entwined with equality.  ie 
 
@@ -42,7 +42,8 @@ Users expect copies to be the same (ie equal), that's why they are called "copie
 
 So, even if Foo contains raw pointers, if the default copy-ctor is "OK", then the default `==` is also OK.
 
-I'm told a more technical wording might be **generate `==` if the copy constructor is not user-provided**
+I'm told a more technical wording might be  
+**generate `==` if the copy constructor is not user-provided**
 
 ### When to generate `!=`
 
