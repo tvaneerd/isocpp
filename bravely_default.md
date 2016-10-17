@@ -18,7 +18,7 @@ This proposal is based on the work of Bjarne Stroustrup and Jens Maurer, in part
 
 The rule is simple: Code that is OK with the default copy-constructor, is OK with default `==`.
 
-ie 
+Because copy is entwined with equality.  ie 
 
     struct Foo { ... };
     
@@ -26,6 +26,16 @@ ie
     Foo tmp = foo;
     
     f(tmp);  // does the same as f(foo)
+    
+or
+
+    Foo Foo::operator++(int)
+    {
+       Foo tmp = *this; // a copy!
+       ++*this;
+       return tmp; // copy is "same as" ie "equal to" old value, right???
+    }
+    
     
 Users expect copies to be substitutable with the original. Substitutability is a/the definition of equality.  
 Users expect copies to be the same (ie equal), that's why they are called "copies".
