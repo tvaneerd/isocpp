@@ -167,7 +167,7 @@ C++17
    class Foo {
       // ...
    public:
-      template &lt;int N&gt; get() { /*...*/ }
+      template &lt;int N&gt; auto get() /*const?*/ { /*...*/ }
    };
    Foo stuff();
    namespace std {
@@ -175,8 +175,7 @@ C++17
       template ... tuple_element ...
    }
    // or get outside class
-   template&lt;int N&gt; get(Foo &amp; foo) { /*...*/ }
-   template&lt;int N&gt; get(Foo const &amp; foo) { /*...*/ }
+   template&lt;int N&gt; auto get(Foo /*const?*/ &amp; foo) { /*...*/ }
    //...
    
    auto [ i, s ] = stuff();
