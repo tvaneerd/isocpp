@@ -5,13 +5,13 @@ Decomposition Declarations a.k.a Structured Bindings
 <tr>
 <th>
 C++14
-</td>
+</th>
 <th>
 C++14
-</td>
+</th>
 <th>
 C++17
-</td>
+</th>
 </tr>
 <tr>
 <td  valign="top">
@@ -19,8 +19,8 @@ C++17
    tuple&lt;int, string&gt; stuff();
    
    auto tup = stuff();
-   int i = get<0>(tup);
-   string s = get<1>(tup);
+   int i = get&lt;0&gt;(tup);
+   string s = get&lt;1&gt;(tup);
   
    use(s, i);
 </pre>
