@@ -77,9 +77,46 @@ compiler
 <pre lang="cpp">
    pair&lt;int, string&gt; stuff();
    
-   auto __tmp = stuff();
+   auto &amp; __tmp = stuff();
    auto &amp; i = get&lt;0&gt;(__tmp);
    auto &amp; s = get&lt;1&gt;(__tmp);
+
+   use(s, i);
+</pre>
+</td>
+</tr>
+</table>
+
+
+
+
+
+<table>
+<tr>
+<th>
+C++17
+</th>
+</tr>
+<tr>
+<td valign="top">
+<pre lang="cpp">
+   pair&lt;int, string&gt; stuff();
+   
+   
+   auto &amp;&amp; [ i, s ] = stuff();
+
+
+   use(s, i);
+</pre>
+</td>
+<td valign="top">
+<pre lang="cpp">
+   pair&lt;int, string&gt; stuff();
+   
+   // ???
+   auto &amp;&amp; __tmp = stuff();
+   auto &amp;&amp; i = get&lt;0&gt;(__tmp);
+   auto &amp;&amp; s = get&lt;1&gt;(__tmp);
 
    use(s, i);
 </pre>
