@@ -185,3 +185,30 @@ C++17
 </td>
 </tr>
 </table>
+
+
+
+<table>
+<tr>
+<th>
+etc
+</th>
+</tr>
+<tr>
+<td valign="top">
+<pre lang="cpp">
+    
+   int arr[4] = { /*...*/ };
+   auto [ a, b, c, d ] = arr; 
+   auto [ t, u, v ] = std::array&lt;int,3&gt;();
+   auto [ x, y ] = { 1, 2 }; // ??
+   
+   // now we're talkin'
+   for (auto &amp;&amp; [key, value] : my_map)
+   {
+      //...
+   }
+</pre>
+</td>
+</tr>
+</table>
