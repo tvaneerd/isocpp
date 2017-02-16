@@ -96,6 +96,9 @@ compiler
 <th>
 C++17
 </th>
+<th>
+compiler
+</th>
 </tr>
 <tr>
 <td valign="top">
@@ -117,6 +120,36 @@ C++17
    auto &amp;&amp; __tmp = stuff();
    auto &amp;&amp; i = get&lt;0&gt;(__tmp);
    auto &amp;&amp; s = get&lt;1&gt;(__tmp);
+
+   use(s, i);
+</pre>
+</td>
+</tr>
+</table>
+
+
+Wait, pair and tuple are not magic(?), can *my* types work with this?
+
+
+
+
+
+<table>
+<tr>
+<th>
+C++17
+</th>
+</tr>
+<tr>
+<td valign="top">
+<pre lang="cpp">
+   struct Foo {
+      int x;
+      string str;
+   };
+   Foo stuff();
+     
+   auto &amp;&amp; [ i, s ] = stuff();
 
    use(s, i);
 </pre>
