@@ -72,7 +72,7 @@ When considering the platonic form, we also need to consider how well the platon
 
 - **generic code** Each type of conversion interacts differently with generic code. Implicit conversion can sometimes pass through generic code unnoticed.  But if you want your generic code to work with some explicit types, then write your templates with (sometime redundant) explicit casts.  If you know you want to work with disparate types, pick a named function (like `to_string`) and make it a requirement on your concept.  This aspect is more about what you expect templates to look like, than what your conversion looks like.
 
-Named free-funciton conversions can be good extension points.
+Named free-function conversions can be good extension points.
 _However_, they do require agreement on the name - which is fine for STL, but harder for independent libraries.
 ie my library called it `to_int` but your library called it `to_integer`. De facto standands - _plural_. :-(
 
