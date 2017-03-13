@@ -83,7 +83,9 @@ Extensions points in STL have their own problems. ADL, `using std::swap`. etc.
 - **if in doubt** Implicit conversion is the default in C++, but as a coding guideline, I think the default should be explicit.
 
 
-How to read this table.  Think of a conversion.  Answer the questions along the left column.  The _rightmost_ column that gets a "check" for your conversion is the type of conversion you should choose (except the 'generic code' column).  Thus only choose implicit if ALL checks are in the implicit column.  "generic code" exception: you could choose Named _in addition to_ Implicit/Explicit if you are choosing Named just as an extension point. (ie `string` can still have a `to_string` function). And yes, the differences between Explicit and Named are not always cut and dry.
+#### How to read this table.
+
+Think of a conversion.  Answer the questions along the left column.  The _rightmost_ column that gets a "check" for your conversion is the type of conversion you should choose (except the 'generic code' column).  Thus only choose implicit if ALL checks are in the implicit column.  "generic code" exception: you could choose Named _in addition to_ Implicit/Explicit if you are choosing Named just as an extension point. (ie `string` can still have a `to_string` function). And yes, the differences between Explicit and Named are not always cut and dry.
 
 | **Consideration** | Implicit | Explicit  | Named |
 | --- | --- | --- | --- |
