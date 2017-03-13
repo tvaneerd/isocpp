@@ -60,7 +60,7 @@ When determining whether to use implicit, explicit, or named conversions, there 
 
 - **"platonic" thing**  Many C++ objects attempt to represent objects or ideas outside of the language. ie, things such as "numbers" and "dates". For example, both `int` and `long` attempt to represent numbers and their operations, but can't represent all numbers.  The term "platonic" is used here in reference to Plato's [Theory of Forms](https://en.wikipedia.org/wiki/Theory_of_Forms).  When converting from one type to another, it is important to ask whether both types represent the same platonic thing, and thus whether the conversion is "natural". Converting from `int` to `long` both represent numbers, so is "natural".  But `int` and `string` do not represent the same platonic thing.
 
-When considering the platonic form, we also need to consider how well the platonic is represented.  Is there information loss? `int` represents less numbers than `long` does (typically).
+When considering the platonic form, we also need to consider how well the platonic is represented.  Is there information loss? `int` represents fewer numbers than `long` does (typically).
 
 - **performance**  Always important in C++. A conversion could have both time and space performance considerations.  Most programmers likely expect implicit conversions to take "no time".  Hiding lots of code behind overloaded operators is a common complaint about C++.  Maybe **complexity** could be a separate category - developers expect implicit conversions to be "simple".  You don't want to be forced to trace into conversions when debugging - they are too easy to skip over.
 
