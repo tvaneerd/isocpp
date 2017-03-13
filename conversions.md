@@ -102,7 +102,7 @@ Think of a conversion.  Answer the questions along the left column.  The _rightm
 |  |  |  |  |
 | **if in doubt** | | if "same thing"  | if not "same thing" |
 
-*('self-policed' - Explicit conversions are more for situations where you want the developer to stop for a second and think about the conversion, but have enough faith in the average developer to make a good choice, and don't feel it typically needs much further policing. You can see it in a code review, but harder to grep for.)
+*('self-policed' - Explicit conversions are more for situations where you want the developer to stop for a second and think about the conversion, but have enough faith in the average developer to make a good choice, and don't feel it typically needs much further policing. You can see it in a code review, but harder to grep for.)*
 
 
 
