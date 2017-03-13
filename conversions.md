@@ -92,7 +92,7 @@ Think of a conversion.  Answer the questions along the left column.  The _rightm
 | **Consideration** | Implicit | Explicit  | Named |
 | --- | --- | --- | --- |
 | **same platonic thing?** | completely | yes, but info/accuracy lost | not "same thing". |
-| **performance?** | (almost) none (time nor space) | small performance penalty |  performance penalty  |
+| **performance?** | little/no impact | small performance penalty |  performance penalty  |
 | **throws?** | noexcept | might throw?  | can throw |
 | **danger?** | not dangerous | if dangerous (eg dangling pointer/ref) | dangerous |
 | **code review?** | fine | self-policed | greppable / policeable |
