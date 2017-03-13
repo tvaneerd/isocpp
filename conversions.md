@@ -114,3 +114,10 @@ Think of a conversion.  Answer the questions along the left column.  The _rightm
 
 #### Elsewhere
 - boost lexical_cast
+
+
+### Other Things to Consider
+
+- **Constructor or cast operator?** - see `string_view` vs `string` - which should depend on which. If can convert both ways, both conversions should be in _same_ class, not one in each. (ie no circular dependencies)
+- **member function or free function?**
+- **Use "_cast" in name?**
