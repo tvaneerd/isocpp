@@ -125,19 +125,19 @@ Given the above considerations, we can express this in a table. _There's always 
 
 Think of a conversion.  Answer the questions along the left column.  The _rightmost_ column that gets a "check" for your conversion is the type of conversion you should choose (except the 'generic code' column).  Thus only choose implicit if ALL checks are in the implicit column.  "generic code" exception: you could choose Named _in addition to_ Implicit/Explicit if you are choosing Named just as an extension point. (ie `string` can still have a `to_string` function). And yes, the differences between Explicit and Named are not always cut and dry.
 
-| **Consideration** | Implicit | Explicit  | Named |
-| --- | --- | --- | --- |
-| **same platonic thing?** | completely | no | no |
-| **info fidelity** | no loss | some loss | more loss |
-| **performance?** | little/no impact | small performance penalty |  performance penalty  |
-| **throws?** | noexcept (or 'rarely'?) | yes  | yes |
-| **danger?** | no | yes | yes |
-| **code review?** | fine | self-policed | greppable / policeable |
-| **generic code?** | if all implicit | if all implicit or explicit  | "extension point"  |
-| **modify class?** | yes | yes | no |
+| **Consideration** | Your Class? | Your Class? | Your Class? | Your Class? |
+| --- | --- | --- | --- | --- |
+| **same platonic thing?** | yes | (yes) | no | no |
+| **info fidelity** | no loss | some loss | some loss | more loss |
+| **performance penalty?** | little/no | some |  some |  yes  |
+| **throws?** | noexcept?/rarely?/same as copyctor? | yes  | yes  | - |
+| **danger? (dangling, etc)** | no | yes | yes | - |
+| **code review?** | fine | self-policed | self-policed | greppable / policeable |
+| **generic code?** | strict | less strict | less strict  | "extension point"  |
+| **modify class?** | - | - | - | no |
+| **are you sure?** | yes | no | no | - | 
 |  |  |  |  |
-|  |  |  |  |
-| **if in doubt** | no | yes  | yes |
+| **Result** | **Implicit ctor/cast** | **Explicit cast** | **Explicit ctor** | **Named** |
 
 *('self-policed' - Explicit conversions are more for situations where you want the developer to stop for a second and think about the conversion, but have enough faith in the average developer to make a good choice, and don't feel it typically needs much further policing. You can see it in a code review, but harder to grep for.)*
 
