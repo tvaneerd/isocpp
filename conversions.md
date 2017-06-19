@@ -1,6 +1,6 @@
 ## Conversions
 
-Document number: P0XXXR0  
+Document number: P0705R0  
 Date: 2017-06-19  
 Audience: LEWG  
 Reply-to: Tony Van Eerd. conversions at forecode.com
@@ -11,7 +11,6 @@ Reply-to: Tony Van Eerd. conversions at forecode.com
 
 ### Three Types of Conversions
 
-To be clear:
 
 #### 1. Implicit Constructor and/or Implicit Cast
 
