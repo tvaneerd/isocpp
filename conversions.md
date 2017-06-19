@@ -44,11 +44,9 @@ To be clear:
     
 P.S. I find it weird and unfortunate that casting and construction are the same. ie:
 
-    class Image
-    {
+    class Image {
         Image(char const * filename) { ... }
-    }
-    
+    };
     Image x = (Image)"foo.png";  // cast a string to an Image???
 
 #### 3. "Named" Conversion
