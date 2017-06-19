@@ -1,4 +1,4 @@
-## Conversions
+## Implicit and Explicit Conversions
 
 Document number: P0705R0  
 Date: 2017-06-19  
@@ -11,6 +11,7 @@ Reply-to: Tony Van Eerd. conversions at forecode.com
 
 ### Three Types of Conversions
 
+Let's be explicit about the different conversions:
 
 #### 1. Implicit Constructor and/or Implicit Cast
 
@@ -197,6 +198,7 @@ Think of a conversion.  Answer the questions along the left column.  The _rightm
 
 #### Elsewhere
 - boost lexical_cast
+- boost units
 - foonathan's typesafe library
 
 
