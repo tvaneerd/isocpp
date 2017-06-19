@@ -1,6 +1,17 @@
 ## Conversions
 
-### Three Types
+Document number: P0XXXR0  
+Date: 2017-06-19  
+Audience: LEWG  
+Reply-to: Tony Van Eerd. conversions at forecode.com
+
+
+**_Note: This paper intentionally left unfinished_**
+
+_I would like to get feedback before continuing._
+
+
+### Three Types of Conversions
 
 To be clear:
 
@@ -12,8 +23,8 @@ To be clear:
        operator int() { return 17; }
     };
     
-    Int J = 17;
-    int k = J;
+    Int J = 17;  // Int(17) constructor
+    int k = J;   // J.operator int()
     
 #### 2. Explicit Constructor and/or Explicit Cast
 
@@ -23,14 +34,24 @@ To be clear:
        explicit operator int() { return 23; }
     };
     
-    // three "spellings"
+    // three "spellings" for calling Ent(int)
     Ent E = Ent(17);
     Ent F = (Ent)17;
     Ent G = static_cast<Ent>(17);
-    // three "spellings"
+    
+    // three "spellings" for calling operator int()
     int x = int(E);
     int y = (int)E;
     int z = static_cast<int>(E);
+    
+P.S. I find it weird and unfortunate that casting and construction are the same. ie:
+
+    class Image
+    {
+        Image(char const * filename) { ... }
+    }
+    
+    Image x = (Image)"foo.png";  // cast a string to an Image???
 
 #### 3. "Named" Conversion
 
@@ -42,7 +63,7 @@ To be clear:
         int to_int() { return 31; }
     };
     
-    // ...or free function:
+    // ...or free functions:
     Nnt to_Nnt(int) { return Nnt(); }
     int to_int(Nnt) { return 13; }
     
@@ -69,7 +90,10 @@ Some types are obviously not attempting to model the same "thing". An `Image` cl
 
 **_This is probably the number one criteria for deciding `implicit` vs `explicit` - is it the same platonic thing._**
 
-But there are other aspects the we may (or may not!) want to consider when deciding conversions.
+Implicit conversons must just "do the right thing" - ie std::chrono seconds to minutes.
+
+
+There are other aspects the we may (or may not!) want to consider when deciding conversions.
 
 #### Information Fidelity
 
@@ -85,7 +109,7 @@ Note, however, that things like `string(string const &)`, `vector(vector const &
 #### Failure
 
 Does the conversion throw? Does it allocate memory?  Can it fail?
-Note, however, that things like `string(string const &)`, `vector(vector const &)`, etc are implicit copy constructors, and they throw.
+Note, however, that things like `string(string const &)`, `vector(vector const &)`, etc are implicit copy constructors, and yet they throw.
 
 
 #### Danger
@@ -100,7 +124,32 @@ This is somewhat a collection of the other properties.  If the conversion is dan
 
 _How would this work in generic code?_
 
-Each type of conversion interacts differently with generic code. Implicit conversion can sometimes pass through generic code unnoticed.  But if you want your generic code to work with some explicit types, then write your templates with (sometimes redundant) explicit casts.  If you know you want to work with disparate types, pick a named function (like `to_string`) and make it a requirement on your concept.  This aspect is more about what you expect templates to look like, than what your conversion looks like.
+Each type of conversion interacts differently with generic code. Be careful with explicit casts when you don't actually know the types involved (ie due to templates) - you don't know what you are being explicit about.  
+*User code should avoid using explicit casts/constructors - if all code is explicit, explicit == implicit.*
+
+    template <class Duration1, class Duration2>
+    nanoseconds average(Duration1 d1, Duration2 d2)
+    {
+        // whoops: explicit ctor used
+        auto ns = nanoseconds{d1 + d2};
+        return ns/2;
+    }
+
+    // much later...
+    int i = ...;
+    int j = ...;
+    nanoseconds a = average(i, j);
+
+vs 
+
+    template <class Duration1, class Duration2>
+    nanoseconds average(Duration1 d1, Duration2 d2)
+    {
+        nanoseconds ns = d1 + d2;
+        return ns/2;
+    }
+
+If you know you want to work with disparate (not same-platonic-thing) types, pick a named function (like `to_string`) and make it a requirement on your concept.  This aspect is more about what you expect templates to look like, than what your conversion looks like.
 
 Named free-function conversions can be good extension points.
 _However_, they do require agreement on the name - which is fine for STL, but harder for independent libraries.
@@ -114,7 +163,9 @@ Constructors and casts are not free functions.  Named conversions can be. Thus o
 
 #### If In Doubt
 
-Although the language rule is implicit-by-default,  as a coding guideline, I think the default should be explicit. ie All new STL classes should have explicit constructors unless there is _motivation_ to make it otherwise.
+Although the language rule is implicit-by-default, as a coding guideline, I think the default should be explicit. ie suggestion:
+
+**_All new STL classes should have explicit constructors unless there is _motivation_ to make it otherwise._**
 
 ---
 
@@ -128,14 +179,14 @@ Think of a conversion.  Answer the questions along the left column.  The _rightm
 
 | **Consideration** |  Your Class? | Your Class? | Your Class? |
 | --- | --- | --- | --- |
-| **same platonic thing?** | yes[1] | no | - |
+| **same platonic thing?** | yes | no[1] | - |
 | **info fidelity** | no loss |  some loss | more loss |
 | **performance penalty?** | little/no |  some |  yes  |
 | **throws?** | noexcept?/rarely?/ same as copyctor?  | yes  | - |
 | **danger? (dangling, etc)** | no | yes | - |
-| **code review?** | fine | self-policed[2] | greppable / policeable |
+| **code review?** | no need | self-policed[2] | greppable / policeable |
 | **generic code?** | strict  | less strict  | "extension point"  |
-| **modify class?** | - | - | no |
+| **can modify class?** | yes | yes | no |
 | **are you sure?** | yes | no | - | 
 |  |  |  |  |
 | **Result** | **Implicit ctor/cast** | **Explicit cast/ctor** | **Named** |
@@ -147,7 +198,7 @@ Think of a conversion.  Answer the questions along the left column.  The _rightm
 
 #### How are we (std::) doing?
 - `string(char *)` should be explicit? (can throw).  But sooo convenient.  But now we have string_view - doesn't throw.
-- chrono :-)
+- chrono :-)  chrono is an excellent example of thoughtful conversions
 - std::to_string
 - std::byte to_integer
 
@@ -158,5 +209,11 @@ Think of a conversion.  Answer the questions along the left column.  The _rightm
 ### Other Things to Consider
 
 - **Constructor or cast operator?** - see `string_view` vs `string` - which should depend on which. If can convert both ways, both conversions should be in _same_ class, not one in each. (ie no circular dependencies)
+- **beware of ambiguity** - if `string_view` constructed from `string` and `string` had a cast to `string_view` we'd get ambiguity errors
 - **member function or free function?**
 - **Use "_cast" in name?**
+
+
+### Acknowledgements
+
+Howard Hinnant knows this better than I do, and gave me lots of input and examples.  `chrono` is one big example of explicit vs implicit.
