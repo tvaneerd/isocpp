@@ -90,10 +90,8 @@ Some types are obviously not attempting to model the same "thing". An `Image` cl
 
 **_This is probably the number one criteria for deciding `implicit` vs `explicit` - is it the same platonic thing._**
 
-Implicit conversons must just "do the right thing" - ie std::chrono seconds to minutes.
+Implicit conversons must just "do the right thing" - ie std::chrono seconds to minutes.  Whereas `int` to `seconds` is explicit because `int` is models a Number, and `seconds` models a Duration - not the same Thing.
 
-
-There are other aspects the we may (or may not!) want to consider when deciding conversions.
 
 #### Information Fidelity
 
