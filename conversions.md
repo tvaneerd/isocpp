@@ -6,9 +6,7 @@ Audience: LEWG
 Reply-to: Tony Van Eerd. conversions at forecode.com
 
 
-**_Note: This paper intentionally left unfinished_**
-
-_I would like to get feedback before continuing._
+**_Note: This paper intentionally left unfinished_**  - _I would like to get feedback before continuing._
 
 
 ### Three Types of Conversions
@@ -79,7 +77,7 @@ P.S. I find it weird and unfortunate that casting and construction are the same.
 
 When determining whether to use implicit, explicit, or named conversions, there are some aspects to consider.  Answering these questions can help decide which type of conversion should be used.
 
-If we are to form general LEWG guidelines, we need to decide which of these are worth considering, and to what extent.
+_If we are to form general LEWG guidelines, we need to decide which of these are worth considering, and to what extent._
 
 
 #### Same "Platonic" Thing
@@ -88,7 +86,7 @@ Many C++ objects attempt to represent objects or ideas outside of the language. 
 
 Some types are obviously not attempting to model the same "thing". An `Image` class may have a constructor like `Image(file_system::path const & file)`, but obviously an `Image` does not attempt to model the same thing as a `file_system::path`.
 
-**_This is probably the number one criteria for deciding `implicit` vs `explicit` - is it the same platonic thing._**
+_This is probably the number one criteria for deciding `implicit` vs `explicit` - is it the same platonic thing._
 
 Implicit conversons must just "do the right thing" - ie std::chrono seconds to minutes.  Whereas `int` to `seconds` is explicit because `int` is models a Number, and `seconds` models a Duration - not the same Thing.
 
@@ -163,7 +161,7 @@ Constructors and casts are not free functions.  Named conversions can be. Thus o
 
 Although the language rule is implicit-by-default, as a coding guideline, I think the default should be explicit. ie suggestion:
 
-**_All new STL classes should have explicit constructors unless there is _motivation_ to make it otherwise._**
+_All new STL classes should have explicit constructors unless there is _motivation_ to make it otherwise._
 
 ---
 
@@ -214,4 +212,4 @@ Think of a conversion.  Answer the questions along the left column.  The _rightm
 
 ### Acknowledgements
 
-Howard Hinnant knows this better than I do, and gave me lots of input and examples.  `chrono` is one big example of explicit vs implicit.
+Howard Hinnant knows this better than I do, and gave me lots of input and examples.  Such as `chrono`, which is one big example of explicit vs implicit.  I also appreciate the encouragement I received from Jeffrey, Gaby, and others.
