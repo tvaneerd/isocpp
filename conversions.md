@@ -200,6 +200,7 @@ Think of a conversion.  Answer the questions along the left column.  The _rightm
 
 #### Elsewhere
 - boost lexical_cast
+- foonathan's typesafe library
 
 
 ### Other Things to Consider
