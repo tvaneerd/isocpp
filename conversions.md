@@ -44,7 +44,7 @@ Let's be explicit about the different conversions:
     
 P.S. I find it weird and unfortunate that casting and construction are the same. ie:
 
-    class Image {
+    struct Image {
         Image(char const * filename) { ... }
     };
     Image x = (Image)"foo.png";  // cast a string to an Image???
