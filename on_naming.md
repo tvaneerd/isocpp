@@ -42,6 +42,9 @@ std::optional uses operator* _precisely_ because developers have learned to see 
 
 smart-ptr get() is no more "dangerous" than the raw pointer it wraps. Whereas optional adds the additional empty state, smart-ptrs don't. So `get()` doesn't throw like optional's `value()` does.  So `get()` isn't "dangerous" (more than the pointer already is) but `get()` is a _different_ warning sign - it is a sign that you are removing some type-safety.  A `unique_ptr` guarantees you are the only owner, but if the code is littered with `up.get()` everywhere, you start to question that "guarantee".
 
+#### Be greppable
+
+'get' is hard to grep. Or way too easy - too many results.  Of course, code analytics and search tools are getting better, and you can search carefully for ".get(" or "get<", etc, but something like "unwrap" is still easier to search for - possibly easier for our _eyes_ as well, as much searching - particularly in code reviews - is just visual, not textual.
 
 ### Be _Glaringly_ Inconsistent
 
