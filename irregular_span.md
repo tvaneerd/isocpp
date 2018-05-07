@@ -57,7 +57,27 @@ Concepts, which are appearing in C++20, also strongly lean on Regular; see the P
 
 See also Lakos (N2479) on defining Value and the properties of copy and equality, and the assumed relationship between copy and `==`.
 
-I shouldn't need to explain Regular to any LEWG member, so I won't.  Read, again, Elements of Programming by Stepanov.
+**Basically, we all know that overloading operators can be dangerous _when you change the common meaning of the operator_.**
+
+The meaning of copy construction and copy assignment is to copy the _value_ of the object.
+The meaning of `==` (and `<`, etc) is to compare the _value_ of the object.
+
+Copy, assign, equality are the holy trinity of C++.  They are expected to go together.  It's fundamental to allowing user-defined types to act as built-in types, and for code to work as expected, at a glance.
+
+Java strings came up in the reflector discussion.  It is well known that people have issues with String's `.equal()` vs `==`.
+_This is precisely because java strings do NOT act like built in types_
+
+Java has classes, that work one way (as pointers) and built-ins (ie int) that work like values.  String is in between, thus confusing.
+
+C++ exposes the one model - Regular - and makes pointers work the same as int.  Yes, this means to onus is on the programmer to recognize that a pointer is NOT the thing it points to.  But once this fundamental bridge is crossed, everything is consistent.
+
+Having a type that is a mixed bag of meaning, is dangerous.
+
+I shouldn't need to explain Regular to any LEWG member, so I'll stop here.  Read, again, Elements of Programming by Stepanov.
+
+See also, the LEWG guidelines (https://github.com/cplusplus/LEWG/blob/master/library-design-guidelines.md), in particular,
+
+- When designing a class type, where possible it should be a "regular type"
 
 Span
 ----
@@ -116,8 +136,8 @@ void f()
 
 (Currently, the above can easily fail when T is `span`).
 
-Deep Assignment
----------------
+Shallow Assignment?
+-------------------
 
 If the _value_ of a `span` is the elements to which it refers, why doesn't `sp1 = sp2;` modify the elements of sp1?
 
