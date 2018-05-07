@@ -122,6 +122,8 @@ Thus if a span is const, ie `const span<T> csp;`, then the _value_ of the span (
 If you feel that `const span<T>` should be "shallow" similar to a smart pointer, ie `const unique_ptr<T>`, and thus allow T to be modified,
 then you should also want `==` to work like a pointer and be shallow.  _Be consistent._
 
+Note also, that `std::cbegin(sp)` is not the same as `sp.cbegin()`.  The first is a (non-const) `iterator` from a `const span`, the other is a `const_iterator`.
+
 
 ```
 void read_only(const T & x);
