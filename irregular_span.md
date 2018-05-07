@@ -29,8 +29,18 @@ Reply-to: Tony Van Eerd. regular at forecode.com
       |                  /      \
       |               /     WTF    \
      Yes              \      ?     /
-                         \      /
-                            \/
+      |                  \      /
+      |                     \/
+      |
+      |
+      /\
+   /      \
+/ deep assign\ 
+\     ?      /  No ---------+
+   \      /      
+      \/         
+      |
+     Yes
 ```
 
 
@@ -104,12 +114,17 @@ void f()
 
 (Currently, the above can easily fail when T is `span`).
 
+Deep Assignment
+---------------
 
+If the _value_ of a `span` is the elements to which it refers, why doesn't `sp1 = sp2;` modify the elements of sp1?
+
+It appears that `span` is pointer-like on assignment.
 
 Naming
 ------
 
-If `span` is to have reference semantics (deep equality, deep const, shallow copy), it should maybe be called `span_ref`; this might lessen confusion.
+If `span` is to have _some_ reference semantics (deep equality, deep const) (yet shallow assignment?), it should maybe be called `span_ref`; this might lessen confusion.
 
 If `span` is to have pointer semantics (shallow equality, shallow const, shallow copy - ie Regular), it should be called `span_ptr`.  With `ptr` in its name, I doubt anyone will be confused by its shallow semantics.
 
