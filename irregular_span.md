@@ -78,6 +78,8 @@ Yet it is not Regular, and thus may not work as expected compared to most types,
 
 Basically `span` has, in some sense, reference semantics, which tends to trip people up eventually.
 
+ie using a `span` in a `set` or as a key in a `map`.  (Since the _value_ of `span` can easily change at a distance.)
+
 ```
 T oldx = x;
 change(x);
