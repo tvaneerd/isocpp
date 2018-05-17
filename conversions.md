@@ -1,6 +1,6 @@
 ## Implicit and Explicit Conversions
 
-Document number: P0705R0  
+Document number: D0705R1  
 Date: 2017-06-19  
 Audience: LEWG  
 Reply-to: Tony Van Eerd. conversions at forecode.com
