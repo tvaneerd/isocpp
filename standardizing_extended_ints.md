@@ -123,7 +123,7 @@ But note the consistency:
 - `short long` - short _takes away half_ the bits you would have gained with `long`;
 - `long short` - long _gains back half_ the bits you would have lost with `short`.
 
-Thus instead of `long` and `short` annihilating each other completely, they only cancel half the affect.
+Thus instead of `long` and `short` annihilating each other completely, they only cancel half the effect.
 
 Further combinations are applied naturally:
 
