@@ -1,6 +1,6 @@
 ## Standardizing Extended Integers
 
-Document number: P0989R0  
+Document number: D0989R1  
 Date: 2018-04-01  
 Audience: EWG  
 Reply-to: Tony Van Eerd. extint at forecode.com
