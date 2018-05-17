@@ -42,7 +42,7 @@ Let's be explicit about the different conversions:
     int y = (int)E;
     int z = static_cast<int>(E);
     
-P.S. I find it weird and unfortunate that casting and construction are the same. ie:
+P.S. I find it weird and unfortunate that casting and construction are the same. i.e.:
 
     struct Image {
         Image(char const * filename) { ... }
@@ -84,9 +84,9 @@ Many C++ objects attempt to represent objects or ideas outside of the language. 
 
 Some types are obviously not attempting to model the same "thing". An `Image` class may have a constructor like `Image(file_system::path const & file)`, but obviously an `Image` does not attempt to model the same thing as a `file_system::path`.
 
-_This is probably the number one criteria for deciding `implicit` vs `explicit` - is it the same platonic thing._
+_This is probably the number one criterion for deciding `implicit` vs `explicit` - is it the same platonic thing?_
 
-Implicit conversons must just "do the right thing" - ie std::chrono seconds to minutes.  Whereas `int` to `seconds` is explicit because `int` is models a Number, and `seconds` models a Duration - not the same Thing.
+Implicit conversons must just "do the right thing" - ie std::chrono seconds to minutes.  Whereas `int` to `seconds` is explicit because `int` models a Number, and `seconds` models a Duration - not the same Thing.
 
 
 #### Information Fidelity
@@ -108,7 +108,7 @@ Note, however, that things like `string(string const &)`, `vector(vector const &
 
 #### Danger
 
-Some conversions are platonic, fast, don't throw, etc, yet are dangerous. ie converting a `std::string` to a `char *`. We could make this implicit, but instead made it a named conversion `c_str()`.  Why? Because the pointer could be left dangling - it is too easy to be dangerous.
+Some conversions are platonic, fast, don't throw, etc, yet are dangerous, e.g. converting a `std::string` to a `char *`. We could have made this implicit, but instead made it a named conversion `c_str()`.  Why? Because the pointer could be left dangling - it is too easy to be dangerous.
 
 #### Code Review
 
@@ -118,7 +118,7 @@ This is somewhat a collection of the other properties.  If the conversion is dan
 
 _How would this work in generic code?_
 
-Each type of conversion interacts differently with generic code. Be careful with explicit casts when you don't actually know the types involved (ie due to templates) - you don't know what you are being explicit about.  
+Each type of conversion interacts differently with generic code. Be careful with explicit casts when you don't actually know the types involved (i.e. due to templates) - you don't know what you are being explicit about.  
 *User code should avoid using explicit casts/constructors - if all code is explicit, explicit == implicit.*
 
     template <class Duration1, class Duration2>
@@ -147,7 +147,7 @@ If you know you want to work with disparate (not same-platonic-thing) types, pic
 
 Named free-function conversions can be good extension points.
 _However_, they do require agreement on the name - which is fine for STL, but harder for independent libraries.
-ie my library called it `to_int` but your library called it `to_integer`. De facto standands - _plural_. :-(
+i.e. my library called it `to_int` but your library called it `to_integer`. De facto standands - _plural_. :-(
 
 Note: Extensions points in STL have their own problems. ADL, `using std::swap`. etc.
 
@@ -157,7 +157,7 @@ Constructors and casts are not free functions.  Named conversions can be. Thus o
 
 #### If In Doubt
 
-Although the language rule is implicit-by-default, as a coding guideline, I think the default should be explicit. ie suggestion:
+Although the language rule is implicit-by-default, as a coding guideline, I think the default should be explicit. i.e. suggestion:
 
 _All new STL classes should have explicit constructors unless there is _motivation_ to make it otherwise._
 
@@ -168,7 +168,7 @@ Given the above considerations, we can express this in a table. _There's always 
 ### How to read this table.
 
 
-Think of a conversion.  Answer the questions along the left column.  The _rightmost_ column that gets a "check" for your conversion is the type of conversion you should choose (except the 'generic code' column).  Thus only choose implicit if ALL checks are in the implicit column.  "generic code" exception: you could choose Named _in addition to_ Implicit/Explicit if you are choosing Named just as an extension point. (ie `string` can still have a `to_string` function). And yes, the differences between Explicit and Named are not always cut and dry.
+Think of a conversion.  Answer the questions along the left column.  The _rightmost_ column that gets a "check" for your conversion is the type of conversion you should choose (except the 'generic code' column).  Thus only choose implicit if ALL checks are in the implicit column.  "generic code" exception: you could choose Named _in addition to_ Implicit/Explicit if you are choosing Named just as an extension point. (i.e. `string` can still have a `to_string` function). And yes, the differences between Explicit and Named are not always cut and dry.
 
 
 | **Consideration** |  Your Class? | Your Class? | Your Class? |
