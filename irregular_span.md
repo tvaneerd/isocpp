@@ -1,12 +1,28 @@
 Should Span be Regular?
 -----------------------
 
-Document number: P1085R0  
+Document number: D1085R1  
 Date: 2018-05-04  
 Audience: EWG  
 Reply-to: Tony Van Eerd. regular at forecode.com
 
 
+Revision 1
+-----
+
+LEWG decision was to remove == (and other comparisons) from span.
+Added wording (editor instructions, on advice of LWG memebers). In this case, added to the top of the doc, for simplicity sake.
+
+Wording (Editor Instructions)
+-----
+remove ref{span.comparison}
+remove Sec3[span.comparison]{Comparison operators}
+
+see https://github.com/cplusplus/draft/compare/master...tvaneerd:patch-1
+
+
+Motivation
+------
 
 
 ```
