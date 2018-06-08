@@ -10,8 +10,8 @@ Reply-to: Tony Van Eerd. regular at forecode.com
 Revision 1
 -----
 
-LEWG decision was to remove == (and other comparisons) from span.  
-Added wording (editor instructions, on advice of LWG memebers). In this case, added to the top of the doc, for simplicity sake.
+- LEWG decision was to remove == (and other comparisons) from span.  
+- Added wording (editor instructions, on advice of LWG memebers). In this case, added to the top of the doc, for simplicity sake.
 
 Wording (Editor Instructions)
 -----
