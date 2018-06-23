@@ -10,8 +10,9 @@ Reply-to: Tony Van Eerd. regular at forecode.com
 Revision 1
 -----
 
-- LEWG decision was to remove == (and other comparisons) from span.  
-- Added wording (editor instructions, on advice of LWG memebers). In this case, added to the top of the doc, for simplicity sake.
+- LEWG decision was to remove == (and other comparisons) from span.  See **LEWG Review** below
+- Added more about deep const as it relates to copies and threads
+- Added wording (editor instructions actually, on advice of LWG memebers). In this case, added to the top of the doc, for simplicity sake.
 
 Wording (Editor Instructions)
 -----
@@ -20,6 +21,36 @@ remove Sec3[span.comparison]{Comparison operators}
 
 see https://github.com/cplusplus/draft/compare/master...tvaneerd:patch-1
 
+
+LEWG Review
+-----
+
+Approval voting:
+
+|     |                                                                   |
+|-----|-------------------------------------------------------------------|
+| 12  |  Rename to spanning_ptr(ish) + make operator== (etc) shallow      | 
+| 18  |  No rename, make operator== (etc) shallow                         |
+| 24  |  Drop operator== (etc)                                            |
+|  3  |  Do nothing                                                       |
+|  9  |  Remove span from IS                                              |
+|  3  |  Make span operate only on const T, (rename cspan, obviously :D)  |
+| 15  |  Add member .equal() and remove operator== (etc)                  |
+
+Runoff: No rename, make operator== (etc) shallow vs Drop operator== (etc)  
+(S=shallow, D=drop)
+
+| SS   |  S   |  N   |   D  |  SD |
+|------|------|------|------|-----|
+|  2   |  4   |  0   |  13  |  8  |
+
+Add member .equal()?
+
+|  SF  |   F  |   N  |   A  |  SA |
+|------|------|------|------|-----|
+|   0  |   8  |   9  |   7  |  4  |
+
+(for example, just use ranges::equal)
 
 Motivation
 ------
@@ -153,6 +184,22 @@ void f()
 ```
 
 (Currently, the above can easily fail when T is `span`).
+
+Note, however, that deep const cannot be maintained. ie:
+
+```
+void g()
+{
+    const span const_sp = some_span();
+    span cp = const_sp; // makes a "copy", and is non-const
+    cp[1] = 17;  // this also changes _value_ of const_sp
+}
+```
+
+You can take that example to mean that const should not be shallow.  Others take it to mean that span is fundamentally broken. (ie maybe reconsider making `==` shallow, const shallow and copy shallow!)
+
+Also recall that for the STL (and as a good practice in general) `const` means safe to read from multiple threads. That would also not be true for deep const and span.
+
 
 Shallow Assignment?
 -------------------
