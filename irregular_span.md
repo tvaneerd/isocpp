@@ -1,7 +1,7 @@
 Should Span be Regular?
 -----------------------
 
-Document number: D1085R1  
+Document number: P1085R1  
 Date: 2018-05-04  
 Audience: EWG  
 Reply-to: Tony Van Eerd. regular at forecode.com
