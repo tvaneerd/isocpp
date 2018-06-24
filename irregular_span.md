@@ -10,9 +10,9 @@ Reply-to: Tony Van Eerd. regular at forecode.com
 Revision 1
 -----
 
-- LEWG decision was to remove == (and other comparisons) from span.  See **LEWG Review** below
+- LEWG decision was to remove `==` (and other comparisons) from span.  See **LEWG Review** below
 - Added more about deep const as it relates to copies and threads
-- Added wording (editor instructions actually, on advice of LWG memebers). In this case, added to the top of the doc, for simplicity sake.
+- Added wording (editor instructions actually, on advice of LWG regulars). In this case, added to the top of the doc, for simplicity sake.
 
 Wording (Editor Instructions)
 -----
