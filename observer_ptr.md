@@ -35,14 +35,14 @@ and thus doesn't bias to any of the other good names to follow.
 Criteria:
 
 - not understanding is better than MISunderstanding.  (Mark Twain: “It ain't what you don't know that gets you into trouble. It's what you know for sure that just ain't so.”)
-- coin a term is OK, it will forever have that meaning (ie "observer"), if you can find a good term not already used
+- coin a term is OK, it will forever have that meaning (ie "observer" means observer pattern), if you can find a good term not already used
 - avoid negatives, as these quickly lead to double negatives in code (ie `if (!noSoup)...`)
 - avoid spoken ambiguity.  ie `raw_ptr` vs "raw pointer"
 
 A list of names
 ---------------
 
-(todo - make table? ie name, pros, cons)
+
 
 | name | pros | cons |
 |------|------|------|
