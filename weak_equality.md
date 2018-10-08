@@ -274,6 +274,7 @@ Some of these are alternatives to others (ie contradictory to each other, or one
 - better, remove `weak_equality` completely, `weak_ordering` as well, as it becomes moot
 - consider introducing `partial_equality`, we may actually be useful
 
+------
 
 References
 ---
