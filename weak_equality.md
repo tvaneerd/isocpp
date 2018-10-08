@@ -7,9 +7,7 @@ Audience: EWG
 Reply-to: Tony Van Eerd. regular at forecode.com
 
 
-_If I had more time, I would have written a shorter letter._
-
--- Blaise Pascal (and others, see https://quoteinvestigator.com/2012/04/28/shorter-letter/)
+_If I had more time, I would have written a shorter letter._  - Blaise Pascal (and others)
 
 ----
 
@@ -28,8 +26,7 @@ Synopsis _(and about that title)_
 This paper will explain why `weak_equality` should not lead to the generation of `==` (nor `!=`).  
 (See P0515 for in the introduction of `weak_equality` and `<=>` into C++.)
 
-The title of this paper is obviously "click-bait" like the goto paper it alludes to
-(https://en.wikipedia.org/wiki/Considered_harmful), but it is also accurate -
+The title of this paper is obviously "click-bait" like the goto paper it alludes to, but it is also accurate -
 an `==` operator that is "weakly equal" is an oxymoron and is _harmful_ to quality software;
 it will break std algorithms and goes against Concepts, the Palo Alto paper (N3351),
 the Lakos "value paper" (N2479), Stepanov and the _Elements of Programming_ ("EoP") book,
@@ -72,7 +69,9 @@ What _does_ equal mean?
 
 **The C++ Working Draft:**
 
-There are ~700 occurrences of "equal" in the Standard. Besides technical terms like `brace-or-equal-initializers`, the Standard uses "equal" in the English and mathematical sense.  When referring to syntactic `==`, it will use more specific terms, like "compare equal".  
+There are approximately 700 occurrences of "equal" in the Standard. Besides technical terms like
+`brace-or-equal-initializers`, the Standard mostly uses "equal" in the English and mathematical sense.
+When referring to syntactic `==`, it will use more specific terms, like "compare equal".  
 The word "equal" is used in the sense of "weak_equality" 0 times.
 
 The Standard also uses equivalent (550+ occurences)
@@ -276,3 +275,17 @@ Some of these are alternatives to others (ie contradictory to each other, or one
 - consider introducing `partial_equality`, we may actually be useful
 
 
+References
+---
+
+- _A shorter letter_, https://quoteinvestigator.com/2012/04/28/shorter-letter/
+- _Goto Considered Harmful_ is not the original title https://en.wikipedia.org/wiki/Considered_harmful
+- Dr Dobb's interview with Alex Stepanov, March 1995 http://stepanovpapers.com/drdobbs-interview.html
+- _Notes on Programming_, Alexander Stepanov, http://stepanovpapers.com/notes.pdf
+- _Fundamentals of Generic Programming_, James C. Dehnert and Alexander Stepanov, http://stepanovpapers.com/DeSt98.pdf 
+- _Elements of Programming_ (EoP book), Alexander Stepanov and Paul McJones, http://elementsofprogramming.com
+- _A Concept Design for the STL_ (N3351, the "Palo Alto paper"), B. Stroustrup and A. Sutton (Editors), http://wg21.link/N3351
+- _Normative Language to Describe Value Copy Semantics_ (N2479), John Lakos, http://wg21.link/N2479
+- _Consistent comparison_, Herb Sutter, Jens Maurer, Walter E. Brown, http://wg21.link/P0515
+- _Comparison in C++_, Lawrence Crowl, http://wg21.link/P0100
+- _Comparison in C++: Basic Facilities_, Lawrence Crowl, http://wg21.link/P0474
