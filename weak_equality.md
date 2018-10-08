@@ -6,7 +6,6 @@ Date: 2018-10-08
 Audience: EWG  
 Reply-to: Tony Van Eerd. regular at forecode.com
 
-----
 
 _If I had more time, I would have written a shorter letter._
 
