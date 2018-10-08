@@ -1,22 +1,20 @@
 weak_equality considered harmful
 -----------------------
 
-Document number: PXXXX  
+Document number: P1307  
 Date: 2018-10-08  
 Audience: EWG  
 Reply-to: Tony Van Eerd. regular at forecode.com
-
 
 _If I had more time, I would have written a shorter letter._  - Blaise Pascal (and others)
 
 ----
 
-
 > _I hope that most programmers will learn the fundamental semantic properties of fundamental operations. What does assignment mean? What does equality mean? How to construct data structures._
 > 
 > _At present C++ is the best vehicle for this style of programming._
 
--- Alex Stepanov, http://stepanovpapers.com/drdobbs-interview.html
+-- Alex Stepanov
 
 ----
 
@@ -26,8 +24,7 @@ Synopsis _(and about that title)_
 This paper will explain why `weak_equality` should not lead to the generation of `==` (nor `!=`).  
 (See P0515 for in the introduction of `weak_equality` and `<=>` into C++.)
 
-The title of this paper is obviously "click-bait" like the goto paper it alludes to, but it is also accurate -
-an `==` operator that is "weakly equal" is an oxymoron and is _harmful_ to quality software;
+The title of this paper is obviously "click-bait" like the goto paper it alludes to, but it is also accurate - an `==` operator that is "weakly equal" is an oxymoron and is _harmful_ to quality software;
 it will break std algorithms and goes against Concepts, the Palo Alto paper (N3351),
 the Lakos "value paper" (N2479), Stepanov and the _Elements of Programming_ ("EoP") book,
 and the very fundamentals of C++.
@@ -147,7 +144,7 @@ It goes back to Palo Alto's "Reasoning about computer programs is facilitated by
 
 > Every important optimization technique is affiliated with some abstract property of programming objects. Optimization, after all, is based on our ability to reason about programs and to replace one program with its faster equivalent. 
 
--- Alexander Stepanov, _Notes on Programming_, http://stepanovpapers.com/notes.pdf
+-- Alexander Stepanov, _Notes on Programming_
 
 Another way to consider it is what Stepanov called "optimizing programmers":
 
@@ -171,7 +168,7 @@ Another way to consider it is what Stepanov called "optimizing programmers":
 > Ultimately, we would like compilers to be able to perform such optimizations at a
 > high  semantic  level  as  well  as  they  do  at  the  built-in  type  level. 
 
--- James C. Dehnert and Alexander Stepanov, _Fundamentals of Generic Programming_, http://stepanovpapers.com/DeSt98.pdf 
+-- James C. Dehnert and Alexander Stepanov, _Fundamentals of Generic Programming_
 
 ie we, as programmers, assume equality means substitution.
 We do this regularly.
@@ -192,7 +189,7 @@ I see 2 motivations for `weak_equality` in P0515 (the original paper proposing `
 3. building on Lawrence Crowl's comparison work (P0474, P0100)
 
 
-**Completeness** - ie it makes the table of the relationship between equality and ordering more complete (and teachable):
+**Motivation 1: Completeness** - ie it makes the table of the relationship between equality and ordering more complete (and teachable):
 
 ```
 +-----------------+------------------+
@@ -208,7 +205,7 @@ Note however that it is not actually complete - `partial_equality` is missing. i
 
 In fact, strong vs weak (ie "is it substitutible") and partial vs total ("does it cover all values") are orthogonal axes, conflated by P0515.
 
-**`CaseInsensitiveString`** (and/or case insensitive filenames)
+**Motivation 2: `CaseInsensitiveString`** (and/or case insensitive filenames)
 
 The original `<=>` paper (P0515) used `CaseInsensitiveString` as a motivating example of a class that might want to use `weak_equality` or `weak_ordering`.
 
@@ -220,7 +217,6 @@ Alternatively, would the rest of the code (and user-base) be OK is the string wa
 
 - If case is not salient, not important, then equality can ignore it, and it is actually _strong equality_
 (like vector ignores capacity - it is not part of the value).
-
 - Alternatively, if case is salient, make it part of `==`.
 
 Neither case results in a weak `==`.
@@ -251,11 +247,11 @@ True, the standard isn't a guideline, but be very clear - the whole `<=>` featur
 
 > C++ as a language does not impose any constraints. You can define your equality operator to do multiplication. But equality should be equality.
 
--- Alexander Stepanov, http://stepanovpapers.com/drdobbs-interview.html
+-- Alexander Stepanov
 
 
 
-**Building on Crowl's P0474 and P0100**
+**Motivation 3: Building on Crowl's P0474 and P0100**
 
 
 Much of the categorization in P0515 is based on Lawrence Crowl's very detailed comparison papers, P0474 and P0100.  Lawrence suggested a `weak_equivalence()` function (which makes sense on types like `CaseInsensitiveString` that have weak or partial ordering), but never suggested promoting that to `==`.  His papers are very clear that `==` should always be actual equality.  (In fact, an earlier version of his paper called it `weak_equal`, but he (correctly :-) later changed it to `weak_equivalence`).
@@ -266,13 +262,10 @@ It seems `weak_equality`, and the generation of a weak `==`, was new in P0515 an
 Suggested Actions
 ----
 
-Some of these are alternatives to others (ie contradictory to each other, or one moots the other, etc).
-
 - do not generate `==` from anything except `strong_ordering` and `strong_equality`
-- rename `strong_equality` to `equality`
-- rename `weak_equality` to `weak_equivalence`,
+- rename `strong_equality` to `equality`, `weak_equality` to `weak_equivalence`,
 - better, remove `weak_equality` completely, `weak_ordering` as well, as it becomes moot
-- consider introducing `partial_equality`, we may actually be useful
+- consider introducing `partial_equality`, which may actually be useful
 
 ------
 
