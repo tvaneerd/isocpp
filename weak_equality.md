@@ -287,6 +287,7 @@ References
 - _Elements of Programming_ (EoP book), Alexander Stepanov and Paul McJones, http://elementsofprogramming.com
 - _A Concept Design for the STL_ (N3351, the "Palo Alto paper"), B. Stroustrup and A. Sutton (Editors), http://wg21.link/N3351
 - _Normative Language to Describe Value Copy Semantics_ (N2479), John Lakos, http://wg21.link/N2479
+- _Salient_, actual John Lakos, personal communication
 - _Consistent comparison_, Herb Sutter, Jens Maurer, Walter E. Brown, http://wg21.link/P0515
 - _Comparison in C++_, Lawrence Crowl, http://wg21.link/P0100
 - _Comparison in C++: Basic Facilities_, Lawrence Crowl, http://wg21.link/P0474
