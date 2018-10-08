@@ -12,9 +12,9 @@ _If I had more time, I would have written a shorter letter._  - Blaise Pascal (a
 ----
 
 
-_I hope that most programmers will learn the fundamental semantic properties of fundamental operations. What does assignment mean? What does equality mean? How to construct data structures._
-
-_At present C++ is the best vehicle for this style of programming._
+> _I hope that most programmers will learn the fundamental semantic properties of fundamental operations. What does assignment mean? What does equality mean? How to construct data structures._
+> 
+> _At present C++ is the best vehicle for this style of programming._
 
 -- Alex Stepanov, http://stepanovpapers.com/drdobbs-interview.html
 
