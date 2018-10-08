@@ -40,8 +40,8 @@ Background
 
 To ensure everyone clearly understands the terms `strong_equality` and `weak_equality` from P0515.
 
-`strong_equality` implies _substitutibility_, ie that `x == y` implies `f(x) == f(y)`, for all `f()`
-that stick to the _salient_ attributes of `x` and `y`.
+`strong_equality` implies _substitutibility_, ie that `x == y` implies `f(x) == f(y)`, for all (Regular) `f`
+that only accesses the _salient_ attributes of `x` and `y`.
 What is _salient_? See Lakos.  Either N2479, or see actual John Lakos.
 But basically "salient" means "the important parts" and
 the parts that are _guaranteed_ to be copied/moved via construction and assignment.
@@ -212,6 +212,8 @@ I see 2 motivations for `weak_equality` in P0515 (the original paper proposing `
 
 Note however that it is not actually complete - `partial_equality` is missing. ie An equality that is strong where defined, but not defined over the full set of values - ie this could be used for <=> over floating point types (ie with strong equality everywhere except NaN). Rust, for example, has the `PartialEq` trait for this.
 
+In fact, strong vs weak (ie "is it substitutible") and partial vs total ("does it cover all values") are orthogonal axes, conflated by P0515.
+
 **`CaseInsensitiveString`** (and/or case insensitive filenames)
 
 The original <=> paper (P0515) used `CaseInsensitiveString` as a motivating example of a class that might want to use `weak_equality` or `weak_ordering`.
@@ -277,9 +279,11 @@ Suggested Actions
 
 Some of these are alternatives to others (ie contradictory to each other, or one moots the other, etc).
 
-- do not generate `==` from anything except `strong_ordering` and `strong_equality`
+- do not generate `==` from anything except `strong_ordering` and `strong_equality` (ie not weak_ordering nor partial_ordering)
 - rename `weak_equality` to `weak_equivalence`,
 - rename `strong_equality` to `equality`
 - remove `weak_equality` completely
+- remove `weak_ordering` as well
+- consider introducing `partial_equality`
 
 
