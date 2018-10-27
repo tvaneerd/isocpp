@@ -18,10 +18,11 @@ Changes
 -------
 
 Allow implicit conversion from other smart pointers.  
-Review `reset(ptr)` and `release()`.
+Review  `release()` and `reset(ptr)`.
 
-`reset(ptr)` - for all other smart pointers, this _suggests_ taking ownership. Not so for `observer_ptr`.  Maybe use `=`?
-`release()` - why? The name implies ownership. use `get()` or `reset()`.
+`release()` - The name implies ownership - and ownership transfer. use `get()` or `reset()`.  In generic code, you might call `release()` to take ownership.  With `observer_ptr` is does NOT tranfer ownership.  Different semantics require different name.
+
+`reset(ptr)` - for all other smart pointers, this _suggests_ taking ownership (although not as obvious as `release()`).   Maybe use `=`?
 
 
 Naming
@@ -44,36 +45,39 @@ A list of names
 
 
 
-| name | pros | cons |
-|------|------|------|
-| dumb_ptr | | politically incorrect? |
-| dang_ptr | dangling, coin | :-) |
-| lax_ptr | relaxed, lackadaisical, coin | |
-| notmy_ptr | intent | cheeky, double negatives |
-| cadged_ptr | intent, coin a term | not well known |
-| temp_ptr  | use | |
-| guest_ptr  | | |
-| access_ptr | grants access, no more no less | |
-| transient_ptr | intent | long |
-| ephemeral_ptr | intent | long |
-| sojourn_ptr | intent | uncommon |
-| dependent_ptr | | |
-| | | |
-| exempt_ptr | ownership, obviously | exempt from what? |
-| | | |
-| view_ptr | | a pointer to a view? |
-| ptr_view | | doesn't end in _ptr |
-| viewing_ptr | | is that read only? |
-| | | |
-| loaned_ptr | | |
-| borrowed_ptr | | but how do you give it back? |
-| | | |
-| neutral_ptr | | |
-| swiss_ptr | | |
-| | | |
-| | | |
-| ~~ptr~~ | | ambiguous |
-| ~~raw_ptr~~ | | ambiguous |
+| vote | name | pros | cons |
+|---|------|------|------|
+|   | transient_ptr | intent | long |
+|   | cadged_ptr | very correct, coins a term | not well known |
+|   | basic_ptr | basic_string? | basic_string? |
+|   | naive_ptr | gives fair warning | |
+|   | lax_ptr | relaxed, lackadaisical, coins a term | |
+|   | loose_ptr | | |
+|   | assumed/presumed_ptr | |
+|   | temp_ptr  | use | |
+|   | brief_ptr |  | i before e |
+|   | ephemeral_ptr | intent | long |
+|   | guest_ptr  | | |
+|   | dependent_ptr | | |
+|   | foster_ptr | | |
+|   | | | |
+|   | view_ptr | | a pointer to a view? |
+|   | ptr_view | | doesn't end in ptr? |
+|   | | | |
+|   | loaned_ptr | | |
+|   | borrowed_ptr | | but how do you give it back? |
+|   | | | |
+|   | neutral_ptr | | |
+|   | | | |
+|   | access_ptr | grants access, no more no less | |
+|   | dang_ptr | dangling, coins a term | :-) |
+|   | notmy_ptr | intent | cheeky, double negatives |
+|   | sojourn_ptr | intent | uncommon |
+|   | dumb_ptr | | politically incorrect? |
+|   | bum/freeload/mooch | | slang |
+|   | viewing_ptr | | is that read only? |
+|   | exempt_ptr | ownership, obviously | exempt from what? |
+
 
 
 From the original paper (N3740)
