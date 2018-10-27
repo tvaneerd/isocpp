@@ -62,6 +62,7 @@ A list of names
 |---|------|------|------|
 |   | notmy_ptr | intent | cheeky, double negative |
 |   | nonowning_ptr | intent | double negative | 
+|   | someones_ptr | intent | cheeky |
 |   | cadged_ptr | very correct, coins a term | not well known |
 |   | dang/danged_ptr | dangling/danger, coins a term | :-) |
 |   | borrowed_ptr | | but how do you give it back? |
