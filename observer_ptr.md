@@ -60,7 +60,7 @@ A list of names
 
 | vote | name | pros | cons |
 |---|------|------|------|
-|   | basic_ptr | basic_string? | basic_string? |
+|   | basic_ptr | basic_string? | captures functionality, but not intent |
 |   | cadged_ptr | very correct, coins a term | not well known |
 |   | naive_ptr | gives fair warning | |
 |   | lax_ptr | relaxed, lackadaisical, coins a term | |
