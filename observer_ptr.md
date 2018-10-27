@@ -17,6 +17,8 @@ It does increase risk of dangling - same as string_view does.  Thus, similar to 
 Changes
 -------
 
+**Implicit Conversions**
+
 Allow implicit conversion from other smart pointers. (Just std ones or detection?)   
 Allow implicit conversion from raw pointers. ie `T *`. (This also covers anything convertible to `U*` that is convertible to `T*`)  
 
@@ -28,7 +30,7 @@ And it is safe. And they represent the same values. (see P0705 for in depth disc
 
 
 
-Review  `release()` and `reset(ptr)`.
+**Review  `release()` and `reset(ptr)`.**
 
 `release()` - The name implies ownership - and ownership transfer. use `get()` or `reset()`.  In generic code, you might call `release()` to take ownership.  With `observer_ptr` is does NOT tranfer ownership.  Different semantics require different name.
 Actually, `shared_ptr` doesn't transfer ownership on `release` either, as some other `shared_ptr` might still own it.
