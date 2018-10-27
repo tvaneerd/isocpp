@@ -17,10 +17,21 @@ It does increase risk of dangling - same as string_view does.  Thus, similar to 
 Changes
 -------
 
-Allow implicit conversion from other smart pointers.  
+Allow implicit conversion from other smart pointers. (Just std ones or detection?)   
+Allow implicit conversion from raw pointers. ie `T *`. (This also covers anything convertible to `U*` that is convertible to `T*`)  
+
+Why? 
+
+As mentioned above, `obeserver_ptr` is like `string_view`, and it would be good to have a type that smart pointers can safely cast to.
+
+And it is safe. And they represent the same values. (see P0705 for in depth discussion on conversion rules.)
+
+
+
 Review  `release()` and `reset(ptr)`.
 
 `release()` - The name implies ownership - and ownership transfer. use `get()` or `reset()`.  In generic code, you might call `release()` to take ownership.  With `observer_ptr` is does NOT tranfer ownership.  Different semantics require different name.
+Actually, `shared_ptr` doesn't transfer ownership on `release` either, as some other `shared_ptr` might still own it.
 
 `reset(ptr)` - for all other smart pointers, this _suggests_ taking ownership (although not as obvious as `release()`).   Maybe use `=`?
 
@@ -47,15 +58,15 @@ A list of names
 
 | vote | name | pros | cons |
 |---|------|------|------|
-|   | transient_ptr | intent | long |
-|   | cadged_ptr | very correct, coins a term | not well known |
 |   | basic_ptr | basic_string? | basic_string? |
+|   | cadged_ptr | very correct, coins a term | not well known |
 |   | naive_ptr | gives fair warning | |
 |   | lax_ptr | relaxed, lackadaisical, coins a term | |
 |   | loose_ptr | | |
 |   | assumed/presumed_ptr | |
 |   | temp_ptr  | use | |
 |   | brief_ptr |  | i before e |
+|   | transient_ptr | intent | long |
 |   | ephemeral_ptr | intent | long |
 |   | guest_ptr  | | |
 |   | dependent_ptr | | |
