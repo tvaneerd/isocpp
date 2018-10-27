@@ -60,8 +60,23 @@ A list of names
 
 | vote | name | pros | cons |
 |---|------|------|------|
-|   | basic_ptr | basic_string? | captures functionality, but not intent |
+|   | notmy_ptr | intent | cheeky, double negative |
+|   | nonowning_ptr | intent | double negative | 
 |   | cadged_ptr | very correct, coins a term | not well known |
+|   | dang/danged_ptr | dangling/danger, coins a term | :-) |
+|   | borrowed_ptr | | but how do you give it back? |
+|   | loaned_ptr | | |
+|   | dependent_ptr | | `[[carries_dependency]]`? |
+|   | foster_ptr | | |
+|   | guest_ptr  | | |
+|   | sojourn_ptr | intent | uncommon |
+|   | | | |
+|   | basic_ptr | basic_string? | captures functionality, but not intent |
+|   | common_ptr | | functionality, not intent |
+|   | access_ptr | grants access, no more no less | |
+|   | view_ptr | | a pointer to a view? |
+|   | ptr_view | | doesn't end in ptr? |
+|   | | | |
 |   | naive_ptr | gives fair warning | |
 |   | lax_ptr | relaxed, lackadaisical, coins a term | |
 |   | loose_ptr | | |
@@ -70,22 +85,9 @@ A list of names
 |   | brief_ptr |  | i before e |
 |   | transient_ptr | intent | long |
 |   | ephemeral_ptr | intent | long |
-|   | guest_ptr  | | |
-|   | dependent_ptr | | |
-|   | foster_ptr | | |
-|   | | | |
-|   | view_ptr | | a pointer to a view? |
-|   | ptr_view | | doesn't end in ptr? |
-|   | | | |
-|   | loaned_ptr | | |
-|   | borrowed_ptr | | but how do you give it back? |
 |   | | | |
 |   | neutral_ptr | | |
 |   | | | |
-|   | access_ptr | grants access, no more no less | |
-|   | dang_ptr | dangling, coins a term | :-) |
-|   | notmy_ptr | intent | cheeky, double negatives |
-|   | sojourn_ptr | intent | uncommon |
 |   | dumb_ptr | | politically incorrect? |
 |   | bum/freeload/mooch | | slang |
 |   | viewing_ptr | | is that read only? |
