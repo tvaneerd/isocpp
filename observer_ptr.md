@@ -24,9 +24,54 @@ Allow implicit conversion from raw pointers. ie `T *`. (This also covers anythin
 
 Why? 
 
-As mentioned above, `obeserver_ptr` is like `string_view`, and it would be good to have a type that smart pointers can safely convert to. `f(observer_ptr<Foo> p)` should be safe to call with a `shared_ptr` or a `unique_ptr`.
 
-And it is safe. And they represent the same values. (see P0705 for in depth discussion on conversion rules.)
+<table>
+<tr>
+<th>C++</th>  <th>C++LibFun2</th>  <th>C++20</th>
+</tr>
+<tr>
+<td  valign="top">
+
+<pre lang="cpp">
+void f(Foo * pf);
+    
+f(shared_p.get());
+f(unique_p.get());
+f(raw_p);
+</pre>
+</td>
+<td  valign="top">
+
+<pre lang="cpp">
+void f(observer_ptr&lt;Foo&gt; pf);
+    
+f(observer_ptr(shared_p.get()));
+f(observer_ptr(unique_p.get()));
+f(observer_ptr(raw_p));
+</pre>
+</td>
+<td  valign="top">
+
+<pre lang="cpp">
+void f(observer_ptr&lt;Foo&gt; pf);
+    
+f(shared_p);
+f(unique_p);
+f(raw_p);
+</pre>
+</td>
+</tr>
+</table>
+
+- The leftmost version has calls to `get()` which require extra scrutiny in a code review (as you are removing the safety latch), as does the function `f` that takes a raw pointer.
+- The middle version is just noisy - for no good reason - the noise does not protect anything dangerous.
+- The rightmost version is safe - `observer_ptr` doesn't change ownership semantics. Nothing extra should be required.
+
+Basically:
+- In terms of P0705 conversion rules: They represent the same values, and it is safe.
+- As mentioned above,  
+`obeserver_ptr` is to `shared_ptr`, `unique_ptr`, and `T*`  
+as `string_view` is to `char *` and `string`.
 
 
 
@@ -56,7 +101,10 @@ Criteria:
 A list of names
 ---------------
 
-
+* ONWERSHIP: smart pointers tend to be about ownership.  This one is lack of ownership.  But the pointer is still owned (hopefully!), just not by you.  So `unowned_ptr` is not correct. `notmy_ptr` is more correct.
+* USAGE: Instead of defined-by-contrast, we could focus on how it is meant to be used - it is best used as a param (like string_view) and is only temporary. Thus names like temp/brief/transient/sojourn/... It is also meant to grant _access_ to an object, no-more-no-less, thus `access_ptr`.
+* FUNCTIONALITY: We can define a class by what it is and what it offers, and let users decide how to use it.
+* COINAGE: Picking a word that is currently unused, and give it meaning in the programming context.  But it should at least hint at meaning.
 
 | vote | name | pros | cons |
 |---|------|------|------|
@@ -65,37 +113,43 @@ A list of names
 |   | | | |
 |   | notmy_ptr | intent | cheeky, double negative |
 |   | nonowning_ptr | intent | double negative | 
-|   | cadged_ptr | very correct, coins a term | not well known |
+| 1 | cadged_ptr | very correct, coins a term | not well known |
 |   | borrowed_ptr | | but how do you give it back? |
 |   | loaned_ptr | | |
 |   | someones_ptr | intent | cheeky |
-|   | dang/danged_ptr | dangling/danger, coins a term | dang_ptr! :-) |
+|   | dang_ptr | dangling/danger, coins a term | cheeky |
 |   | dependent_ptr | | `[[carries_dependency]]`? |
 |   | exempt_ptr | ownership, obviously | exempt from what? |
 |   | | | |
 |   | USAGE | | |
 |   | | | |
-|   | access_ptr | grants access, no more no less | |
+| 1 | access_ptr | grants access, no more no less | |
 |   | temp_ptr  | use | |
-|   | brief_ptr |  | i before e |
+| 1 | brief_ptr |  | i before e |
 |   | transient_ptr | intent | long |
 |   | ephemeral_ptr | intent | long |
 |   | guest_ptr  | | |
 |   | sojourn_ptr | intent | uncommon |
 |   | | | |
+|   | FUNCTIONALITY | | |
+|   | | | |
 |   | basic_ptr | basic_string? | captures functionality, but not intent |
 |   | common_ptr | | functionality, not intent |
 |   | view_ptr | | a pointer to a view? |
-|   | ptr_view | | doesn't end in ptr? |
+|   | ptr_view | like string_view | doesn't end in ptr? |
+|   | | | |
+|   | COINAGE | | |
 |   | | | |
 |   | naive_ptr | gives fair warning | |
 |   | neutral_ptr | | |
 |   | thin_ptr | | |
-|   | tepid_ptr | coin | |
-|   | lax_ptr | (relaxed/lackadaisical), coins a term | |
+|   | tepid_ptr | | |
+|   | lax_ptr | (relaxed/lackadaisical) | |
 |   | loose_ptr | | |
 |   | assumed_ptr | | |
 |   | presumed_ptr | | |
+|   | | | |
+|   | etc | | |
 |   | | | |
 |   | dumb_ptr | | politically incorrect? |
 |   | bum/freeload/mooch | | slang |
