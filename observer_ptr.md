@@ -4,15 +4,15 @@ Reasons to standardize
 ----------------------
 
 1. `observer_ptr` is a post-modern tool for transitioning a codebase to more modern C++.  
-ie review all raw pointers, convert each case to the correct smart pointer (ie `unique_ptr` hopefully, else `shared_ptr`, etc).
-"unowned" pointers need a thing to convert to (ie `observer_ptr`) else it is hard to know which raw pointers have been review, and which haven't.
+ie review all raw pointers, replace each case with the correct smart pointer (ie `unique_ptr` hopefully, else `shared_ptr`, etc).
+"unowned" pointers need a thing to be replaced with (ie `observer_ptr`) else it is hard to know which raw pointers have been review, and which haven't.
 (If *all* owned pointers in a codebase are wrapped with smart pointers,
 then a raw pointer can mean "unowned". But most codebases are mixed with new and old uses.)
 
 2. `observer_ptr` for `unique_ptr` and `shared_ptr` is like `string_view` for `char *` and `string`.  
 (For even the most modern of codebases...) ie a common base type that any pointer can be temporarily safely converted to.  You don't want smart pointers to implicitly convert to raw pointers
 (as this can too easily lead to accidental misownership - ie `delete someSharedPtr;`), but converting to `observer_ptr` does not increase the risk of misownership.
-It does increase risk of dangling - same as string_view does.  Thus, similar to `string_view`, `observer_ptr` is best used as function param.
+It does increase risk of dangling - same as string_view does.  Thus, similar to `string_view`, `observer_ptr` is best used as a function param.
 
 Changes
 -------
@@ -24,7 +24,7 @@ Allow implicit conversion from raw pointers. ie `T *`. (This also covers anythin
 
 Why? 
 
-As mentioned above, `obeserver_ptr` is like `string_view`, and it would be good to have a type that smart pointers can safely cast to.
+As mentioned above, `obeserver_ptr` is like `string_view`, and it would be good to have a type that smart pointers can safely convert to. `f(observer_ptr<Foo> p)` should be safe to call with a `shared_ptr` or a `unique_ptr`.
 
 And it is safe. And they represent the same values. (see P0705 for in depth discussion on conversion rules.)
 
@@ -49,7 +49,7 @@ and thus doesn't bias to any of the other good names to follow.
 Criteria:
 
 - not understanding is better than MISunderstanding.  (Mark Twain: “It ain't what you don't know that gets you into trouble. It's what you know for sure that just ain't so.”)
-- coin a term is OK, it will forever have that meaning (ie "observer" means observer pattern), if you can find a good term not already used
+- coin a term is OK, it will forever have that meaning (ie "observer" means observer pattern), if you can find a good term not already used - an arbitrary term (like _iota_) is not good "coinage". A coined term should at least contain a hint that our brains can cling to.
 - avoid negatives, as these quickly lead to double negatives in code (ie `if (!noSoup)...`)
 - avoid spoken ambiguity.  ie `raw_ptr` vs "raw pointer"
 
@@ -60,39 +60,46 @@ A list of names
 
 | vote | name | pros | cons |
 |---|------|------|------|
+|   | | | |
+|   | OWNERSHIP | | |
+|   | | | |
 |   | notmy_ptr | intent | cheeky, double negative |
 |   | nonowning_ptr | intent | double negative | 
-|   | someones_ptr | intent | cheeky |
 |   | cadged_ptr | very correct, coins a term | not well known |
-|   | dang/danged_ptr | dangling/danger, coins a term | :-) |
 |   | borrowed_ptr | | but how do you give it back? |
 |   | loaned_ptr | | |
+|   | someones_ptr | intent | cheeky |
+|   | dang/danged_ptr | dangling/danger, coins a term | dang_ptr! :-) |
 |   | dependent_ptr | | `[[carries_dependency]]`? |
-|   | foster_ptr | | |
+|   | exempt_ptr | ownership, obviously | exempt from what? |
+|   | | | |
+|   | USAGE | | |
+|   | | | |
+|   | access_ptr | grants access, no more no less | |
+|   | temp_ptr  | use | |
+|   | brief_ptr |  | i before e |
+|   | transient_ptr | intent | long |
+|   | ephemeral_ptr | intent | long |
 |   | guest_ptr  | | |
 |   | sojourn_ptr | intent | uncommon |
 |   | | | |
 |   | basic_ptr | basic_string? | captures functionality, but not intent |
 |   | common_ptr | | functionality, not intent |
-|   | access_ptr | grants access, no more no less | |
 |   | view_ptr | | a pointer to a view? |
 |   | ptr_view | | doesn't end in ptr? |
 |   | | | |
 |   | naive_ptr | gives fair warning | |
-|   | lax_ptr | relaxed, lackadaisical, coins a term | |
-|   | loose_ptr | | |
-|   | assumed/presumed_ptr | |
-|   | temp_ptr  | use | |
-|   | brief_ptr |  | i before e |
-|   | transient_ptr | intent | long |
-|   | ephemeral_ptr | intent | long |
-|   | | | |
 |   | neutral_ptr | | |
+|   | thin_ptr | | |
+|   | tepid_ptr | coin | |
+|   | lax_ptr | (relaxed/lackadaisical), coins a term | |
+|   | loose_ptr | | |
+|   | assumed_ptr | | |
+|   | presumed_ptr | | |
 |   | | | |
 |   | dumb_ptr | | politically incorrect? |
 |   | bum/freeload/mooch | | slang |
 |   | viewing_ptr | | is that read only? |
-|   | exempt_ptr | ownership, obviously | exempt from what? |
 
 
 
