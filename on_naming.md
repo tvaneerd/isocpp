@@ -13,7 +13,27 @@ Yet because it is given the generic "map" name, people expect all things to be m
 "Everything should be mappable" leads to "everything should be orderable" leads to people wanting default operator< for types where "less" is nonsensical. Yes, any bag of bytes (ie a struct/class) is orderable, and thus mappable, but the ordering part doesn't make sense.
 /rant
 
+### Level of generality
 
+This goes along with essence.
+
+Look out for how general your name is.  Example: "map" is a very general name; "unordered_map" is a "map", but more specific; "hash_map" is yet more specific.  Yet, even still, there are many possible hash_maps. "siphash_map", for example, would specify the hash. Alternatively, "redblack_map" would specify the underlying data structure (and thus iterator stability guarantees, etc).
+
+A name is basically never _more_ specific than the class/function it names.  If your function is named "introsort" but does a bubble sort, then you have a bug.  If your function is named "sort", it could be any sort (but typically, after decades of work by computer scientists on sorting, we expect it to fast, and not bubble sort :-).
+
+A name that is exactly specific is probably too long - how do you describe every detail in one word? "flat_map_with_array_of_keyvalues" vs "flat_map_with_array_of_keys_and_array_of_values".  But sometimes you can be close - typically because someone took a general, unused, or made-up name, and now it means something specific - ie "introsort", "redblack tree".
+
+So typically a name will be more general than the thing it names.  That's OK.  But be wary of being tooooo general.
+Too general means:
+
+- users will expect it to work for all cases (I need a map, it is called `map` why isn't it right for this case?)
+- usage then guides future changes (ie change `map` to be unordered because that's more efficient and the common use case?) and new features. These new features might not "fit" well with the original design, because the original design was targeting one niche whereas current use targets another, but the class was able to "drift" between design spaces because it was given a generic name that covered both niches.  A more specific name may have made it more obvious that a different class was needed.
+
+Of course, in day-to-day code, you often don't yet know what the class is or will be in the future - you know it is a work in progress.  But even then, at least _thinking_ about where on the "generality spectrum" the name is, might help you better understand the thing you are designing.
+
+A more general name tends to imply more of a commitment to be usable in more general situations.
+
+See also "essence" and "by use vs by functionality"
 
 ### Describe the thing in detail – what words did you use?
 
@@ -116,6 +136,8 @@ That is the point of words, basically.
 
 ### By use or by functionality?
 
+"functionality", here, also means "by structure".  `std::pair` is a pair by structure, and offers the common functionality that can be offered by that structure.
+
 `void_t` is named by functionality, but doesn't hint at typical use.  Sometimes use is better; sometimes functionality is better.  This relates to top-down vs bottom-up.
 
 (In "normal" (non-STL) code this is often decided by future plans - I work with projectors. `projector.getRelativeBightness(x,y)` doesn't really return correctly calculated brightness.
@@ -124,5 +146,5 @@ And then you need to worry about whether people use it for what it says, vs what
 
 The more general, the more likely it is to be named by functionality (because if it is general, you can't know how it will be used).
 
-
+Note that "by use" implies more of a commitment to that usage - future features will follow from that usage.
 
