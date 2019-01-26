@@ -34,10 +34,14 @@ Why?
 
 <pre lang="cpp">
 void f(Foo * pf);
+
+shared_ptr<Foo> sp = ...;
+unique_ptr<Foo> up = ...;
+Foo * rp = ...;
     
-f(shared_p.get());
-f(unique_p.get());
-f(raw_p);
+f(sp.get());
+f(up.get());
+f(rp);
 </pre>
 </td>
 <td  valign="top">
@@ -45,9 +49,13 @@ f(raw_p);
 <pre lang="cpp">
 void f(observer_ptr&lt;Foo&gt; pf);
     
-f(observer_ptr(shared_p.get()));
-f(observer_ptr(unique_p.get()));
-f(observer_ptr(raw_p));
+shared_ptr<Foo> sp = ...;
+unique_ptr<Foo> up = ...;
+Foo * rp = ...;
+    
+f(observer_ptr(sp.get()));
+f(observer_ptr(up.get()));
+f(observer_ptr(rp));
 </pre>
 </td>
 <td  valign="top">
@@ -55,9 +63,13 @@ f(observer_ptr(raw_p));
 <pre lang="cpp">
 void f(observer_ptr&lt;Foo&gt; pf);
     
-f(shared_p);
-f(unique_p);
-f(raw_p);
+shared_ptr<Foo> sp = ...;
+unique_ptr<Foo> up = ...;
+Foo * rp = ...;
+    
+f(sp);
+f(up);
+f(rp);
 </pre>
 </td>
 </tr>
