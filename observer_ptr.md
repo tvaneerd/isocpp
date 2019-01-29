@@ -131,6 +131,7 @@ A list of names
 |   | someones_ptr | intent | cheeky |
 |   | dang_ptr | dangling/danger, coins a term | cheeky |
 |   | dependent_ptr | | `[[carries_dependency]]`? |
+|   | trust_ptr | | I trust it will live long enough |
 |   | exempt_ptr | ownership, obviously | exempt from what? |
 |   | | | |
 |   | USAGE | | |
