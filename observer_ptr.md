@@ -11,7 +11,7 @@ Reply-to: Tony Van Eerd. cadged at forecode.com
 Summary
 -------
 
-In P1408, Bjarne wrote a rebuttal against standardizing `observer_ptr`, but no one had yet rewritten a proposal to standardize it. Thus the need for this "prebuttal".
+In P1408, Bjarne wrote a rebuttal against standardizing `observer_ptr`, but no one had yet rewritten a proposal to standardize it. Thus the need for this "prebuttal":
 
 `observer_ptr` should be standardized (but with a better name)
 
@@ -24,7 +24,7 @@ Reasons to standardize `observer_ptr` (with more indepth explanations to follow)
 1. `observer_ptr` is the safe **_common type_** for `unique_ptr`, `shared_ptr`, other smart pointers, and `T*`.
 2. `observer_ptr` is a **_safer alternative to `T*`_**
 3. `observer_ptr` **_extends the type safety_** of `shared_ptr` and `unique_ptr` (and other smart pointers)
-4. `observer_ptr` makes intent more clear
+4. `observer_ptr` makes **_intent_** more **_clear_**
 5. `observer_ptr` is a post-modern tool for **_transitioning a codebase_** to more modern C++.
 
 ---
@@ -115,7 +115,7 @@ A smart pointer, when used correctly, ensures safe lifetime management. The only
 
 `observer_ptr` avoids `get()` and allows the invariant to stay protected throughout more code. A function that previously used a raw pointer (so as to be used by both `shared_ptr` and `unique_ptr` clients), can now avoid `get()` completely.  This means `get()` can be pushed to the edge of your codebase - only needed at the border with 3rd party or unchangeable APIs that require other pointer types.
 
-4. `observer_ptr` makes intent more clear
+4. `observer_ptr` makes **_intent_** more **_clear_**
 
 From the original proposal (N4282) "it is intended as a near drop-in replacement for raw pointer types, with the advantage that,  as a vocabulary type, it indicates its intended use without need for detailed analysis by code readers". `observer_ptr` makes code more clear, easier to read, alleviating nagging lifetime questions. Some codebases can use `T*` to mean non-owning, but many popular 3rd party libraries still use raw pointers with various meanings, thus adding ambiguity to even modern codebases.
 
@@ -149,7 +149,7 @@ See the table earlier in this paper - implicit conversion is required to allow `
 - a smart/raw pointer and an `observer_ptr` both represent the same "platonic" thing (or `observer_ptr` is a strict subset of a pointer, since it offers a subset of functionality). Thus conversion (of some form) is worth considering.
 - the conversion is safe. The `observer_ptr` won't delete the pointer, etc.  For a smart-pointer, conversion to `observer_ptr` does *not* break the smart-pointer's invariants. (whereas `get()` on a smart-pointer _does_ break (or expose for breakage) a smart pointer's invariants).  There is a slight concern with dangling (the `observer_ptr` doesn't extend the lifetime of the pointer), but this is the exact same level of concern (and same risk/reward) as with `string_view`.
 
-
+This change has been implemented a few implementations without issue.
 
 
 2. **_Rename/remove `release()`_** (as it does not transfer ownership)
@@ -331,12 +331,18 @@ https://www.reddit.com/r/cpp/comments/808c5z/bikeshedding_time_poll_for_a_new_na
 |    21 | view_ptr           | something to view an object |
 
 
-References
+Acknowledgement
 ----------
+
+Thank you Walter for the original proposal. Thanks to Ville and others for their encouragement and implementation experience.
+
+Referneces
+---------
 
 N4282 - A Proposal for the World’s Dumbest Smart Pointer, v4 - Walter E. Brown  
 P1408 - Abandon observer_ptr - Bjarne Stroustrup  
 P0705 - Implicit and Explicit Conversions - Tony Van Eerd  
 P0468 - An Intrusive Smart Pointer - Isabella Muerte  
 P1132 - out_ptr - a scalable output pointer abstraction - JeanHeyd Meneide, Todor Buyukliev, Isabella Muerte  
-P0201 - A polymorphic value-type for C++ - Jonathan Coe, Sean Parent
+P0201 - A polymorphic value-type for C++ - Jonathan Coe, Sean Parent  
+
