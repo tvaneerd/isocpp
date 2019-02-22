@@ -13,7 +13,7 @@ Summary
 
 In P1408, Bjarne wrote a rebuttal against standardizing `observer_ptr`, but no one had yet rewritten a proposal to standardize it. Thus the need for this "prebuttal":
 
-`observer_ptr` (from Library Fundamentals 2 TS) should be standardized (but with a better name and better conversions)
+`observer_ptr` (from Library Fundamentals 2 TS) **should be standardized** (but with a better name and better conversions)
 
 
 Reasons to standardize
@@ -34,7 +34,7 @@ depth explanations to follow).
 
 1. `observer_ptr` is the safe **_common type_** for `unique_ptr`, `shared_ptr`, other smart pointers, and `T*`.
 
-`observer_ptr` for smart and raw pointers, is like `string_view` for `char *` and `string`.  
+`observer_ptr` for smart and raw pointers, is like `string_view` for `char const *` and `string`.  
 ie a common base type that any pointer can be temporarily safely converted to.
 
 
@@ -342,7 +342,7 @@ Acknowledgement
 
 Thank you Walter for the original proposal. Thanks to Ville and others for their encouragement and implementation experience.
 
-Referneces
+References
 ---------
 
 N4282 - A Proposal for the World’s Dumbest Smart Pointer, v4 - Walter E. Brown  
