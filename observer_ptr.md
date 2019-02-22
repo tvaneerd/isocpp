@@ -13,13 +13,16 @@ Summary
 
 In P1408, Bjarne wrote a rebuttal against standardizing `observer_ptr`, but no one had yet rewritten a proposal to standardize it. Thus the need for this "prebuttal":
 
-`observer_ptr` should be standardized (but with a better name)
+`observer_ptr` (from Library Fundamentals 2 TS) should be standardized (but with a better name and better conversions)
 
 
 Reasons to standardize
 ----------------------
 
-Reasons to standardize `observer_ptr` (with more indepth explanations to follow).
+Reasons to standardize `observer_ptr` (with more in-
+
+
+depth explanations to follow).
 
 1. `observer_ptr` is the safe **_common type_** for `unique_ptr`, `shared_ptr`, other smart pointers, and `T*`.
 2. `observer_ptr` is a **_safer alternative to `T*`_**
@@ -102,12 +105,13 @@ It does increase risk of dangling - same as string_view does.  Thus, similar to 
 
 As mentioned in recent emails on the reflector, `T*` has some downsides:
 
-    - `T*` allows `++`, `--`, and `[i]` even when it shouldn't
-    - `T*` allows derived/base conversions (and then more `++`/`--` with the wrong size)
-    - `T*` `<` is not a total order
-    - `T*` opens up questions about ownership (in many codebases)
-    - `T*` allows conversion to `void *`
-    - etc... ie `reinterpret_cast`...
+- `T*` allows `++`, `--`, and `[i]` even when it shouldn't
+- `T*` allows derived/base conversions (and then more `++`/`--` with the wrong size)
+- `T*` `<` is not a total order
+- `T*` opens up questions about ownership (in many codebases)
+- `T*` allows conversion to `void *`
+- `reinterpret_cast`
+- etc
 
 3. `observer_ptr` **_extends the type safety of other smart pointers_**
 
@@ -115,13 +119,15 @@ A smart pointer, when used correctly, ensures safe lifetime management. The only
 
 `observer_ptr` avoids `get()` and allows the invariant to stay protected throughout more code. A function that previously used a raw pointer (so as to be used by both `shared_ptr` and `unique_ptr` clients), can now avoid `get()` completely.  This means `get()` can be pushed to the edge of your codebase - only needed at the border with 3rd party or unchangeable APIs that require other pointer types.
 
+`observer_ptr` extends the safety net of a smart pointer over more of your codebase.
+
 4. `observer_ptr` makes **_intent_** more **_clear_**
 
 From the original proposal (N4282) "it is intended as a near drop-in replacement for raw pointer types, with the advantage that,  as a vocabulary type, it indicates its intended use without need for detailed analysis by code readers". `observer_ptr` makes code more clear, easier to read, alleviating nagging lifetime questions. Some codebases can use `T*` to mean non-owning, but many popular 3rd party libraries still use raw pointers with various meanings, thus adding ambiguity to even modern codebases.
 
 5. `observer_ptr` is a post-modern tool for **_transitioning a codebase_** to more modern C++.
 
-This is the reasoning most often mentioned (and sometimes derided). NOte that it is listed _fifth_. The idea is to review all raw pointers in a codebase, replacing each case with the correct smart pointer (ie `unique_ptr` hopefully, else `shared_ptr`, etc).
+This is the reasoning most often discussed. Note that it is listed _fifth_. The idea is to review all raw pointers in a codebase, replacing each case with the correct smart pointer (ie `unique_ptr` hopefully, else `shared_ptr`, etc).
 Since this replacement takes time, and not all cases will be fixed at once, "unowned" pointers need a thing to be replaced with (ie `observer_ptr`) else it is hard to know which raw pointers have been reviewed, and which haven't.
 (If *all* owned pointers in a codebase are wrapped with smart pointers,
 then a raw pointer can mean "unowned". But most codebases are still mixed with new and old uses.)
@@ -135,7 +141,7 @@ Rebuttal rebuttal:  There was concern about the potential proliferation of smart
 Changes
 -------
 
-Before standardizing `observer_ptr`, we should make a few small changes (more indepth below)
+Before standardizing `observer_ptr`, we should make a few small changes (more in-depth below)
 
 1. Allow **_implicit conversions from smart and raw pointers_**
 2. **_Rename/remove `release()`_** (as it does not transfer ownership)
