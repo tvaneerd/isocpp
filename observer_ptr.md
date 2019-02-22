@@ -340,7 +340,7 @@ https://www.reddit.com/r/cpp/comments/808c5z/bikeshedding_time_poll_for_a_new_na
 Acknowledgement
 ----------
 
-Thank you Walter for the original proposal. Thanks to Ville and others for their encouragement and implementation experience.
+Thank you Walter for the original proposal. Thanks to Ville, Martin Moene, and others for their encouragement and implementation experience.
 
 References
 ---------
