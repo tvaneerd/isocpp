@@ -1,6 +1,17 @@
+## Prebuttal for Standardizing observer_ptr
+
+Document number: D1495R0  
+Date: 2019-02-21  
+Audience: LEWG  
+Reply-to: Tony Van Eerd. cadged at forecode.com
+
+---
+
 
 Summary
 -------
+
+In P1408, Bjarne wrote a rebuttal against standardizing `observer_ptr`, but no one had yet rewritten a proposal to standardize it. Thus the need for this "prebuttal".
 
 `observer_ptr` should be standardized (but with a better name)
 
@@ -8,12 +19,13 @@ Summary
 Reasons to standardize
 ----------------------
 
-Reasons to standardize (with more indepth explanations to follow).
+Reasons to standardize `observer_ptr` (with more indepth explanations to follow).
 
 1. `observer_ptr` is the safe **_common type_** for `unique_ptr`, `shared_ptr`, other smart pointers, and `T*`.
 2. `observer_ptr` is a **_safer alternative to `T*`_**
 3. `observer_ptr` **_extends the type safety_** of `shared_ptr` and `unique_ptr` (and other smart pointers)
-4. `observer_ptr` is a post-modern tool for **_transitioning a codebase_** to more modern C++.
+4. `observer_ptr` makes intent more clear
+5. `observer_ptr` is a post-modern tool for **_transitioning a codebase_** to more modern C++.
 
 ---
 
@@ -78,8 +90,9 @@ f(rp);
 - The leftmost function `f` (taking a raw pointer) also requires extra scrutiny.
 - The middle version is just noisy - for no good reason - the noise does not protect anything dangerous.
 - The rightmost version is safe - `observer_ptr` doesn't change ownership semantics. Nothing extra should be required.
-- In terms of P0705 conversion rules, an implicit conversion to `observer_ptr` is safe and sensible.
+- In terms of P0705 conversion guidelines, an implicit conversion to `observer_ptr` is safe and sensible.
 
+_Why isn't `T*` the common type?_
 
 You don't want smart pointers to implicitly convert to raw pointers
 (as this can too easily lead to accidental misownership - ie `delete someSharedPtr;`), but converting to `observer_ptr` does not increase the risk of misownership.
@@ -94,25 +107,29 @@ As mentioned in recent emails on the reflector, `T*` has some downsides:
     - `T*` `<` is not a total order
     - `T*` opens up questions about ownership (in many codebases)
     - `T*` allows conversion to `void *`
-    - etc... ie `reinterpret_cast`
+    - etc... ie `reinterpret_cast`...
 
 3. `observer_ptr` **_extends the type safety of other smart pointers_**
 
 A smart pointer, when used correctly, ensures safe lifetime management. The only (well almost only) way to break the safety of a smart pointer, is improper use of `get()`.  Since `get()` exposes the underlying pointer, it exposes the responsibility of the smart pointer's invariants, breaking the "air-tight seal" of the smart pointer.
 
-`observer_ptr` avoids `get()` and allows the invariant to stay protected throughout more code. A function that previously used a raw pointer (so as to be used by both `shared_ptr` and `unique_ptr` clients), can now avoid `get()` completely.  This means `get()` can be pushed to the edge of your codebase - only needed at the border with3rd party APIs that require other pointer types.
+`observer_ptr` avoids `get()` and allows the invariant to stay protected throughout more code. A function that previously used a raw pointer (so as to be used by both `shared_ptr` and `unique_ptr` clients), can now avoid `get()` completely.  This means `get()` can be pushed to the edge of your codebase - only needed at the border with 3rd party or unchangeable APIs that require other pointer types.
 
-4. `observer_ptr` is a post-modern tool for **_transitioning a codebase_** to more modern C++.
+4. `observer_ptr` makes intent more clear
 
-This was the reasoning in the original paper. The idea is to review all raw pointers in a codebase, replacing each case with the correct smart pointer (ie `unique_ptr` hopefully, else `shared_ptr`, etc).
+From the original proposal (N4282) "it is intended as a near drop-in replacement for raw pointer types, with the advantage that,  as a vocabulary type, it indicates its intended use without need for detailed analysis by code readers". `observer_ptr` makes code more clear, easier to read, alleviating nagging lifetime questions. Some codebases can use `T*` to mean non-owning, but many popular 3rd party libraries still use raw pointers with various meanings, thus adding ambiguity to even modern codebases.
+
+5. `observer_ptr` is a post-modern tool for **_transitioning a codebase_** to more modern C++.
+
+This is the reasoning most often mentioned (and sometimes derided). NOte that it is listed _fifth_. The idea is to review all raw pointers in a codebase, replacing each case with the correct smart pointer (ie `unique_ptr` hopefully, else `shared_ptr`, etc).
 Since this replacement takes time, and not all cases will be fixed at once, "unowned" pointers need a thing to be replaced with (ie `observer_ptr`) else it is hard to know which raw pointers have been reviewed, and which haven't.
 (If *all* owned pointers in a codebase are wrapped with smart pointers,
 then a raw pointer can mean "unowned". But most codebases are still mixed with new and old uses.)
 
-Prebuttal
+Postbuttal
 ---------
 
-There was concern about the potential proliferation of smart pointers in the standard. Although there are a few other potential smart pointers not (yet) in the standard (ie an intrustive_ptr, see P0468), smart pointers have been around for about 20 years, and there really isn't that much variation.  Boost has shared_ptr and intrusive_ptr, many codebases have something like observer_ptr. There is also inout_ptr (P1132), which can be found in many codebases (and is not really a smart pointer, but more of a helper, working alongside smart pointers).  The list of common, widely used (and thus candidates for standardization) smart pointers is not long.  Conversely, the more we have, the more useful `observer_ptr` becomes as a common type that works seemlessly with all of them.
+Rebuttal rebuttal:  There was concern about the potential proliferation of smart pointers in the standard. Although there are a few other potential smart pointers not (yet) in the standard (ie an intrustive_ptr, see P0468), smart pointers have been around for about 20 years, and there really isn't that much variation.  Boost has shared_ptr and intrusive_ptr, many codebases have something like observer_ptr. There is also inout_ptr (P1132), which can be found in many codebases (and is not really a smart pointer, but more of a helper, working alongside smart pointers), and also a clone_ptr or value_ptr, now called polymorphic_value (P0201).  But the list of common, widely used (and thus candidates for standardization) smart pointers is finite and short.  Ironically, the more we have, the more useful `observer_ptr` becomes as a common type that works seemlessly with all of them.
 
 
 Changes
@@ -127,21 +144,21 @@ Before standardizing `observer_ptr`, we should make a few small changes (more in
 
 1. Allow **_implicit conversions from smart and raw pointers_**
 
-The original proposal did not include implicit conversions.  Most guidelines now favour `explicit` constructors - _when in doubt_; however, in the case of `observer_ptr`, there is no danger in an implicit conversion, only benefit.
+The original proposal did not include implicit conversions.  Most coding guidelines now favour `explicit` constructors - _when in doubt_; however, in the case of `observer_ptr`, there is no danger in an implicit conversion, only benefit.
 See the table earlier in this paper - implicit conversion is required to allow `f(observer_ptr<T>)` to take smart pointers and raw pointers without calls to `get()`.  See P0705 for a more complete explanation as to when implicit conversion is acceptable. `observer_ptr` checks all the right boxes.  In particular:
-- a smart/raw pointer and an `observer_ptr` both represent the same "platonic" thing (or `observer_ptr` is a strict subset of a pointer, since it offers a subset of functionality).
-- the conversion is safe. Nothing dangles, the `observer_ptr` won't delete the pointer, etc.  For a smart-pointer, conversion to `observer_ptr` does *not* break the smart-pointer's invariants. (whereas `get()` on a smart-pointer _does_ break (or expose for breakage) a smart pointer's invariants)
+- a smart/raw pointer and an `observer_ptr` both represent the same "platonic" thing (or `observer_ptr` is a strict subset of a pointer, since it offers a subset of functionality). Thus conversion (of some form) is worth considering.
+- the conversion is safe. The `observer_ptr` won't delete the pointer, etc.  For a smart-pointer, conversion to `observer_ptr` does *not* break the smart-pointer's invariants. (whereas `get()` on a smart-pointer _does_ break (or expose for breakage) a smart pointer's invariants).  There is a slight concern with dangling (the `observer_ptr` doesn't extend the lifetime of the pointer), but this is the exact same level of concern (and same risk/reward) as with `string_view`.
 
 
 
 
 2. **_Rename/remove `release()`_** (as it does not transfer ownership)
 
-`unique_ptr` has a `release()` function, which transfers ownership. Note that `shared_ptr` does NOT have a `release` function (as you can't gain exclusive ownership from the shared pointer). 
+`unique_ptr` has a `release()` function, which transfers ownership. Note that `shared_ptr` does NOT have a `release` function (as you don't gain exclusive ownership from the shared pointer). 
 
 `observer_ptr::release()` **does not transfer ownership**.  It should be consistent with STL `shared_ptr`, and not have this function.
 
-In any language, it is important that **_Different semantics require different names_** but it is particluarly important in a language with templates that use compile-time duck-typing.  If `release()` is called in a template, the expectation would be ownership transfer.
+In any programming language, it is important that **_Different semantics require different names_** but it is particluarly important in a language with templates that use compile-time duck-typing.  If `release()` is called in a template, the expectation would be ownership transfer.
 
 `release` can be renamed `detach` or just removed - the user can call `get()` then `reset()`.
 
@@ -160,15 +177,17 @@ Criteria:
 
 There are some criteria to use when considering naming:
 
-- not understanding is better than MISunderstanding.  (Josh Billings: “It is better to know nothing than to know what ain’t so.”)
-- coin a term is OK, it will forever have that meaning (ie "observer" means observer pattern), if you can find a good term not already used - an arbitrary term (like _iota_) is not good "coinage". A coined term should at least contain a hint that our brains can cling to.
-- avoid negatives, as these quickly lead to double negatives in code (ie `if (!noSoup)...`)
-- avoid spoken ambiguity.  ie `raw_ptr` vs "raw pointer"
+- Not understanding is better than MISunderstanding.  (“It is better to know nothing than to know what ain’t so.” - Josh Billings, 1874)
+- Coining a term is OK - it will forever have that meaning (ie "observer" means observer pattern). The hard part is finding a good term not already used - an arbitrary term (like _iota_) is not good "coinage" (but it does show how coining a term - attaching meaning - works). A coined term should at least contain a hint that our brains can cling to.
+- Avoid negatives, as these quickly lead to double negatives in code (ie `if (!noSoup)...`)
+- Avoid spoken ambiguity.  ie `raw_ptr` vs "raw pointer".
 
 A list of names
 ---------------
 
-* ONWERSHIP: smart pointers tend to be about ownership.  This one is lack of ownership.  But the pointer is still owned (hopefully!), just not by you.  So `unowned_ptr` is not correct. `notmy_ptr` is more correct.
+Mostly the names can be grouped into a few piles:
+
+* ONWERSHIP: smart pointers tend to be about ownership.  This one is lack of ownership.  But the pointer is still owned (hopefully!), just not by you.  So `unowned_ptr`, for example, is not correct. `notmy_ptr` is more correct.
 * USAGE: Instead of defined-by-contrast, we could focus on how it is meant to be used - it is best used as a param (like string_view) and is only temporary. Thus names like temp/brief/transient/sojourn/... It is also meant to grant _access_ to an object, no-more-no-less, thus `access_ptr`.
 * FUNCTIONALITY: We can define a class by what it is and what it offers, and let users decide how to use it.
 * COINAGE: Picking a word that is currently unused, and give it meaning in the programming context.  But it should at least hint at meaning.
@@ -193,7 +212,7 @@ A list of names
 |   | | | |
 | 1 | access_ptr | grants access, no more no less | |
 |   | temp_ptr  | use | |
-| 1 | brief_ptr |  | i before e |
+|   | brief_ptr |  | i before e |
 |   | transient_ptr | intent | long |
 |   | ephemeral_ptr | intent | long |
 |   | guest_ptr  | | |
@@ -311,3 +330,13 @@ https://www.reddit.com/r/cpp/comments/808c5z/bikeshedding_time_poll_for_a_new_na
 |    24 | borrowed_ptr       | its borrows something someone else owns |
 |    21 | view_ptr           | something to view an object |
 
+
+References
+----------
+
+N4282 - A Proposal for the World’s Dumbest Smart Pointer, v4 - Walter E. Brown  
+P1408 - Abandon observer_ptr - Bjarne Stroustrup  
+P0705 - Implicit and Explicit Conversions - Tony Van Eerd  
+P0468 - An Intrusive Smart Pointer - Isabella Muerte  
+P1132 - out_ptr - a scalable output pointer abstraction - JeanHeyd Meneide, Todor Buyukliev, Isabella Muerte  
+P0201 - A polymorphic value-type for C++ - Jonathan Coe, Sean Parent
