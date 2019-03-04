@@ -104,6 +104,8 @@ As far as I'm concerned, that term is now taken.
 The co-opted term, needs to be *close* to the right meaning, so that programmers can quickly latch onto how it applies to the named thing.
 `cadged_ptr` is an *accurate* name for `observer_ptr` (look up meaning of 'cadged'), but most people are unfamiliar with the term, and thus can't latch onto it.
 
+Reminder: _"Extent" can mean many things, but once we use it, it can only mean one thing._
+
 
 
 ### Avoid negatives – thus avoiding double negatives
