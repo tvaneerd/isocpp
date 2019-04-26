@@ -222,6 +222,7 @@ Mostly the names can be grouped into a few piles:
 |   | transient_ptr | intent | long |
 |   | ephemeral_ptr | intent | long |
 |   | guest_ptr  | | |
+|   | param_ptr | | |
 |   | sojourn_ptr | intent | uncommon |
 |   | | | |
 |   | FUNCTIONALITY | | |
