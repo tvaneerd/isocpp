@@ -227,6 +227,7 @@ Mostly the names can be grouped into a few piles:
 |   | | | |
 |   | FUNCTIONALITY | | |
 |   | | | |
+|   | object_ptr | Anthony Williams library | |
 |   | basic_ptr | basic_string? | captures functionality, but not intent |
 |   | common_ptr | | functionality, not intent |
 |   | view_ptr | | a pointer to a view? |
@@ -338,10 +339,16 @@ https://www.reddit.com/r/cpp/comments/808c5z/bikeshedding_time_poll_for_a_new_na
 |    21 | view_ptr           | something to view an object |
 
 
+Implementation Experience
+----------
+
+Anthony Williams - https://www.justsoftwaresolutions.co.uk/cplusplus/object_ptr.html - includes implicit conversions, removed `release()`
+Martin Moene - https://github.com/martinmoene/observer-ptr-lite
+
 Acknowledgement
 ----------
 
-Thank you Walter for the original proposal. Thanks to Ville, Martin Moene, and others for their encouragement and implementation experience.
+Thank you Walter for the original proposal. Thanks to Ville, Anthony, Martin, and others for their encouragement and implementation experience.
 
 References
 ---------
