@@ -214,7 +214,7 @@ Mostly the names can be grouped into a few piles:
 |   | trust_ptr | | I trust it will live long enough |
 |   | exempt_ptr | ownership, obviously | exempt from what? |
 |   | | | |
-|   | USAGE | | |
+|   | HOW (USAGE) | | |
 |   | | | |
 | 1 | access_ptr | grants access, no more no less | |
 |   | temp_ptr  | use | |
@@ -225,7 +225,7 @@ Mostly the names can be grouped into a few piles:
 |   | param_ptr | | |
 |   | sojourn_ptr | intent | uncommon |
 |   | | | |
-|   | FUNCTIONALITY | | |
+|   | WHAT | | |
 |   | | | |
 |   | object_ptr | Anthony Williams library | |
 |   | basic_ptr | basic_string? | captures functionality, but not intent |
