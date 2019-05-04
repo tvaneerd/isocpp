@@ -19,10 +19,7 @@ In P1408, Bjarne wrote a rebuttal against standardizing `observer_ptr`, but no o
 Reasons to standardize
 ----------------------
 
-Reasons to standardize `observer_ptr` (with more in-
-
-
-depth explanations to follow).
+Reasons to standardize `observer_ptr` (with more in-depth explanations to follow).
 
 1. `observer_ptr` is the safe **_common type_** for `unique_ptr`, `shared_ptr`, other smart pointers, and `T*`.
 2. `observer_ptr` is a **_safer alternative to `T*`_**
