@@ -259,8 +259,6 @@ attending_ptr
 austere_ptr  
 bare_ptr  
 blameless_ptr  
-blond_ptr  
-blonde_ptr  
 classic_ptr  
 core_ptr  
 disinterested_ptr  
