@@ -1,6 +1,6 @@
 ## Prebuttal for Standardizing observer_ptr
 
-Document number: D1495R0  
+Document number: D1495R1  
 Date: 2019-02-21  
 Audience: LEWG  
 Reply-to: Tony Van Eerd. cadged at forecode.com
