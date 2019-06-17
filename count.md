@@ -1,6 +1,6 @@
 ## ssize Should be Named count
 
-Document number: DXXXX  
+Document number: P1764r0  
 Date: 2019-06-01  
 Audience: LEWG  
 Reply-to: Tony Van Eerd. count at forecode.com
@@ -58,22 +58,22 @@ Functions named `count` can already be found in the standard.
 
 ### Consistent/Compatible existing usage of "count"
 
-`AssociativeContainer::count(key)` returns the number of items with `key`.  This is consistent with a function `AssociativeContainer::count()` returning the number of _all_ the items.
+- `AssociativeContainer::count(key)` returns the number of items with `key`.  This is consistent with a function `AssociativeContainer::count()` returning the number of _all_ the items.
 
 Similarly, these Algorithms:
 
-std::[range]::count(first, last, value [, projection])
-std::[range]::count_if(first,last, predicate [, projection])
-std::range::count(range, value [, projection])
-std::range::count_if(range, predicate [, projection])
+- std::[range]::count(first, last, value [, projection])
+- std::[range]::count_if(first,last, predicate [, projection])
+- std::range::count(range, value [, projection])
+- std::range::count_if(range, predicate [, projection])
 
 are consistent with a std::count(container/range) that would return the total number of elements of the container/range
 
 (P.S. the above algorithms return signed values)
 
-Ranges also has `counted_iterator::count()` returning the "length" of the iterator (ie number of iterations to get to end). (also a signed value)
+- Ranges also has `counted_iterator::count()` returning the "length" of the iterator (ie number of iterations to get to end). (also a signed value)
 
-chrono: duration.count() - number of ticks
+- chrono: duration.count() - number of ticks
 
 All the above are consistent with using the name `count` for the number of items in a range or container.
 
