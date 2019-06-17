@@ -8,7 +8,7 @@ Reply-to: Tony Van Eerd. snapshot at forecode.com
 ---
 
 > I've been through the papers, found some stuff with bad names  
-> It felt bad to be source of dev pain  
+> It felt bad to be causing dev pain  
 > In the standard you need stuff with good names  
 > Cause there ain't no one for to help you explain  
 > La la, la la-la la  
