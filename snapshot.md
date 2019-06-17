@@ -25,7 +25,7 @@ Reply-to: Tony Van Eerd. snapshot at forecode.com
 > In the standard you need stuff with good names  
 > Cause there ain't no one for to help you explain  
 > La la, la la-la la  
-> ....
+> ....  
 > (ie _A Horse with No Name_ by America)
 
 ---
