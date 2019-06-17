@@ -1,6 +1,6 @@
 ## std::latest<> Should be Named std::snapshot_source
 
-Document number: DXXXX  
+Document number: P1760R0  
 Date: 2019-06-17  
 Audience: LEWG  
 Reply-to: Tony Van Eerd. snapshot at forecode.com
