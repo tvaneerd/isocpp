@@ -47,11 +47,12 @@ This is the number 1 API design guideline (applies not only to naming, but param
 Consider any/optional/variant/etc before Vicente's papers - `any::clear()`, `optional::reset()`; `any::empty()`, `optional::operator bool()`, `has_value()` ... ?
 
 Not all consistency is equal. Local consistency is more important than Global.consistency
-• Self consistency
-• Similar consistency
-• ...
-• ...
-• Global Consistency
+
+- Self consistency
+- Similar consistency
+- ...
+- ...
+-foratt Global Consistency
 
 (eg. `optional<T>::operator>=()` is consistent with `T`, mildly inconsistent with `vector`)
 
