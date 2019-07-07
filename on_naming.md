@@ -52,7 +52,7 @@ Not all consistency is equal. Local consistency is more important than Global.co
 - Similar consistency
 - ...
 - ...
--foratt Global Consistency
+- Global Consistency
 
 (eg. `optional<T>::operator>=()` is consistent with `T`, mildly inconsistent with `vector`)
 
