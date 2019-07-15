@@ -1,6 +1,6 @@
 ## Prebuttal for Standardizing observer_ptr
 
-Document number: D1495R1  
+Document number: D1495R0  
 Date: 2019-02-21  
 Audience: LEWG  
 Reply-to: Tony Van Eerd. cadged at forecode.com
@@ -224,7 +224,7 @@ Mostly the names can be grouped into a few piles:
 |   | | | |
 |   | WHAT | | |
 |   | | | |
-|   | object_ptr | Anthony Williams library | |
+| 1 | object_ptr | Anthony Williams library | |
 |   | basic_ptr | basic_string? | captures functionality, but not intent |
 |   | common_ptr | | functionality, not intent |
 |   | view_ptr | | a pointer to a view? |
