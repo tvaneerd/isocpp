@@ -339,6 +339,7 @@ Implementation Experience
 
 - Anthony Williams - https://www.justsoftwaresolutions.co.uk/cplusplus/object_ptr.html - includes implicit conversions, removed `release()`
 - Martin Moene - https://github.com/martinmoene/observer-ptr-lite
+- (IIUC) Ville has tried these changes against libstdc++ and its testsuite
 
 Acknowledgement
 ----------
