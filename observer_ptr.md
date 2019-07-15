@@ -214,6 +214,7 @@ Mostly the names can be grouped into a few piles:
 |   | HOW (USAGE) | | |
 |   | | | |
 | 1 | access_ptr | grants access, no more no less | |
+| 1 | alias_ptr | aliases a ptr out there somewhere | |
 |   | temp_ptr  | use | |
 |   | brief_ptr |  | i before e |
 |   | transient_ptr | intent | long |
@@ -233,6 +234,7 @@ Mostly the names can be grouped into a few piles:
 |   | COINAGE | | |
 |   | | | |
 |   | naive_ptr | gives fair warning | |
+| 1 | klein_ptr | https://en.wikipedia.org/wiki/Minimalism#/media/File:IKB_191.jpg | not Klein bottle |
 |   | neutral_ptr | | |
 |   | thin_ptr | | |
 |   | tepid_ptr | | |
