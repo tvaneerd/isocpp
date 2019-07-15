@@ -337,8 +337,8 @@ https://www.reddit.com/r/cpp/comments/808c5z/bikeshedding_time_poll_for_a_new_na
 Implementation Experience
 ----------
 
-Anthony Williams - https://www.justsoftwaresolutions.co.uk/cplusplus/object_ptr.html - includes implicit conversions, removed `release()`
-Martin Moene - https://github.com/martinmoene/observer-ptr-lite
+- Anthony Williams - https://www.justsoftwaresolutions.co.uk/cplusplus/object_ptr.html - includes implicit conversions, removed `release()`
+- Martin Moene - https://github.com/martinmoene/observer-ptr-lite
 
 Acknowledgement
 ----------
