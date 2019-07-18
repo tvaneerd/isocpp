@@ -127,13 +127,13 @@ From the original proposal (N4282) "it is intended as a near drop-in replacement
 
 ### 5. `observer_ptr` helps prevent overuse of `shared_ptr` as a function param.
 
-It is very common in a codebase using `shared_ptr` (for sharing, hopefully) to pass `shared_ptr` as a function param.  Basically "I have a shared_ptr to Foo. I need to write a function that uses it.  I'll pass *it* into the function."
+It is very common, in a codebase using `shared_ptr` (for sharing, hopefully), to pass `shared_ptr` as a function param.  Basically "I have a shared_ptr to Foo. I need to write a function that uses it.  I'll pass *it* into the function:"
 ```
 int count(shared_ptr<Foo> foo);
 ```
 
 There are 2 problems with this:
-- it does not show intent - there is no intent to shared ownership (beyond the length of the call).  ie vs a function like `setFoo(shared_ptr<Foo> foo)` which probably does intend to share ownership
+- it does not show intent - there is no intent to share ownership (beyond the length of the call).  ie vs a function like `setFoo(shared_ptr<Foo> foo)` which probably does intend to share ownership
 - it involves unnecessary atomic increment/decrement - Photoshop, for example, changed all functions like this to instead take `shared_ptr<Foo> const & foo`, to avoid the atomic ops. Effective, but convoluted for a pointer.
 
 `observer_ptr<Foo>` is a drop-in replacement for these functions. (`Foo *` is a replacement that has other issues as mentioned elsewhere, and also requires updating all call-sites, whereas `observer_ptr` does not require changes to callsites.)
