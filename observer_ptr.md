@@ -25,7 +25,10 @@ Reasons to standardize `observer_ptr` (with more in-depth explanations to follow
 2. `observer_ptr` is a **_safer alternative to `T*`_**
 3. `observer_ptr` **_extends the type safety_** of `shared_ptr` and `unique_ptr` (and other smart pointers)
 4. `observer_ptr` makes **_intent_** more **_clear_**
-5. `observer_ptr` is a post-modern tool for **_transitioning a codebase_** to more modern C++.
+5. `observer_ptr` helps prevent overuse of `shared_ptr` as a function param
+6. `observer_ptr` is a post-modern tool for **_transitioning a codebase_** to more modern C++.
+
+Personally, I come across these uses _weekly_.
 
 ---
 
@@ -122,7 +125,20 @@ A smart pointer, when used correctly, ensures safe lifetime management. The only
 
 From the original proposal (N4282) "it is intended as a near drop-in replacement for raw pointer types, with the advantage that,  as a vocabulary type, it indicates its intended use without need for detailed analysis by code readers". `observer_ptr` makes code more clear, easier to read, alleviating nagging lifetime questions. Some codebases can use `T*` to mean non-owning, but many popular 3rd party libraries still use raw pointers with various meanings, thus adding ambiguity to even modern codebases.
 
-### 5. `observer_ptr` is a post-modern tool for **_transitioning a codebase_** to more modern C++.
+### 5. `observer_ptr` helps prevent overuse of `shared_ptr` as a function param.
+
+It is very common in a codebase using `shared_ptr` (for sharing, hopefully) to pass `shared_ptr` as a function param.  Basically "I have a shared_ptr to Foo. I need to write a function that uses it.  I'll pass *it* into the function."
+```
+int count(shared_ptr<Foo> foo);
+```
+
+There are 2 problems with this:
+- it does not show intent - there is no intent to shared ownership (beyond the length of the call).  ie vs a function like `setFoo(shared_ptr<Foo> foo)` which probably does intend to share ownership
+- it involves unnecessary atomic increment/decrement - Photoshop, for example, changed all functions like this to instead take `shared_ptr<Foo> const & foo`, to avoid the atomic ops. Effective, but convoluted for a pointer.
+
+`observer_ptr<Foo>` is a drop-in replacement for these functions. (`Foo *` is a replacement that has other issues as mentioned elsewhere, and also requires updating all call-sites, whereas `observer_ptr` does not require changes to callsites.)
+
+### 6. `observer_ptr` is a post-modern tool for **_transitioning a codebase_** to more modern C++.
 
 This is the reasoning most often discussed. Note that it is listed _fifth_. The idea is to review all raw pointers in a codebase, replacing each case with the correct smart pointer (ie `unique_ptr` hopefully, else `shared_ptr`, etc).
 Since this replacement takes time, and not all cases will be fixed at once, "unowned" pointers need a thing to be replaced with (ie `observer_ptr`) else it is hard to know which raw pointers have been reviewed, and which haven't.
