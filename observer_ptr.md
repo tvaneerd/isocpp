@@ -11,9 +11,9 @@ Reply-to: Tony Van Eerd. cadged at forecode.com
 Summary
 -------
 
-In P1408, Bjarne wrote a rebuttal against standardizing `observer_ptr`, but no one had yet rewritten a proposal to standardize it. Thus the need for this "prebuttal":
+In P1408, Bjarne wrote a rebuttal against standardizing `observer_ptr`, but no one had yet written a proposal to standardize it. Thus the need for this "prebuttal":
 
-`observer_ptr` (from Library Fundamentals 2 TS) **should be standardized** (but with a better name and better conversions)
+**`observer_ptr`** (from Library Fundamentals 2 TS) **should be standardized** (but with a better name and better conversions).
 
 
 Reasons to standardize
@@ -28,7 +28,9 @@ Reasons to standardize `observer_ptr` (with more in-depth explanations to follow
 5. `observer_ptr` helps prevent overuse of `shared_ptr` as a function param
 6. `observer_ptr` is a post-modern tool for **_transitioning a codebase_** to more modern C++.
 
-Personally, I come across these uses _weekly_.
+Personally, I come across these uses _weekly_.  Note that I listed the oft-sited "transitioning a codebase" as sixth in order of importance (IMO).
+
+Details/Explanations of each:
 
 ---
 
@@ -40,49 +42,55 @@ ie a common base type that any pointer can be temporarily safely converted to.
 
 <table>
 <tr>
-<th>C++</th>  <th>C++LibFun2</th>  <th>C++20</th>
+<th>C++</th>  <th>C++LibFun2</th>  <th>C++2x</th>
 </tr>
 <tr>
 <td  valign="top">
 
 <pre lang="cpp">
-void f(Foo * pf);
 
 shared_ptr<Foo> sp = ...;
 unique_ptr<Foo> up = ...;
 Foo * rp = ...;
+    
+void f(Foo * pf);
     
 f(sp.get());
 f(up.get());
 f(rp);
+
 </pre>
 </td>
 <td  valign="top">
 
 <pre lang="cpp">
-void f(observer_ptr&lt;Foo&gt; pf);
-    
+
 shared_ptr<Foo> sp = ...;
 unique_ptr<Foo> up = ...;
 Foo * rp = ...;
+    
+void f(observer_ptr&lt;Foo&gt; pf);
     
 f(observer_ptr(sp.get()));
 f(observer_ptr(up.get()));
 f(observer_ptr(rp));
+
 </pre>
 </td>
 <td  valign="top">
 
 <pre lang="cpp">
-void f(observer_ptr&lt;Foo&gt; pf);
-    
+
 shared_ptr<Foo> sp = ...;
 unique_ptr<Foo> up = ...;
 Foo * rp = ...;
     
+void f(observer_ptr&lt;Foo&gt; pf);
+    
 f(sp);
 f(up);
 f(rp);
+
 </pre>
 </td>
 </tr>
@@ -98,7 +106,7 @@ f(rp);
 _Why isn't `T*` the common type?_
 
 You don't want smart pointers to implicitly convert to raw pointers
-(as this can too easily lead to accidental misownership - ie `delete someSharedPtr;`), but converting to `observer_ptr` does not increase the risk of misownership.
+(as this can too easily lead to accidental misownership), but converting to `observer_ptr` does not increase the risk of misownership.
 It does increase risk of dangling - same as string_view does.  Thus, similar to `string_view`, `observer_ptr` is best used as a function param.
 
 ### 2. `observer_ptr` is a **_safer alternative to `T*`_**
@@ -137,6 +145,8 @@ There are 2 problems with this:
 - it involves unnecessary atomic increment/decrement - Photoshop, for example, changed all functions like this to instead take `shared_ptr<Foo> const & foo`, to avoid the atomic ops. Effective, but convoluted for a pointer.
 
 `observer_ptr<Foo>` is a drop-in replacement for these functions. (`Foo *` is a replacement that has other issues as mentioned elsewhere, and also requires updating all call-sites, whereas `observer_ptr` does not require changes to callsites.)
+
+I feel it will be easier to teach/train/convince/remind developers to use `observer_ptr` here than `T *` as `observer_ptr` is basically "made to order" for this usecase, and doesn't require extra thought.
 
 ### 6. `observer_ptr` is a post-modern tool for **_transitioning a codebase_** to more modern C++.
 
@@ -181,7 +191,7 @@ In any programming language, it is important that **_Different semantics require
 
 `release` can be renamed `detach` or just removed - the user can call `get()` then `reset()`.
 
-(P.S. same with `retain_ptr::release()` (P0468), although its semantics are even subtler - the refernce count lives with the raw pointer, not the smart pointer, and only responsibility is being transferred.)
+(P.S. same with `retain_ptr::release()` (P0468), although its semantics are even subtler - the reference count lives with the raw pointer, not the smart pointer, and only responsibility is being transferred.)
 
 
 ### 3. **_Rename `observer_ptr`_**
@@ -190,7 +200,7 @@ Naming
 ------
 
 `observer_ptr` is a bad name.  It is bad because "observer" already has common meaning in programming (ie "the observer pattern" https://en.wikipedia.org/wiki/Observer_pattern).
-`observer_ptr` is so bad that it is a great name to use throughout this paper, as it is a clearly only a placeholder, not a reasonable suggestion, and thus doesn't bias to any of the other good names to follow.
+`observer_ptr` is thus a great name to use throughout this paper, as it is a only a placeholder, not a suggestion, and thus doesn't bias to any of the other good names to follow.
 
 Criteria:
 
@@ -204,11 +214,11 @@ There are some criteria to use when considering naming:
 A list of names
 ---------------
 
-Mostly the names can be grouped into a few piles:
+Mostly the following names can be grouped into a few piles:
 
-* ONWERSHIP: smart pointers tend to be about ownership.  This one is lack of ownership.  But the pointer is still owned (hopefully!), just not by you.  So `unowned_ptr`, for example, is not correct. `notmy_ptr` is more correct.
-* USAGE: Instead of defined-by-contrast, we could focus on how it is meant to be used - it is best used as a param (like string_view) and is only temporary. Thus names like temp/brief/transient/sojourn/... It is also meant to grant _access_ to an object, no-more-no-less, thus `access_ptr`.
-* FUNCTIONALITY: We can define a class by what it is and what it offers, and let users decide how to use it.
+* ONWERSHIP: smart pointers tend to be about ownership.  This one is lack of ownership.  But the pointer is still owned (hopefully!), just not by you.  So `unowned_ptr`, for example, is not correct (as _someone_ owns it); `notmy_ptr` is more correct.
+* USAGE: Instead of defined-by-contrast (ie vs other smart pointers), we could focus on how it is meant to be used - it is best used as a param (like string_view) and is only temporary. Thus names like temp/brief/transient/sojourn/... It is also meant to grant _access_ to an object, no-more-no-less, thus `access_ptr`.
+* WHAT: We can define a class by what it is and what it offers, and let users decide how to use it.
 * COINAGE: Picking a word that is currently unused, and give it meaning in the programming context.  But it should at least hint at meaning.
 
 | vote | name | pros | cons |
@@ -218,6 +228,7 @@ Mostly the names can be grouped into a few piles:
 |   | | | |
 |   | notmy_ptr | intent | cheeky, double negative |
 |   | nonowning_ptr | intent | double negative | 
+| 1 | alias_ptr | aliases a ptr out there somewhere | |
 | 1 | cadged_ptr | very correct, coins a term | not well known |
 |   | borrowed_ptr | | but how do you give it back? |
 |   | loaned_ptr | | |
@@ -230,13 +241,12 @@ Mostly the names can be grouped into a few piles:
 |   | HOW (USAGE) | | |
 |   | | | |
 | 1 | access_ptr | grants access, no more no less | |
-| 1 | alias_ptr | aliases a ptr out there somewhere | |
 |   | temp_ptr  | use | |
 |   | brief_ptr |  | i before e |
 |   | transient_ptr | intent | long |
 |   | ephemeral_ptr | intent | long |
 |   | guest_ptr  | | |
-|   | param_ptr | | |
+|   | param_ptr | strongly suggest safe usage | unenforceable |
 |   | sojourn_ptr | intent | uncommon |
 |   | | | |
 |   | WHAT | | |
@@ -250,7 +260,8 @@ Mostly the names can be grouped into a few piles:
 |   | COINAGE | | |
 |   | | | |
 |   | naive_ptr | gives fair warning | |
-| 1 | klein_ptr | https://en.wikipedia.org/wiki/Minimalism#/media/File:IKB_191.jpg | not Klein bottle |
+| 1 | klein_ptr | https://en.wikipedia.org/wiki/Minimalism#/media/File:IKB_191.jpg | not Klein bottle :-( |
+|   | brown_ptr | Walter | |
 |   | neutral_ptr | | |
 |   | thin_ptr | | |
 |   | tepid_ptr | | |
@@ -262,9 +273,8 @@ Mostly the names can be grouped into a few piles:
 |   | etc | | |
 |   | | | |
 |   | dumb_ptr | | politically incorrect? |
-|   | bum/freeload/mooch | | slang |
-|   | viewing_ptr | | is that read only? |
-
+|   | bum/freeload/mooch | (this is what 'cadge' means)| slang |
+|   | see below | many creative names from original paper coin a term | |
 
 
 From the original paper (N3740)
