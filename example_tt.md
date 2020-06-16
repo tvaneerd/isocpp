@@ -1,9 +1,9 @@
 ## Going Towards a More General Looping Mechanism
 
 Document number: DXXXXR0  
-Date: 2021-04-01  
+Date: 20XX-MM-DD  
 Audience: EWG  
-Reply-to: Tony Van Eerd. comefrom at forecode.com
+Reply-to: Tony Van Eerd. tt at forecode.com
 
 
 ### Summary
