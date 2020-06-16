@@ -17,8 +17,8 @@ Looking at how all these mechanisms work, we can refactor them into a single, mo
 In fact, it could *replace* all the other keywords with this single mechanism!
 
 _(Note, for the sake of backwards compatibility, we do not recommend deprecation at this time.
-If the new style is widely adopted - as we expect it will - we can consider deprecating the old keywords
-as coding practices show they have fallen out of failure.)_
+If the new style is widely adopted - as we expect it will - we can deprecate the old keywords
+when common coding practices show they have fallen out of favour.)_
 
 
 
