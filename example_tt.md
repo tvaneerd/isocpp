@@ -1,4 +1,4 @@
-## Going To a More Versatile Control Flow
+## Towards a More General Looping Mechanism
 
 Document number: DXXXXR0  
 Date: 2021-04-01  
@@ -8,7 +8,7 @@ Reply-to: Tony Van Eerd. comefrom at forecode.com
 
 ### Summary
 
-Current control-flow mechanisms (`if` and `switch` statements, `for`loops, `while` and `do`...`while` loops)
+Current looping mechanisms (`for`loops, `while` and `do`...`while` loops)
 are great - in their niche uses;
 but they are often found wanting, resulting in awkward constructs.
 In particular, in a few cases it is impossible to NOT repeat yourself (ie a violation of DRY) or to be concise, using those mechanisms.
@@ -79,8 +79,16 @@ return res;
 
 ### More Elucidating Examples
 
-...
+... show more problematic uses of current control flow, compared against new mechanism
+
+### Proof of Replacement
+
+... show before/after table replacing each of { `for`, `while` and `do`...`while` }
 
 ### Technical Details or Preliminary Wording, Etc
 
 Label statements, goto statement. Etc.
+
+### Further Work
+
+Initial results suggest a *"computed goto"* could also replace `if` and `switch` statements - thus completely **replacing all control flow mechanisms** with a single keyword.  The committee should *give me* a kidney.
