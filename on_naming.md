@@ -92,6 +92,8 @@ NOT understanding at least gives you a chance to read the docs instead of guessi
 
 This is somewhat the flip side of the consistency coin.
 
+This should include being consistent with other programming languages and "nearby" fields (math, science, ...).  "Generators" already has meaning in Python, we shouldn't use that term to mean something else.
+
 
 
 ### Co-opt a term
