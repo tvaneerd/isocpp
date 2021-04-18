@@ -153,3 +153,11 @@ The more general, the more likely it is to be named by functionality (because if
 
 Note that "by use" implies more of a commitment to that usage - future features will follow from that usage.
 
+# General Rule for Abbreviations
+
+If it is the first search result in google, you can use the abbreviation, otherwise probably not.
+
+ie search for `NFC` - the first result is about Near-field Communication.
+
+But search for `ISM` - you don't get anything about the ISM frequency band that NFC runs on.
+
