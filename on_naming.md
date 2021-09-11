@@ -13,6 +13,10 @@ Yet because it is given the generic "map" name, people expect all things to be m
 "Everything should be mappable" leads to "everything should be orderable" leads to people wanting default operator< for types where "less" is nonsensical. Yes, any bag of bytes (ie a struct/class) is orderable, and thus mappable, but the ordering part doesn't make sense.
 /rant
 
+#### Corollary - don't separate the essence
+
+`std::fp::binary16_t` is/was a suggested name for a 16 bit floating point number.  This would lead to some code using `binary16_t` (without the namespace qualification) but "binary16_t" doesn't scream number, it screams binary data of some kind, like unsigned shorts or something.  Don't put the essence in the namespace, where it can get separated along the journey.
+
 ### Level of generality
 
 This goes along with essence.
