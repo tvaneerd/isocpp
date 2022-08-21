@@ -133,6 +133,14 @@ I've experienced this confusion with `std::function`.  (The solution is to say "
 `empty()`
 
 
+### hints of complexity
+
+A Name should hint at the complexity/performance of the function.
+
+`getFoo()` should be fast, like return an existing member variable, or some very simple calculation like `getArea() const { return w * h; }`  
+`find` should typically be O(logN) or linear  
+`determine` or `calculate` could be worse than linear
+
 
 ### Be *Conceptually* Concise. Avoid sub-concepts.
 
