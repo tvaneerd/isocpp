@@ -216,7 +216,7 @@ A list of names
 
 Mostly the following names can be grouped into a few piles:
 
-* ONWERSHIP: smart pointers tend to be about ownership.  This one is lack of ownership.  But the pointer is still owned (hopefully!), just not by you.  So `unowned_ptr`, for example, is not correct (as _someone_ owns it); `notmy_ptr` is more correct.
+* OWNERSHIP: smart pointers tend to be about ownership.  This one is lack of ownership.  But the pointer is still owned (hopefully!), just not by you.  So `unowned_ptr`, for example, is not correct (as _someone_ owns it); `notmy_ptr` is more correct.
 * USAGE: Instead of defined-by-contrast (ie vs other smart pointers), we could focus on how it is meant to be used - it is best used as a param (like string_view) and is only temporary. Thus names like temp/brief/transient/sojourn/... It is also meant to grant _access_ to an object, no-more-no-less, thus `access_ptr`.
 * WHAT: We can define a class by what it is and what it offers, and let users decide how to use it.
 * COINAGE: Picking a word that is currently unused, and give it meaning in the programming context.  But it should at least hint at meaning.
